@@ -486,3 +486,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:28px;margin:0}
 .hero-eyebrow{font-size:13.5px;letter-spacing:.08em;text-transform:none;color:var(--ink-2);font-weight:500}
 .hero-eyebrow::before{background:var(--accent)}
 .hero-note b{color:var(--ink);font-weight:600}
+/* Mobile fixes */
+.mobile-menu .wrap{height:auto;justify-content:normal;align-items:stretch}
+.mobile-menu a:not(.btn){padding:14px 4px;min-height:44px;display:flex;align-items:center}
+.foot-grid a,.cta-contact a{display:inline-block;padding:6px 0}
+.nav .wrap .logo{padding:6px 0}
