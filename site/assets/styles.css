@@ -481,3 +481,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:28px;margin:0}
 .pcard.span2{grid-column:span 2}
 .pcard-sub{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-top:2px}
 @media (max-width:980px){.pcard.span3,.pcard.span2{grid-column:span 6}}
+
+/* Hero eyebrow replaces the product pill */
+.hero-eyebrow{font-size:13.5px;letter-spacing:.08em;text-transform:none;color:var(--ink-2);font-weight:500}
+.hero-eyebrow::before{background:var(--accent)}
+.hero-note b{color:var(--ink);font-weight:600}
