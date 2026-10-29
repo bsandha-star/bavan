@@ -17,8 +17,8 @@ jobs:
       - name: Push site/ to the gh-pages branch
         run: |
           set -e
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm -rf /tmp/out && mkdir /tmp/out && cp -r site/. /tmp/out/ && touch /tmp/out/.nojekyll
           cd /tmp/out && git init -q -b gh-pages && git add -A && git commit -q -m "Publish site from ${GITHUB_SHA::7}"
           git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
