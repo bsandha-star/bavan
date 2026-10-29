@@ -12,7 +12,7 @@ manages DNS for it, so the files are hosted elsewhere and Squarespace points the
 3. Under **Custom domain**, type `huddle.dental` and press Save. Tick **Enforce HTTPS** once DNS has propagated (step 2).
 4. Open https://github.com/bsandha-star/bavan/actions and re-run the "Deploy to GitHub Pages" workflow if it shows as failed from before Pages was enabled. Every later push to `main` deploys automatically.
 
-GitHub Pages on a **private** repo needs a paid GitHub plan. If the Pages setting is greyed out, either make the
+GitHub Pages on a **private** repo needs a paid GitHub plan; this repo was made public on 2026-10-29 for that reason. If the Pages setting is greyed out, either make the
 repo public (it holds only the marketing site, nothing sensitive) at Settings → General → Danger Zone →
 Change visibility, or use option B.
 
