@@ -8,9 +8,9 @@ manages DNS for it, so the files are hosted elsewhere and Squarespace points the
 **Option A: GitHub Pages (this repo, free, already wired up)**
 
 1. Open https://github.com/bsandha-star/bavan/settings/pages
-2. Under **Build and deployment → Source**, choose **GitHub Actions**.
+2. Under **Build and deployment → Source**, it should read **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`. Every push to `main` republishes that branch automatically.
 3. Under **Custom domain**, type `huddle.dental` and press Save. Tick **Enforce HTTPS** once DNS has propagated (step 2).
-4. Open https://github.com/bsandha-star/bavan/actions and re-run the "Deploy to GitHub Pages" workflow if it shows as failed from before Pages was enabled. Every later push to `main` deploys automatically.
+4. The site is also reachable at https://bsandha-star.github.io/bavan/ until the domain points here.
 
 GitHub Pages on a **private** repo needs a paid GitHub plan; this repo was made public on 2026-10-29 for that reason. If the Pages setting is greyed out, either make the
 repo public (it holds only the marketing site, nothing sensitive) at Settings → General → Danger Zone →
