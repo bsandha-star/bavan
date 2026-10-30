@@ -196,6 +196,65 @@
     });
   }
 
+  /* ---------- Fusion: scattered chores converge into one huddle, then orbit ---------- */
+  var fstage = $('#fstage'), forbit = $('#forbit'), fcore = $('#fcore'), fone = $('#fone'), fword = $('#fword'), fcap = $('.fcaption');
+  if (fstage) {
+    var chips = $$('.fchip', fstage), N = chips.length;
+    function stageSize() { return fstage.getBoundingClientRect().width; }
+    function orbitPos(i) { var S = stageSize(), R = S * 0.39, a = (i / N) * Math.PI * 2 - Math.PI / 2; return { x: Math.cos(a) * R, y: Math.sin(a) * R }; }
+    function scatterPos(i) { var S = stageSize(), seed = (i * 9301 + 49297) % 233280 / 233280, a = seed * Math.PI * 2, r = S * (0.28 + ((i * 7) % 5) * 0.045); return { x: Math.cos(a) * r, y: Math.sin(a) * r }; }
+    function t(x, y, sc) { return 'translate(calc(-50% + ' + x + 'px), calc(-50% + ' + y + 'px)) scale(' + (sc == null ? 1 : sc) + ')'; }
+    function settle() {
+      chips.forEach(function (c, i) { var o = orbitPos(i); c.getAnimations().forEach(function (a) { a.cancel(); }); c.style.opacity = 1; c.style.setProperty('--tx', o.x + 'px'); c.style.setProperty('--ty', o.y + 'px'); c.style.transform = t(o.x, o.y, 1); });
+      fcore.style.transform = 'translate(-50%,-50%) scale(1)';
+      fstage.classList.add('orbit'); fcap.classList.add('done'); fword.textContent = 'chores a dental office juggles';
+    }
+    var playing = false;
+    function play() {
+      if (playing) return; playing = true;
+      fstage.classList.remove('orbit'); fcap.classList.remove('done');
+      fcore.style.transform = 'translate(-50%,-50%) scale(0)';
+      fword.textContent = 'chores a dental office juggles';
+      var drift = 1700, gather = 1100, hold = 500, total = drift + gather + hold;
+      chips.forEach(function (c, i) {
+        var s = scatterPos(i), s2 = { x: s.x * 1.08, y: s.y * 1.08 };
+        c.getAnimations().forEach(function (a) { a.cancel(); });
+        c.style.opacity = 0;
+        c.animate([
+          { transform: t(s.x * 1.25, s.y * 1.25, .8), opacity: 0 },
+          { transform: t(s.x, s.y, 1), opacity: 1, offset: .25 },
+          { transform: t(s2.x, s2.y, 1), opacity: 1, offset: drift / total },
+          { transform: t(0, 0, .25), opacity: 0, offset: (drift + gather) / total },
+          { transform: t(0, 0, .25), opacity: 0 }
+        ], { duration: total, delay: i * 55, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+      });
+      setTimeout(function () {
+        fcore.animate([
+          { transform: 'translate(-50%,-50%) scale(0)' },
+          { transform: 'translate(-50%,-50%) scale(1.22)', offset: .7 },
+          { transform: 'translate(-50%,-50%) scale(1)' }
+        ], { duration: 700, easing: 'cubic-bezier(.3,1.4,.5,1)', fill: 'forwards' });
+      }, drift + gather * 0.65);
+      setTimeout(function () {
+        fcap.classList.add('done');
+        chips.forEach(function (c, i) {
+          var o = orbitPos(i);
+          c.getAnimations().forEach(function (a) { a.cancel(); });
+          c.animate([
+            { transform: t(0, 0, .25), opacity: 0 },
+            { transform: t(o.x, o.y, 1), opacity: 1 }
+          ], { duration: 900, delay: i * 40, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }).onfinish = function () {
+            c.getAnimations().forEach(function (a) { a.cancel(); }); c.style.opacity = 1; c.style.setProperty('--tx', o.x + 'px'); c.style.setProperty('--ty', o.y + 'px'); c.style.transform = t(o.x, o.y, 1);
+            if (i === N - 1) { fstage.classList.add('orbit'); playing = false; }
+          };
+        });
+      }, total + N * 55 + 150);
+    }
+    if (reduce || !('animate' in Element.prototype)) settle(); else play();
+    fcore.addEventListener('click', play);
+    var rT; window.addEventListener('resize', function () { clearTimeout(rT); rT = setTimeout(function () { if (!playing) settle(); }, 150); });
+  }
+
   /* Count-up for the stats band */
   var counters = $$('[data-count]');
   if (counters.length && 'IntersectionObserver' in window && !reduce) {
