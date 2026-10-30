@@ -1,0 +1,34 @@
+name: DNS check (diagnostic)
+on:
+  push:
+    paths: ['.github/workflows/dns-check.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve huddle.dental from several resolvers
+        run: |
+          set +e
+          for r in 8.8.8.8 1.1.1.1 9.9.9.9; do
+            echo "== A huddle.dental @$r";      dig +short A huddle.dental @$r
+            echo "== AAAA huddle.dental @$r";   dig +short AAAA huddle.dental @$r
+            echo "== CNAME www @$r";            dig +short CNAME www.huddle.dental @$r
+          done
+          echo "== NS huddle.dental";           dig +short NS huddle.dental
+          echo "== SOA huddle.dental";          dig +short SOA huddle.dental
+          echo "== Authoritative answer (from the domain's own nameserver)"
+          NS=$(dig +short NS huddle.dental | head -1); echo "ns=$NS"; dig +noall +answer A huddle.dental @$NS; dig +noall +answer CNAME www.huddle.dental @$NS
+          echo "== A huddledental.com";         dig +short A huddledental.com
+          echo "== HTTP huddle.dental";         curl -sS -m 15 -o /dev/null -D - http://huddle.dental/ | head -15
+          echo "== HTTPS huddle.dental";        curl -sS -m 15 -k -o /tmp/h.html -D - https://huddle.dental/ | head -15; grep -o '<title>[^<]*' /tmp/h.html | head -1
+          echo "== github.io/bavan";            curl -sS -m 15 -o /tmp/g.html -D - https://bsandha-star.github.io/bavan/ | head -5; grep -o '<title>[^<]*' /tmp/g.html | head -1
+      - name: GitHub Pages settings for this repo
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          set +e
+          gh api repos/${{ github.repository }}/pages 2>&1 | head -c 1500; echo
+          echo "== health"; gh api repos/${{ github.repository }}/pages/health 2>&1 | head -c 2500; echo
