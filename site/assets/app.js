@@ -93,6 +93,7 @@
   function render(q) {
     var Q = QUEUES[q]; current = q;
     timers.forEach(clearTimeout); timers = []; running = false;
+    if (ball) { ball.getAnimations().forEach(function (a) { a.cancel(); }); ball.hidden = true; }
     demoTitle.textContent = Q.title; runHint.textContent = Q.hint;
     runLabel.textContent = 'Work this queue'; runBtn.disabled = false; runBar.style.width = '0%';
     demoSum.innerHTML = '<b>0</b> resolved · <b>0</b> need you';
@@ -100,10 +101,56 @@
       return '<li><span class="ck">·</span><span><b>' + esc(it.t) + '</b><small class="st">' + esc(it.s) + '</small></span><span class="chip wait">Open</span></li>';
     }).join('') + (Q.more ? '<li class="more"><span class="ck">+</span><span><b>' + Q.more + ' more</b><small class="st">Waiting</small></span><span class="chip wait">Open</span></li>' : '');
   }
+  /* The orange mark becomes a ball and hops down the queue */
+  var demoEl = $('#demo'), ball = null;
+  function ensureBall() {
+    if (ball) return ball;
+    ball = document.createElement('div'); ball.className = 'ball'; ball.hidden = true;
+    ball.innerHTML = '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="11.5" cy="13" r="4" fill="#fff"/><circle cx="20.5" cy="13" r="4" fill="#fff"/><path d="M8 24c0-4 3.5-6 8-6s8 2 8 6" fill="#fff"/></svg>';
+    demoEl.appendChild(ball); return ball;
+  }
+  function centerOf(el) {
+    var r = el.getBoundingClientRect(), d = demoEl.getBoundingClientRect();
+    return { x: r.left - d.left + r.width / 2 - 15, y: r.top - d.top + r.height / 2 - 15 };
+  }
+  function hop(from, to, dur, squash) {
+    var midY = Math.min(from.y, to.y) - 46, midX = (from.x + to.x) / 2;
+    return ball.animate([
+      { transform: 'translate(' + from.x + 'px,' + from.y + 'px) scale(1,1)' },
+      { transform: 'translate(' + midX + 'px,' + midY + 'px) scale(.92,1.08)', offset: .5 },
+      { transform: 'translate(' + to.x + 'px,' + to.y + 'px) scale(' + (squash ? '1.25,.75' : '1,1') + ')', offset: .88 },
+      { transform: 'translate(' + to.x + 'px,' + to.y + 'px) scale(1,1)' }
+    ], { duration: dur, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' });
+  }
+  function pulseLogos() {
+    $$('.logo-mark').forEach(function (m) {
+      m.animate([{ transform: 'scale(1)', borderRadius: '9px' }, { transform: 'scale(1.25) rotate(-12deg)', borderRadius: '50%', offset: .4 }, { transform: 'scale(1)', borderRadius: '9px' }], { duration: 700, easing: 'ease-out' });
+    });
+  }
+
   function run() {
     if (running) return; running = true;
     var Q = QUEUES[current], lis = $$('li', list), done = 0, human = 0, step = reduce ? 0 : 650;
     runBtn.disabled = true; runLabel.textContent = 'Working…';
+    var useBall = !reduce && 'animate' in Element.prototype;
+    if (useBall) {
+      ensureBall(); pulseLogos();
+      var pos = centerOf(runBtn); ball.hidden = false;
+      ball.style.transform = 'translate(' + pos.x + 'px,' + pos.y + 'px)';
+      ball.animate([{ transform: 'translate(' + pos.x + 'px,' + pos.y + 'px) scale(0)' }, { transform: 'translate(' + pos.x + 'px,' + pos.y + 'px) scale(1.2)', offset: .7 }, { transform: 'translate(' + pos.x + 'px,' + pos.y + 'px) scale(1)' }], { duration: 260, fill: 'forwards' });
+      var prev = pos;
+      lis.forEach(function (li, i) {
+        timers.push(setTimeout(function () {
+          var to = centerOf($('.ck', li)); hop(prev, to, Math.max(240, step * 0.78), true); prev = to;
+        }, Math.max(0, i * step - step * 0.1)));
+      });
+      timers.push(setTimeout(function () {
+        var back = centerOf(runBtn); hop(prev, back, 520, false).onfinish = function () {
+          ball.animate([{ transform: 'translate(' + back.x + 'px,' + back.y + 'px) scale(1)', opacity: 1 }, { transform: 'translate(' + back.x + 'px,' + back.y + 'px) scale(0)', opacity: 0 }], { duration: 220, fill: 'forwards' }).onfinish = function () { ball.hidden = true; };
+          pulseLogos();
+        };
+      }, lis.length * step + 60));
+    }
     lis.forEach(function (li, i) {
       timers.push(setTimeout(function () {
         if (i > 0) lis[i - 1].classList.remove('working');
