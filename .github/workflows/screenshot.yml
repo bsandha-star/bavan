@@ -1,0 +1,39 @@
+name: Screenshot huddle.dental (diagnostic)
+on:
+  push:
+    paths: ['.github/workflows/screenshot.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  shot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Playwright Chromium
+        run: npm i -g playwright@1.47.2 && npx playwright@1.47.2 install --with-deps chromium
+      - name: Screenshot the live site
+        run: |
+          mkdir -p out
+          cat > shot.js <<'JS'
+          const { chromium } = require('playwright');
+          (async () => {
+            const b = await chromium.launch();
+            for (const [w,h,n] of [[1365,900,'desktop'],[390,844,'phone']]) {
+              const p = await b.newPage({ viewport: { width: w, height: h } });
+              const r = await p.goto('https://huddle.dental/', { waitUntil: 'networkidle', timeout: 60000 });
+              console.log(n, 'status', r.status(), 'final url', p.url(), 'title', await p.title());
+              await p.waitForTimeout(1500);
+              await p.screenshot({ path: `out/${n}.png`, fullPage: false });
+              if (n === 'desktop') { await p.click('#runQueue'); await p.waitForTimeout(6500); await p.screenshot({ path: 'out/desktop-after-run.png' }); }
+              await p.close();
+            }
+            await b.close();
+          })();
+          JS
+          NODE_PATH=$(npm root -g) node shot.js
+          curl -sS -o /dev/null -w "https://huddle.dental -> HTTP %{http_code}, server %{header_json}\n" https://huddle.dental/ | head -c 300; echo
+      - name: Push screenshots to the evidence branch
+        run: |
+          cd out && git init -q -b evidence && git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Screenshots of https://huddle.dental taken $(date -u +%FT%TZ) from a GitHub runner"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" evidence
