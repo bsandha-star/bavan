@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  pages: read
+  pages: write
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -31,4 +31,5 @@ jobs:
         run: |
           set +e
           gh api repos/${{ github.repository }}/pages 2>&1 | head -c 1500; echo
-          echo "== health"; gh api repos/${{ github.repository }}/pages/health 2>&1 | head -c 2500; echo
+          echo "== enforce https"; gh api -X PUT repos/${{ github.repository }}/pages -F https_enforced=true 2>&1 | head -c 600; echo
+          echo "== after"; gh api repos/${{ github.repository }}/pages --jq '{status, cname, https_enforced, cert: .https_certificate.state}' 2>&1
