@@ -72,6 +72,19 @@
         { t: 'Extraction #17 · Medicaid · $220', s: 'Not yet submitted', d: 'X-ray attached. Submitted.', r: 'done' }
       ],
       more: 3, moreDone: 3
+    },
+    oc: {
+      title: 'Open Chair · 6 openings tomorrow', total: 6,
+      hint: 'One press. Open Chair calls the patients who are due, offers each of them two real times, books the one they pick, and texts the ones who didn\'t answer. You get the chairs filled and the one caller who asked for you.',
+      items: [
+        { t: 'Thu 9:20 · hygiene · Dr. Lopez', s: 'Open since a cancellation', d: 'Called Maria R., due 4 months. "Thursday at nine twenty works." Booked, reminder sent.', r: 'done' },
+        { t: 'Thu 10:20 · hygiene', s: 'Open', d: 'Called 4 due patients. Two voicemails texted with "reply 1 or 2". Priya L. replied 1. Booked.', r: 'done' },
+        { t: 'Thu 2:00 · hygiene · Dr. Chen', s: 'Open', d: 'Called James T., due 7 months. Booked with Dr. Chen. Insurance card reminder read back.', r: 'done' },
+        { t: 'Fri 8:00 · hygiene', s: 'Open', d: 'Dana K. asked about a balance before booking. Callback logged for the manager at 9 AM. Needs you.', r: 'human' },
+        { t: 'Fri 11:40 · short visit', s: 'Open', d: 'Alex B. mentioned a sore tooth. Booked the short visit instead of a cleaning, nothing clinical discussed.', r: 'done' },
+        { t: 'Fri 3:20 · hygiene', s: 'Open', d: 'Three patients reached, none free Friday. Two accepted next week instead. Slot still open; two more being texted.', r: 'human' }
+      ],
+      more: 0, moreDone: 0
     }
   };
   var list = $('#demoList'), runBtn = $('#runQueue'), runLabel = $('#runLabel'), runBar = $('#runBar'), demoSum = $('#demoSum'), demoTitle = $('#demoTitle'), runHint = $('#runHint');
@@ -85,7 +98,7 @@
     demoSum.innerHTML = '<b>0</b> resolved · <b>0</b> need you';
     list.innerHTML = Q.items.map(function (it) {
       return '<li><span class="ck">·</span><span><b>' + esc(it.t) + '</b><small class="st">' + esc(it.s) + '</small></span><span class="chip wait">Open</span></li>';
-    }).join('') + '<li class="more"><span class="ck">+</span><span><b>' + Q.more + ' more</b><small class="st">Waiting</small></span><span class="chip wait">Open</span></li>';
+    }).join('') + (Q.more ? '<li class="more"><span class="ck">+</span><span><b>' + Q.more + ' more</b><small class="st">Waiting</small></span><span class="chip wait">Open</span></li>' : '');
   }
   function run() {
     if (running) return; running = true;

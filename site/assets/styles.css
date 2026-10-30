@@ -491,3 +491,10 @@ input[type=range]{width:100%;accent-color:var(--accent);height:28px;margin:0}
 .mobile-menu a:not(.btn){padding:14px 4px;min-height:44px;display:flex;align-items:center}
 .foot-grid a,.cta-contact a{display:inline-block;padding:6px 0}
 .nav .wrap .logo{padding:6px 0}
+
+/* Curb Appeal card */
+.pcard.span6{grid-column:span 6}
+.curb-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+.curb-grid>div:first-child{display:grid;gap:12px}
+.curb-grid .viz{margin:0}
+@media (max-width:900px){.curb-grid{grid-template-columns:1fr}}
