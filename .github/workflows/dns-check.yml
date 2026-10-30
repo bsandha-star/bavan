@@ -1,7 +1,5 @@
 name: DNS check (diagnostic)
 on:
-  push:
-    paths: ['.github/workflows/dns-check.yml']
   workflow_dispatch:
 permissions:
   contents: read
