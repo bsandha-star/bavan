@@ -1,0 +1,1752 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<title>Green Valley Ownership Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: horizontal swimlanes (rows = employee segments), work percolating left to right
+   from the three bottlenecks into thinner hand-off lines; editor tables below the chart.
+   Tokens follow the Huddle design system (docs/HUDDLE-DESIGN-SYSTEM.md). */
+:root {
+  --bg:#f4f8fb; --card:#ffffff; --ink:#11263a; --muted:#55697b; --faint:#8a9cab;
+  --line:#dce6ee; --line-strong:#c5d4e0; --lane-a:#f8fbfd; --lane-b:#eef4f9; --lane-head:#e4f2fc;
+  --accent:#0b78c2; --accent-ink:#0a5d97; --accent-soft:#e1f0fb; --on-accent:#ffffff;
+  --good:#1f7a4d; --good-bg:#e2f2e9; --bad:#b93a2e; --bad-bg:#fbeae7; --warn-ink:#a56d0a; --warn:#fbefd6;
+  --c-violet:#6d5bd0; --c-blue:#1f8fd6; --c-coral:#e0694a; --c-green:#1f8a57; --c-gold:#b07a08; --c-teal:#0f8b8d; --c-pink:#c2417a; --c-slate:#5b6b7c; --c-ink:#2c3e50; --c-red:#b93a2e;
+  --tip-bg:#11263a; --tip-ink:#ffffff;
+  --shadow:0 1px 2px rgba(17,38,58,.05), 0 6px 18px rgba(17,38,58,.06);
+  --sans:"Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --display:"Bricolage Grotesque", "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --r:12px; --r-sm:8px; --edge-op:.38;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark;
+  --bg:#0b141b; --card:#121e28; --ink:#e4edf3; --muted:#96a9b8; --faint:#6f8494;
+  --line:#233544; --line-strong:#34495b; --lane-a:#0f1a23; --lane-b:#132230; --lane-head:#0f2231;
+  --accent:#5cb6ef; --accent-ink:#8fd0f7; --accent-soft:#11293b; --on-accent:#06192a;
+  --good:#4cc97e; --good-bg:rgba(76,201,126,.14); --bad:#f07a70; --bad-bg:rgba(240,122,112,.14); --warn-ink:#f5c451; --warn:rgba(250,178,25,.16);
+  --c-violet:#a28df0; --c-blue:#5cb6ef; --c-coral:#f0957a; --c-green:#4cc97e; --c-gold:#f5c451; --c-teal:#4fd1c5; --c-pink:#f28cb8; --c-slate:#9fb0c0; --c-ink:#c9d6e2; --c-red:#f07a70;
+  --tip-bg:#e4edf3; --tip-ink:#0b141b; --edge-op:.6;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.3); } }
+:root[data-theme="dark"] { color-scheme: dark;
+  --bg:#0b141b; --card:#121e28; --ink:#e4edf3; --muted:#96a9b8; --faint:#6f8494;
+  --line:#233544; --line-strong:#34495b; --lane-a:#0f1a23; --lane-b:#132230; --lane-head:#0f2231;
+  --accent:#5cb6ef; --accent-ink:#8fd0f7; --accent-soft:#11293b; --on-accent:#06192a;
+  --good:#4cc97e; --good-bg:rgba(76,201,126,.14); --bad:#f07a70; --bad-bg:rgba(240,122,112,.14); --warn-ink:#f5c451; --warn:rgba(250,178,25,.16);
+  --c-violet:#a28df0; --c-blue:#5cb6ef; --c-coral:#f0957a; --c-green:#4cc97e; --c-gold:#f5c451; --c-teal:#4fd1c5; --c-pink:#f28cb8; --c-slate:#9fb0c0; --c-ink:#c9d6e2; --c-red:#f07a70;
+  --tip-bg:#e4edf3; --tip-ink:#0b141b; --edge-op:.6;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.3); }
+
+* { box-sizing:border-box; }
+[hidden] { display:none !important; }
+body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 var(--sans); font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:1320px; margin:0 auto; padding-block:24px 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex; flex-direction:column; gap:20px; }
+h1 { font:700 28px/1.15 var(--display); letter-spacing:-.01em; margin:0; text-wrap:balance; }
+h2 { font:600 18px/1.3 var(--display); margin:0; }
+.eyebrow { font:600 11px/1 var(--sans); letter-spacing:.07em; text-transform:uppercase; color:var(--muted); }
+.muted { color:var(--muted); }
+button, input, select { font:inherit; color:inherit; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+/* header */
+.top { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; }
+.top .lede { max-width:62ch; margin:6px 0 0; color:var(--muted); }
+.status { display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:var(--card); white-space:nowrap; }
+.status i { width:8px; height:8px; border-radius:50%; background:var(--faint); }
+.status[data-s="saved"] i { background:var(--good); }
+.status[data-s="saving"] i { background:var(--c-gold); }
+.status[data-s="local"] i, .status[data-s="view"] i { background:var(--warn-ink); }
+
+/* summary strip */
+.summary { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); }
+.summary > div { padding:14px 18px; display:flex; flex-direction:column; gap:4px; min-width:0; }
+.summary > div + div { border-left:1px solid var(--line); }
+.summary b { font:700 26px/1.1 var(--display); }
+.summary small { color:var(--muted); font-size:12px; }
+.summary .down { color:var(--good); }
+@media (max-width:760px) { .summary { grid-template-columns:repeat(2, minmax(0,1fr)); } .summary > div:nth-child(3) { border-left:0; } .summary > div:nth-child(n+3) { border-top:1px solid var(--line); } }
+
+/* chart card */
+.stage { background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); display:flex; flex-direction:column; min-width:0; }
+.stage > .legend { order:10; }
+.stage-bar { display:flex; flex-wrap:wrap; align-items:center; gap:12px; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--line); }
+.seg { display:inline-flex; border:1px solid var(--line-strong); border-radius:999px; padding:3px; gap:2px; background:var(--bg); }
+.seg button { border:0; background:none; padding:6px 14px; border-radius:999px; cursor:pointer; font-weight:600; font-size:13px; color:var(--muted); }
+.seg button[aria-pressed="true"] { background:var(--card); color:var(--ink); box-shadow:0 1px 3px rgba(17,38,58,.15); }
+.btn { border:1px solid var(--line-strong); background:var(--card); padding:7px 14px; border-radius:999px; cursor:pointer; font-weight:600; font-size:13px; display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { border-color:var(--accent); color:var(--accent-ink); }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.btn.primary:hover { color:var(--on-accent); filter:brightness(1.07); }
+.btn.danger { color:var(--bad); }
+.btn.small { padding:4px 10px; font-size:12px; }
+.caption { font-size:13px; color:var(--muted); min-height:20px; }
+.caption b { color:var(--ink); }
+.scroller { overflow-x:auto; position:relative; }
+#chart { display:block; width:100%; min-width:1080px; height:auto; }
+.legend { display:flex; flex-wrap:wrap; gap:8px 20px; padding:12px 16px; border-top:1px solid var(--line); font-size:12px; color:var(--muted); }
+.legend span { display:inline-flex; align-items:center; gap:6px; }
+.legend .sw { width:22px; height:0; border-top:3px solid currentColor; border-radius:2px; }
+.legend .pill-b { font-size:10px; font-weight:700; color:var(--bad); background:var(--bad-bg); padding:2px 6px; border-radius:999px; letter-spacing:.04em; text-transform:uppercase; }
+
+/* SVG */
+.lane-band { stroke:var(--line); stroke-width:1; }
+.lane-name { font:600 14px var(--display); fill:var(--ink); }
+.lane-note { font:500 11px var(--sans); fill:var(--muted); }
+.box { fill:var(--card); stroke:var(--line-strong); stroke-width:1; }
+.node { cursor:pointer; }
+.node:hover .box, .node.sel .box { stroke:var(--accent); stroke-width:2; }
+.node.bn .box { stroke:var(--bad); stroke-opacity:.45; }
+.node.bn:hover .box, .node.bn.sel .box { stroke:var(--accent); stroke-opacity:1; }
+.n-name { font:600 16px var(--display); fill:var(--ink); }
+.n-name.sm { font-size:14px; }
+.n-role { font:500 11.5px var(--sans); fill:var(--muted); }
+.n-fig { font:700 15px var(--sans); fill:var(--ink); }
+.n-delta { font:700 12px var(--sans); fill:var(--good); }
+.n-item { font:500 11.5px var(--sans); fill:var(--ink); }
+.n-item-h { font:600 11.5px var(--sans); fill:var(--muted); }
+.n-empty { font:italic 500 11.5px var(--sans); fill:var(--faint); }
+.bn-pill rect { fill:var(--bad-bg); }
+.bn-pill text { font:700 9.5px var(--sans); fill:var(--bad); letter-spacing:.06em; }
+.gain-pill rect { fill:var(--good-bg); }
+.gain-pill text { font:700 11px var(--sans); fill:var(--good); }
+.track { fill:var(--bad-bg); }
+.fillbar { fill:var(--accent); opacity:.6; }
+.fillbar.ok { fill:var(--good); }
+.edge { fill:none; stroke-linecap:butt; opacity:var(--edge-op); transition:opacity .2s; pointer-events:stroke; cursor:pointer; }
+.edge.off { stroke-dasharray:6 5 !important; }
+.edge:hover { opacity:.85; }
+.head { transition:opacity .2s; }
+.dot { pointer-events:none; }
+svg.focus .edge:not(.on), svg.focus .head:not(.on) { opacity:.06; }
+svg.focus .dot:not(.on) { opacity:.08; }
+svg.focus .node:not(.on) { opacity:.45; }
+.tier-label { font:600 10.5px var(--sans); fill:var(--faint); letter-spacing:.07em; }
+.chip-t { font:700 8.5px var(--sans); fill:var(--card); letter-spacing:.03em; }
+.pc { display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:16px; padding:0 4px; border-radius:8px; font:700 9px/1 var(--sans); color:var(--card); letter-spacing:.03em; vertical-align:middle; flex:none; }
+.tour { position:sticky; bottom:env(safe-area-inset-bottom, 0px); z-index:5; order:9; background:var(--card); border-top:2px solid var(--accent); box-shadow:0 -8px 24px rgba(17,38,58,.12); padding:12px 16px 14px; display:flex; flex-direction:column; gap:8px; border-radius:0 0 var(--r) var(--r); }
+.tour-top { display:flex; gap:12px; align-items:center; }
+.tour-bar { flex:1; height:4px; background:var(--line); border-radius:2px; overflow:hidden; }
+.tour-bar i { display:block; height:100%; width:0; background:var(--accent); transition:width .4s; }
+.tour-text { margin:0; font:500 17px/1.45 var(--sans); max-width:90ch; min-height:2.9em; }
+.tour-ctl { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.tour-ctl .seg button { padding:4px 10px; font-size:12px; }
+.brow.spot { background:var(--accent-soft); }
+.key { display:flex; flex-wrap:wrap; gap:6px 14px; padding:10px 16px; border-bottom:1px solid var(--line); font-size:12px; color:var(--muted); align-items:center; }
+.key > span { display:inline-flex; gap:6px; align-items:center; }
+.key b { font-weight:600; color:var(--ink); }
+.lane-strip { font:600 10.5px var(--sans); fill:var(--muted); letter-spacing:.05em; }
+.wf-l { font:500 11.5px var(--sans); fill:var(--ink); }
+.wf-l .wf-a { fill:var(--muted); font-weight:500; }
+.wf-l .wf-n { font-weight:700; }
+.wf-l.wf-k { font-weight:700; }
+.wf-l.wf-prop { font-style:italic; fill:var(--muted); }
+.wf-arrow { fill:var(--faint); }
+.wf-v { font:600 11.5px var(--sans); fill:var(--muted); }
+.wf-v.wf-k { fill:var(--ink); font-weight:700; }
+.wf-ghost { fill:none; stroke:var(--faint); stroke-dasharray:3 2; stroke-width:1; opacity:.7; }
+.wf-hair { stroke:var(--faint); stroke-width:1; stroke-dasharray:2 2; }
+.wf-row { cursor:pointer; }
+.wf-row:hover .wf-l { text-decoration:underline; }
+.wf-sep { stroke:var(--line); }
+
+.tip { position:absolute; pointer-events:none; background:var(--tip-bg); color:var(--tip-ink); font-size:12px; padding:7px 10px; border-radius:var(--r-sm); max-width:280px; box-shadow:var(--shadow); z-index:3; }
+.tip b { display:block; }
+
+/* editor */
+.editor { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; align-items:start; }
+@media (max-width:1000px) { .editor { grid-template-columns:minmax(0,1fr); } }
+.panel { background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); min-width:0; }
+.panel-head { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; padding:14px 16px 10px; }
+.panel-head p { margin:2px 0 0; font-size:12px; color:var(--muted); }
+.tbl-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; }
+th { font:600 12px/1.3 var(--sans); color:var(--muted); text-align:left; padding:8px 8px; border-bottom:1px solid var(--line); white-space:nowrap; }
+td { padding:5px 8px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:middle; }
+tr:last-child td { border-bottom:0; }
+td input[type=text], td input[type=number], td select { width:100%; border:1px solid transparent; background:transparent; border-radius:6px; padding:6px 7px; min-width:0; }
+td input[type=number] { width:68px; text-align:right; }
+td input:hover, td select:hover { border-color:var(--line); }
+td input:focus, td select:focus { border-color:var(--accent); background:var(--card); outline:none; }
+td .sw { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; vertical-align:middle; }
+.x { border:0; background:none; color:var(--faint); cursor:pointer; padding:4px 6px; border-radius:6px; font-size:16px; line-height:1; }
+.x:hover { color:var(--bad); background:var(--bad-bg); }
+.x.armed { color:var(--on-accent); background:var(--bad); font-size:11px; font-weight:700; }
+.flag { font-size:10.5px; font-weight:700; color:var(--warn-ink); background:var(--warn); border-radius:999px; padding:2px 7px; white-space:nowrap; }
+.chip { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; background:var(--accent-soft); color:var(--accent-ink); padding:4px 6px 4px 10px; border-radius:999px; }
+.chip button { border:0; background:none; cursor:pointer; color:inherit; font-size:14px; line-height:1; padding:0 4px; }
+.panel-foot { padding:10px 16px 14px; display:flex; flex-wrap:wrap; gap:8px; border-top:1px solid var(--line); }
+.example-note { font-size:12px; color:var(--warn-ink); background:var(--warn); border-radius:var(--r-sm); padding:8px 12px; display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; justify-content:space-between; }
+
+dialog { border:1px solid var(--line); border-radius:var(--r); background:var(--card); color:var(--ink); padding:0; width:min(680px, calc(100vw - 32px)); box-shadow:var(--shadow); }
+dialog::backdrop { background:rgba(11,20,27,.45); }
+dialog .d-body { padding:18px; display:flex; flex-direction:column; gap:12px; }
+dialog textarea { width:100%; height:300px; font:12px/1.45 ui-monospace, "SF Mono", Menlo, Consolas, monospace; border:1px solid var(--line-strong); border-radius:var(--r-sm); padding:10px; background:var(--bg); color:var(--ink); resize:vertical; }
+dialog .row { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+.d-msg { font-size:12px; color:var(--muted); min-height:18px; }
+
+/* responsibility board */
+.board { display:flex; flex-direction:column; }
+.b-lane { padding:10px 16px 6px; background:var(--lane-head); border-top:1px solid var(--line); display:flex; gap:10px; align-items:baseline; }
+.b-lane:first-child { border-top:0; }
+.b-lane b { font:600 14px var(--display); }
+.b-lane span { font-size:12px; color:var(--muted); }
+.brow { display:grid; grid-template-columns:250px minmax(0,1fr); border-top:1px solid var(--line); background:var(--lane-a); }
+.brow.sel { background:var(--accent-soft-2, var(--lane-b)); }
+.bhead { padding:14px 16px; display:flex; flex-direction:column; gap:6px; border-right:1px solid var(--line); cursor:pointer; min-width:0; }
+.bhead .nm { font:600 16px/1.2 var(--display); display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.bhead .dot { width:10px; height:10px; border-radius:50%; flex:none; }
+.bhead .rl { font-size:12px; color:var(--muted); }
+.bhead .ct { font-size:13px; font-weight:700; }
+.bhead .ct small { font-weight:600; color:var(--good); margin-left:6px; font-size:12px; }
+.bhead .ct small.up { color:var(--warn-ink); }
+.bhead .gap { font-size:12px; color:var(--warn-ink); font-weight:600; }
+.badge { font-size:11px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); border-radius:999px; padding:3px 9px; width:fit-content; }
+.bnote { font-size:12px; color:var(--muted); line-height:1.4; }
+.bbody { padding:12px 14px; display:flex; flex-wrap:wrap; gap:10px; align-content:flex-start; min-width:0; }
+.bucket { border:1px solid var(--line); border-radius:var(--r-sm); background:var(--card); padding:8px; display:flex; flex-direction:column; gap:6px; flex:1 1 230px; max-width:330px; min-width:0; }
+.bucket h4 { margin:0 0 2px; font:600 11px/1.2 var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; gap:8px; }
+.duty { border:1px solid var(--line); border-radius:6px; padding:6px 8px; background:var(--bg); font-size:12.5px; line-height:1.35; cursor:pointer; display:flex; flex-direction:column; gap:3px; position:relative; }
+.duty:hover { border-color:var(--accent); }
+.duty .m { font-size:11px; color:var(--muted); display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.duty .m b { color:var(--ink); }
+.duty.move { border-color:var(--accent); border-style:dashed; }
+.duty.prop { border-color:var(--warn-ink); border-style:dashed; background:var(--warn); }
+.duty.in { background:var(--good-bg); border-color:transparent; }
+.duty.in.prop { background:var(--warn); border-color:var(--warn-ink); }
+.ch { font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:1px 6px; border-radius:999px; }
+.ch.mv { color:var(--accent-ink); background:var(--accent-soft); }
+.ch.pp { color:var(--warn-ink); background:var(--card); border:1px solid var(--warn-ink); }
+.b-empty { color:var(--faint); font-style:italic; font-size:12px; padding:4px 2px; }
+.lg-card { display:inline-block; width:18px; height:12px; border-radius:3px; border:1px solid var(--line-strong); background:var(--bg); }
+.lg-card.lg-move { border:1px dashed var(--accent); }
+.lg-card.lg-prop { border:1px dashed var(--warn-ink); background:var(--warn); }
+.lg-card.lg-in { border-color:transparent; background:var(--good-bg); }
+@media (max-width:720px) { .brow { grid-template-columns:minmax(0,1fr); } .bhead { border-right:0; border-bottom:1px solid var(--line); } .bucket { max-width:none; } }
+td select.st { min-width:104px; }
+
+@media (prefers-reduced-motion: reduce) { .edge, .head { transition:none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Green Valley Dental · ADMI</div>
+      <h1>Who owns what, and where the work goes</h1>
+      <p class="lede">Every operations-management duty, who holds it today, and where it should go. Press Play to watch each duty move to its new owner. The driver tree and swimlanes show the same moves as waterfalls and flows.</p>
+    </div>
+    <span class="status" id="status" data-s="local"><i></i><span id="statusText">Loading…</span></span>
+  </header>
+
+  <section class="summary" aria-label="Hours summary">
+    <div><span class="eyebrow">On the bottlenecks today</span><b id="sumNow">–</b><small id="sumNowNote"></small></div>
+    <div><span class="eyebrow">After hand-off</span><b id="sumAfter">–</b><small id="sumAfterNote"></small></div>
+    <div><span class="eyebrow">Off the bottlenecks</span><b class="down" id="sumMoved">–</b><small id="sumMovedNote"></small></div>
+    <div><span class="eyebrow">People taking on work</span><b id="sumPeople">–</b><small id="sumPeopleNote">local people, not counting the bottlenecks</small></div>
+  </section>
+
+  <div class="example-note" id="exampleNote" hidden>
+    <span id="exampleText"></span>
+    <button class="btn small" id="clearExamples" type="button">Clear example tasks</button>
+  </div>
+
+  <section class="stage" aria-label="Ownership chart">
+    <div class="stage-bar">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="seg" role="group" aria-label="Chart">
+          <button type="button" id="vBoard" aria-pressed="true">Board</button>
+          <button type="button" id="vTree" aria-pressed="false">Driver tree</button>
+          <button type="button" id="vLanes" aria-pressed="false">Swimlanes</button>
+        </div>
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" id="mToday" aria-pressed="false">Today</button>
+          <button type="button" id="mAfter" aria-pressed="true">After hand-off</button>
+        </div>
+        <div class="seg" role="group" aria-label="Count by">
+          <button type="button" id="uDuties" aria-pressed="true">Duties</button>
+          <button type="button" id="uHours" aria-pressed="false">Hours</button>
+        </div>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button type="button" class="btn primary" id="play">▶ Guided tour</button>
+        <button type="button" class="btn" id="full">Full screen</button>
+      </div>
+    </div>
+    <div class="tour" id="tour" hidden>
+      <div class="tour-top">
+        <span class="eyebrow" id="tourStep">Guided tour</span>
+        <div class="tour-bar"><i id="tourFill"></i></div>
+      </div>
+      <p class="tour-text" id="tourText" aria-live="polite"></p>
+      <div class="tour-ctl">
+        <button type="button" class="btn small" id="tBack" aria-label="Previous step">⏮ Back</button>
+        <button type="button" class="btn small primary" id="tPause">❚❚ Pause</button>
+        <button type="button" class="btn small" id="tNext" aria-label="Next step">Next ⏭</button>
+        <div class="seg" role="group" aria-label="Speed">
+          <button type="button" data-speed="0.75" aria-pressed="false">0.75×</button>
+          <button type="button" data-speed="1" aria-pressed="true">1×</button>
+          <button type="button" data-speed="1.25" aria-pressed="false">1.25×</button>
+          <button type="button" data-speed="1.5" aria-pressed="false">1.5×</button>
+        </div>
+        <button type="button" class="btn small" id="tVoice" aria-pressed="true">Voice on</button>
+        <button type="button" class="btn small" id="tEnd">End tour</button>
+      </div>
+    </div>
+    <div class="key" id="key" aria-label="Colour key"></div>
+    <div class="board" id="board" hidden></div>
+    <div class="scroller" id="scroller">
+      <svg id="chart" role="img" aria-label="Swimlane chart of hand-offs"></svg>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="editor">
+    <div class="panel">
+      <div class="panel-head">
+        <div><h2>Duties</h2><p>One row per duty: who owns it today, whether it stays, moves or is proposed to move, and the hours a week if you know them.</p></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <span class="chip" id="filterChip" hidden><span id="filterName"></span><button type="button" id="clearFilter" aria-label="Show everyone">×</button></span>
+          <button type="button" class="btn small primary" id="addTask">+ Add duty</button>
+        </div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Owner today</th><th>Status</th><th>New owner</th><th>Bucket</th><th style="width:34%">Activity</th><th style="text-align:right">Hrs/wk</th><th></th><th></th></tr></thead>
+        <tbody id="taskRows"></tbody>
+      </table><datalist id="bucketList"></datalist><table hidden>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div><h2>People</h2><p>Stated hours are the total a person works each week. The board shows how much of it is listed as duties.</p></div>
+        <button type="button" class="btn small" id="addPerson">+ Add person</button>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Name</th><th>Role</th><th>Lane</th><th>Column</th><th style="text-align:right" title="Total hours a week this person works, if known">Stated hrs/wk</th><th title="Bottleneck">Bottleneck</th><th></th></tr></thead>
+        <tbody id="peopleRows"></tbody>
+      </table></div>
+      <div class="panel-head" style="padding-top:18px"><div><h2>Lanes</h2><p>Each lane is one group of employees.</p></div>
+        <button type="button" class="btn small" id="addLane">+ Add lane</button></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Lane</th><th>Note</th><th></th></tr></thead>
+        <tbody id="laneRows"></tbody>
+      </table></div>
+      <div class="panel-foot">
+        <button type="button" class="btn small" id="openData">Copy or paste the data</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<dialog id="dataDlg">
+  <div class="d-body">
+    <h2>Map data</h2>
+    <p class="muted" style="margin:0;font-size:13px">Copy this to keep a backup or move it to another copy of the map. Paste data here and press Apply to load it.</p>
+    <textarea id="dataText" spellcheck="false" aria-label="Map data as JSON"></textarea>
+    <div class="d-msg" id="dataMsg"></div>
+    <div class="row">
+      <button type="button" class="btn danger" id="resetEx">Reset to starting map</button>
+      <button type="button" class="btn" id="copyData">Copy</button>
+      <button type="button" class="btn" id="applyData">Apply</button>
+      <button type="button" class="btn primary" id="closeData">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ───────── Example model: the structure from the brief; tasks and hours are examples ───────── */
+  const EXAMPLE = {
+    version: 3,
+    examples: false,
+    lanes: [
+      { id: "owner",   name: "Ownership", note: "Owner dentist" },
+      { id: "leaders", name: "ADMI senior leadership", note: "Leadership team" },
+      { id: "front",   name: "Front office", note: "Office manager" },
+      { id: "champ",   name: "Champions", note: "One owner per area" },
+      { id: "trim",    name: "Trimmed", note: "Duplicate work to stop" },
+      { id: "central", name: "Central team", note: "Layer 4 · outside this discussion" }
+    ],
+    people: [
+      { short: "BJ", color: "violet", id: "bajwa", name: "Dr. Bajwa", role: "Owner dentist", lane: "owner", tier: 0, bottleneck: true, hoursTotal: 70 },
+      { short: "BW", color: "blue", id: "me", name: "Bhawan", role: "RCM, finance, HR", lane: "leaders", tier: 1, bottleneck: true, badge: "Dr. Bajwa's single point of contact for strategy" },
+      { short: "BV", color: "gold", id: "bhavi", name: "Dr. Bhavi", role: "Hiring", lane: "leaders", tier: 1, note: "Owns hiring from start to finish." },
+      { short: "HP", color: "green", id: "harpyar", name: "Harpyar", role: "Temps, supplies, lab, vendors", lane: "leaders", tier: 1 },
+      { short: "VP", color: "teal", id: "vipul", name: "Vipul", role: "IT", lane: "leaders", tier: 1, note: "Owns IT." },
+      { short: "VJ", color: "pink", id: "virajitha", name: "Dr. Virajitha", role: "Operations", lane: "leaders", tier: 1 },
+      { short: "JN", color: "coral", id: "jen", name: "Jennifer", role: "Office manager", lane: "front", tier: 2, bottleneck: true, hoursTotal: 40, note: "Goal: about 30 of her 40 h/wk on patients, the schedule and people; at most 4–5 h on back-office work; no HR requests. Her hours are estimates." },
+      { short: "NI", color: "slate", id: "nina", name: "Nina", role: "Champion · equipment and dental chair maintenance", lane: "champ", tier: 2, note: "First contact for every maintenance request; escalates to Harpyar." },
+      { short: "CA", color: "slate", id: "casey", name: "Casey", role: "Champion · area to be decided", lane: "champ", tier: 2 },
+      { short: "SA", color: "slate", id: "samantha", name: "Samantha", role: "Champion · medical audit", lane: "champ", tier: 2, note: "Works with each doctor on pending notes and walk-out issues." },
+      { short: "KE", color: "slate", id: "kelly", name: "Kelly", role: "Champion · HR liaison and supplies", lane: "champ", tier: 2, note: "Links employees with the central HR team." },
+      { short: "MA", color: "slate", id: "marissa", name: "Marissa", role: "Champion · IT", lane: "champ", tier: 2, note: "Covers central IT requests on Mondays and Tuesdays." },
+      { short: "JB", color: "slate", id: "jburns", name: "Jennifer Burns", role: "Champion · insurance verification", lane: "champ", tier: 2 },
+      { short: "✕", color: "red", id: "retire", name: "Stop doing", role: "Work done twice today", lane: "trim", tier: 2 },
+      { short: "CT", color: "ink", id: "central", name: "Central team", role: "Layer 4 · central support", lane: "central", tier: 2 }
+    ],
+    /* Agreed routes: who may hand work to whom. "lane:x" means anyone in lane x. */
+    routes: {
+      bajwa:   ["jen", "me", "lane:front", "lane:leaders", "lane:champ", "lane:central", "retire"],
+      me:      ["lane:leaders", "lane:central", "lane:front", "lane:champ", "retire"],
+      jen:     ["lane:front", "lane:champ", "lane:central"],
+      bhavi:   ["jen", "lane:central"],
+      harpyar: ["lane:champ", "lane:central", "vipul"],
+      vipul:   ["lane:champ"]
+    },
+    tasks: [
+      /* Dr. Bajwa */
+      { id: "c1", from: "bajwa", to: "bajwa", bucket: "Clinical", activity: "Clinical work", hours: 35 },
+      { id: "c2", from: "bajwa", to: "bajwa", bucket: "Clinical", activity: "In-line exams" },
+      { id: "l1", from: "bajwa", to: "bajwa", bucket: "Leadership & people", activity: "One-on-ones with 2–3 staff each month, so everyone meets him every 4–5 months" },
+      { id: "l6", from: "bajwa", to: "bajwa", bucket: "Leadership & people", activity: "Monthly associate dentist meeting" },
+      { id: "l2", from: "bajwa", to: "bajwa", bucket: "Leadership & people", activity: "Monthly staff meeting: hygienists, front desk and assistants" },
+      { id: "l4", from: "bajwa", to: "bajwa", bucket: "Leadership & people", activity: "Mentorship and leadership, including keeping morale high" },
+      { id: "e21", from: "bajwa", to: "bajwa", bucket: "Leadership & people", activity: "Reviewing staff memos and directory updates" },
+      { id: "c3", from: "bajwa", to: "bajwa", bucket: "Hiring", activity: "Interviewing dentist candidates, and hygienists when needed" },
+      { id: "l5", from: "bajwa", to: "bajwa", bucket: "Strategy", activity: "Weekly strategic planning with Bhawan", hours: 2 },
+      { id: "d3", from: "bajwa", to: "bajwa", bucket: "Office & facilities", activity: "On-site office supervision, including letting in maintenance crews after hours (2 h/wk at most)", hours: 2 },
+      { id: "g2", from: "bajwa", to: "me", bucket: "Strategy", poc: true, activity: "Landlord engagement" },
+      { id: "g3", from: "bajwa", to: "me", bucket: "Strategy", poc: true, activity: "Procurement, including negotiations" },
+      { id: "g4", from: "bajwa", to: "me", bucket: "Strategy", poc: true, activity: "Growth planning: new roles and expansion" },
+      { id: "d2", from: "bajwa", to: "me", bucket: "Finance", activity: "CPA relationship and annual tax filing", hours: 0.5, proposed: true },
+      { id: "d1", from: "bajwa", to: "harpyar", bucket: "HR", activity: "Morning roster check: call-offs and cover for the day", hours: 10, proposed: true },
+      { id: "d4", from: "bajwa", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Approving which temps come in", proposed: true, with: "Temp app" },
+      { id: "d7", from: "bajwa", to: "nina", bucket: "Office & facilities", activity: "Maintenance requests: first contact for every issue", with: "Nina escalates to Harpyar" },
+      { id: "e29", from: "bajwa", to: "nina", bucket: "Office & facilities", activity: "Landlord repair requests", with: "Nina escalates to Harpyar" },
+      { id: "d5", from: "bajwa", to: "kelly", bucket: "Office & facilities", activity: "Small office chores, such as watering the plants" },
+      { id: "e20", from: "bajwa", to: "central", bucket: "HR", activity: "Unemployment claims, EDD audit forms and employment verifications", with: "Dr. Bajwa signs" },
+      { id: "e31", from: "bajwa", to: "retire", bucket: "HR", activity: "Biweekly payroll review meeting (replace with an email summary)", hours: 0.75, proposed: true },
+
+      /* Bhawan */
+      { id: "r1", from: "me", to: "me", bucket: "RCM", activity: "RCM supervision: verification, payment posting, refund checks, insurance and patient AR", with: "Central team does the work" },
+      { id: "e7", from: "me", to: "central", bucket: "RCM", activity: "Preparing refund checks for overpayments", proposed: true, with: "Requests from Jennifer and the RCM team" },
+      { id: "e12", from: "me", to: "central", bucket: "RCM", activity: "Payer re-credentialing and directory verifications, end to end", proposed: true, with: "Dr. Bajwa signs" },
+      { id: "e13", from: "me", to: "central", bucket: "RCM", activity: "Payer portal and e-payment enrollment (Availity, Ameritas)", proposed: true, with: "Dr. Bajwa signs" },
+      { id: "f1", from: "me", to: "me", bucket: "Finance", activity: "Monthly close and reporting: categorizing transactions, P&L, quarterly business report against prior years" },
+      { id: "f4", from: "me", to: "me", bucket: "Finance", activity: "Monthly budget review" },
+      { id: "f9", from: "me", to: "me", bucket: "Finance", activity: "Signing checks: insurance companies, landlords, refunds and bills paid by check" },
+      { id: "e5", from: "me", to: "me", bucket: "Finance", activity: "Bank admin: authorized users, payees, checkbooks" },
+      { id: "f7", from: "me", to: "central", bucket: "Finance", activity: "Daily production and collection summary (Bhawan supervises)" },
+      { id: "f8", from: "me", to: "central", bucket: "Finance", activity: "Paying bills from the shared bills inbox (checks come to Bhawan to sign)" },
+      { id: "e1", from: "me", to: "harpyar", bucket: "Finance", activity: "Monthly expense validation: supplies, lab, merchant fees, refunds, repairs, utilities" },
+      { id: "e10", from: "me", to: "central", bucket: "Compliance", activity: "Annual tax and benefit filings: state tax, Form 5500, 401(k)", proposed: true, with: "Dr. Bajwa signs" },
+      { id: "h1", from: "me", to: "me", bucket: "HR", activity: "Onboarding, terminations and state paperwork" },
+      { id: "e30", from: "me", to: "me", bucket: "HR", activity: "Pre-payroll audit, every two weeks", hours: 0.75 },
+      { id: "h2", from: "me", to: "central", bucket: "HR", activity: "Running payroll" },
+      { id: "h3", from: "me", to: "me", bucket: "HR", activity: "Benefits: 401(k), workers' comp, annual health-insurance renewal", with: "Dr. Bajwa" },
+      { id: "h7", from: "me", to: "me", bucket: "HR", activity: "Performance reviews and staff goals" },
+      { id: "h4", from: "me", to: "kelly", bucket: "HR", activity: "Employee tickets: time tracking, benefits, pay" },
+      { id: "h9", from: "me", to: "kelly", bucket: "HR", activity: "Attendance issues and W-9 / I-9 paperwork" },
+      { id: "h8", from: "me", to: "retire", bucket: "HR", activity: "Second approval of the monthly employee roster (Jennifer approves it)" },
+      { id: "s1", from: "me", to: "me", bucket: "Leadership & people", activity: "Operations oversight" },
+      { id: "s3", from: "me", to: "me", bucket: "Leadership & people", activity: "Weekly calls with Jennifer, the RCM team and the HR team" },
+      { id: "s4", from: "me", to: "virajitha", bucket: "Leadership & people", activity: "Leading the champions: regular check-ins with each one", proposed: true },
+      { id: "e15", from: "me", to: "central", bucket: "Leadership & people", activity: "Sending monthly call reports to Jennifer and Dr. Bajwa", proposed: true, with: "Central team already builds them" },
+      { id: "e14", from: "me", to: "me", bucket: "Strategy", activity: "Directing fee-schedule negotiations and PPO terminations", with: "Central team" },
+      { id: "k1", from: "me", to: "me", bucket: "Marketing", activity: "Marketing performance review" },
+      { id: "e17", from: "me", to: "bhavi", bucket: "Hiring", activity: "Watching job ads and screening new applicants" },
+      { id: "a1", from: "me", to: "harpyar", bucket: "Office & facilities", activity: "Equipment repairs, parts and vendors for requests Nina escalates", with: "Patterson, Diego, Bomac" },
+      { id: "m1", from: "me", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Zelle payments to temp employees" },
+      { id: "m2", from: "me", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Booking temps for call-offs and roster gaps" },
+      { id: "m3", from: "me", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Supply costs and weekly and monthly supply orders" },
+      { id: "m4", from: "me", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Lab bills, relationships and payments" },
+      { id: "m5", from: "me", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Keeping supplies and lab within budget" },
+      { id: "e11", from: "me", to: "harpyar", bucket: "Supplies, temps & lab", activity: "ACH payments to the lab that only takes ACH", proposed: true },
+      { id: "i1", from: "me", to: "vipul", bucket: "IT", activity: "Day-to-day IT tickets" },
+      { id: "i2", from: "me", to: "vipul", bucket: "IT", activity: "Periodic infrastructure review", with: "Central IT lead" },
+      { id: "i3", from: "me", to: "vipul", bucket: "IT", activity: "Deploying new corporate applications" },
+      { id: "i4", from: "me", to: "vipul", bucket: "IT", activity: "Staff adoption and training on new apps, from January" },
+
+      /* Harpyar and Vipul */
+      { id: "e3", from: "harpyar", to: "harpyar", bucket: "Finance", activity: "Card-processor statements, fees and surcharge pricing" },
+      { id: "e4", from: "harpyar", to: "harpyar", bucket: "Finance", activity: "Vendor autopays (labs, HealthFirst)" },
+      { id: "e6", from: "harpyar", to: "harpyar", bucket: "Office & facilities", activity: "Monitoring and disputing utility bills" },
+      { id: "e26", from: "harpyar", to: "harpyar", bucket: "Supplies, temps & lab", activity: "Weekly supply-list review and savings tracking" },
+      { id: "e25", from: "harpyar", to: "nina", bucket: "Office & facilities", activity: "First look at new equipment service requests", with: "Nina escalates to Harpyar" },
+      { id: "x1", from: "harpyar", to: "kelly", bucket: "Supplies, temps & lab", activity: "Supply stock checks and order requests" },
+      { id: "e28", from: "harpyar", to: "vipul", bucket: "IT", activity: "Phone and network vendor issues", proposed: true, with: "Voipia" },
+      { id: "x2", from: "vipul", to: "marissa", bucket: "IT", activity: "Central IT requests, Mondays and Tuesdays" },
+
+      /* Jennifer: hours are estimates of a typical 40-hour week */
+      { id: "j1", from: "jen", to: "jen", bucket: "Patients & schedule", activity: "Treatment planning and coordination", hours: 10, est: true },
+      { id: "j2", from: "jen", to: "jen", bucket: "Patients & schedule", activity: "Maintaining the patient schedule and keeping the calendar healthy", hours: 6, est: true },
+      { id: "j3", from: "jen", to: "jen", bucket: "Patients & schedule", activity: "Meeting daily office goals", hours: 2, est: true },
+      { id: "j4", from: "jen", to: "jen", bucket: "Leadership & people", activity: "Daily huddle", hours: 2.5, est: true },
+      { id: "j5", from: "jen", to: "jen", bucket: "Leadership & people", activity: "Leadership and staff engagement", hours: 4, est: true },
+      { id: "j7", from: "jen", to: "jen", bucket: "Leadership & people", activity: "One-on-one meetings with staff and doctors on issues", hours: 3, est: true },
+      { id: "j13", from: "jen", to: "jen", bucket: "Leadership & people", activity: "Approving the monthly employee roster (the central team builds it)", hours: 0.5, est: true },
+      { id: "b3", from: "jen", to: "jen", bucket: "Hiring", activity: "In-person interviews with every candidate, and picking one (hiring step 3)", hours: 2, est: true },
+      { id: "j11", from: "jen", to: "jen", bucket: "RCM", activity: "Answering the central team on RCM issues: patient AR and insurance AR only", hours: 3, est: true },
+      { id: "j9", from: "jen", to: "jburns", bucket: "RCM", activity: "Answering insurance verification questions", hours: 2, est: true },
+      { id: "r6", from: "jen", to: "samantha", bucket: "RCM", activity: "Med audit: clearing pending notes with each doctor and resolving walk-out issues", hours: 2, est: true },
+      { id: "j12", from: "jen", to: "kelly", bucket: "HR", activity: "Employee HR requests", hours: 2, est: true },
+      { id: "e27", from: "jen", to: "kelly", bucket: "Supplies, temps & lab", activity: "Compiling the weekly supply list", hours: 1, est: true },
+
+      /* Dr. Bhavi: hiring, start to finish (step 3 is Jennifer's interviews) */
+      { id: "b1", from: "bhavi", to: "bhavi", bucket: "Hiring", activity: "Step 1: Posting the job ad" },
+      { id: "b2", from: "bhavi", to: "bhavi", bucket: "Hiring", activity: "Step 2: First interviews" },
+      { id: "b4", from: "bhavi", to: "bhavi", bucket: "Hiring", activity: "Step 4: Extending the offer" },
+      { id: "b5", from: "bhavi", to: "bhavi", bucket: "Hiring", activity: "Step 5: Onboarding the new hire" },
+      { id: "b6", from: "bhavi", to: "central", bucket: "Hiring", activity: "Step 6: Final onboarding paperwork", with: "Central HR" }
+    ]
+  };
+
+  const COLORS = ["violet", "blue", "coral", "green", "gold", "teal", "pink", "slate", "ink", "red"];
+  const TIERS = ["Layer 1 · owner", "Layer 2 · leadership", "Layer 3 · task owner"];
+  const DOC_PATH = "maps/green-valley";
+  const LS_KEY = "gv-ownership-map-v4";
+  const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let model = clone(EXAMPLE);
+  let mode = "after";          // "today" | "after" | "play"
+  let progT = {};              // task id -> 0..1 (how far that hand-off has flowed)
+  let view = "board";          // "board" | "tree" | "lanes"
+  try { const v = localStorage.getItem(LS_KEY + ":view2"); if (v === "lanes" || v === "tree" || v === "board") view = v; } catch (_) {}
+  let filterId = null;         // person selected in the chart
+  let db = null, docRef = null, canWrite = true, dirty = false, saveTimer = null, saving = false;
+
+  const $ = (id) => document.getElementById(id);
+  const svg = $("chart");
+  const NS = "http://www.w3.org/2000/svg";
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+  function num(v) { const n = parseFloat(v); return isFinite(n) && n > 0 ? Math.round(n * 4) / 4 : 0; }
+  function fmtH(h) { return (Math.round(h * 100) / 100).toString(); }
+  function uid(p) { return p + Math.random().toString(36).slice(2, 8); }
+  function person(id) { return model.people.find((p) => p.id === id); }
+  function lane(id) { return model.lanes.find((l) => l.id === id); }
+  function colorOf(p) { return "var(--c-" + (p && p.color && COLORS.includes(p.color) ? p.color : "slate") + ")"; }
+  function shortOf(p) { if (!p) return "?"; if (p.short) return p.short; const w = String(p.name || "").replace(/^Dr\.?\s+/i, "").split(/\s+/); return ((w[0] || "?")[0] + ((w[1] || w[0] || "?")[w[1] ? 0 : 1] || "")).toUpperCase(); }
+  function chipSVG(p, x, cy) { return '<g class="chip"><rect x="' + x + '" y="' + (cy - 7.5) + '" width="24" height="15" rx="7.5" fill="' + colorOf(p) + '"/><text class="chip-t" x="' + (x + 12) + '" y="' + (cy + 3.2) + '" text-anchor="middle">' + esc(shortOf(p)) + "</text></g>"; }
+  function chipHTML(p) { return '<span class="pc" style="background:' + colorOf(p) + '" title="' + esc(p ? p.name : "") + '">' + esc(shortOf(p)) + "</span>"; }
+  function trunc(s, n) { s = String(s || ""); return s.length > n ? s.slice(0, n - 1) + "…" : s; }
+
+  function normalize(m) {
+    const out = Object.assign({ version: 2, examples: false, lanes: [], people: [], tasks: [], routes: {} }, m || {});
+    out.lanes = (out.lanes || []).filter((l) => l && l.id);
+    if (!out.lanes.length) out.lanes = [{ id: "lane1", name: "Lane 1", note: "" }];
+    out.people = (out.people || []).filter((p) => p && p.id).map((p) => Object.assign({ name: "New person", role: "", lane: out.lanes[0].id, tier: 2, bottleneck: false }, p));
+    out.people.forEach((p) => { if (!out.lanes.some((l) => l.id === p.lane)) p.lane = out.lanes[0].id; p.tier = Math.max(0, Math.min(2, parseInt(p.tier, 10) || 0)); });
+    const ids = new Set(out.people.map((p) => p.id));
+    out.tasks = (out.tasks || []).filter((t) => t && t.id && ids.has(t.from) && ids.has(t.to));
+    out.tasks.forEach((t) => { if (t.from === t.to) t.proposed = false; });
+    out.routes = out.routes || {};
+    return out;
+  }
+
+  function onRoute(t) {
+    if (t.from === t.to) return true;
+    const r = model.routes && model.routes[t.from];
+    if (!r || !r.length) return true;
+    const to = person(t.to);
+    return r.some((x) => x === t.to || (to && x === "lane:" + to.lane));
+  }
+
+  /* ───────── Load: counted in duties, or in hours once hours are entered ───────── */
+  let unit = "duties";
+  try { if (localStorage.getItem(LS_KEY + ":unit") === "hours") unit = "hours"; } catch (_) {}
+  let HO = [];                                     // hand-offs: duties that change owner
+  let FLOWS = [];                                  // hand-offs grouped by giver → taker
+  function refreshHO() {
+    HO = model.tasks.filter((t) => t.from !== t.to);
+    const m = new Map();
+    HO.forEach((t) => { const k = t.from + ">" + t.to; let f = m.get(k); if (!f) m.set(k, (f = { id: "f-" + t.from + "-" + t.to, from: t.from, to: t.to, tasks: [] })); f.tasks.push(t); });
+    FLOWS = [...m.values()];
+    FLOWS.forEach((f) => { f.proposed = f.tasks.every((t) => t.proposed); f.activity = [...new Set(f.tasks.map((t) => (t.bucket || "Other").replace(/ · .*$/, "").replace(/ \(.*\)$/, "")))].join(", "); });
+  }
+  function flowById(id) { return FLOWS.find((f) => f.id === id); }
+  function progOf(x) { if (!x.tasks) return progT[x.id] ?? 1; let a = 0; x.tasks.forEach((t) => (a += progT[t.id] ?? 1)); return a / x.tasks.length; }
+  function listOf(f) { return f.tasks.map((t) => "• " + (t.activity || "Activity to name") + (t.proposed ? " (proposed)" : "")).join("\n"); }
+  function wt(t) { return t.tasks ? t.tasks.reduce((a, x) => a + wt(x), 0) : unit === "hours" ? num(t.hours) : 1; }
+  function U(n) { return unit === "hours" ? fmtH(n) + " h/wk" : fmtH(n) + (Math.round(n * 10) === 10 ? " duty" : " duties"); }
+  function unitWord() { return unit === "hours" ? "h/wk" : "duties"; }
+  function hrsTxt(t) { const h = t.tasks ? t.tasks.reduce((a, x) => a + num(x.hours), 0) : num(t.hours); return h ? " · " + fmtH(h) + " h/wk" : ""; }
+  function startOf(p) {
+    let s = 0;
+    model.tasks.forEach((t) => { if (t.from === p.id) s += wt(t); });
+    if (unit === "hours") s = Math.max(s, num(p.hoursTotal));
+    return s;
+  }
+  function flows() {
+    const out = {}, inn = {};
+    model.people.forEach((p) => { out[p.id] = 0; inn[p.id] = 0; });
+    HO.forEach((t) => { out[t.from] += wt(t); inn[t.to] += wt(t); });
+    return { out, inn };
+  }
+  function hoursAt(p) {   // load given the current animation progress
+    let h = startOf(p);
+    HO.forEach((t) => {
+      if (t.from === p.id) h -= wt(t) * (progT[t.id] ?? 1);
+      if (t.to === p.id) h += wt(t) * (progT[t.id] ?? 1);
+    });
+    return Math.max(0, h);
+  }
+
+  /* ───────── Layout ───────── */
+  const W = 1240, LANE_X = 0, LANE_W = 132, PAD = 18;
+  const COL = [{ x: 156, w: 236 }, { x: 532, w: 236 }, { x: 896, w: 330 }];
+  const ITEM_H = 19;
+
+  function nodeHeight(p, inc) {
+    if (p.bottleneck || p.tier < 2) return 122 + (inc.length ? 10 + inc.length * ITEM_H : 0);
+    return 62 + Math.max(1, inc.length) * ITEM_H + 6;
+  }
+
+  function layout() {
+    const incoming = {};
+    model.people.forEach((p) => (incoming[p.id] = []));
+    FLOWS.forEach((t) => incoming[t.to].push(t));
+    const pos = {}, lanesOut = [];
+    let y = 34;
+    model.lanes.forEach((l, li) => {
+      const cols = [[], [], []];
+      model.people.filter((p) => p.lane === l.id).forEach((p) => cols[p.tier].push(p));
+      const stackH = cols.map((c) => c.reduce((s, p) => s + nodeHeight(p, incoming[p.id]), 0) + Math.max(0, c.length - 1) * 12);
+      const h = Math.max(96, Math.max.apply(null, stackH) + PAD * 2);
+      cols.forEach((c, ci) => {
+        let yy = y + (h - stackH[ci]) / 2;
+        c.forEach((p) => {
+          const nh = nodeHeight(p, incoming[p.id]);
+          pos[p.id] = { x: COL[ci].x, y: yy, w: COL[ci].w, h: nh, cy: yy + nh / 2 };
+          yy += nh + 12;
+        });
+      });
+      lanesOut.push({ lane: l, y, h, i: li });
+      y += h;
+    });
+    return { pos, lanes: lanesOut, height: y + 8, incoming };
+  }
+
+  /* ───────── Render chart ───────── */
+  let edgeEls = [], particles = [], laid = null;
+
+  function thick(h) { return Math.max(2, Math.min(16, h * 1.8)); }
+
+  function renderChart() {
+    model = normalize(model);
+    refreshHO();
+    $("board").hidden = view !== "board";
+    $("scroller").hidden = view === "board";
+    if (view === "board") { svg.innerHTML = ""; laid = { pos: {} }; }
+    else if (view === "tree") drawTree(); else drawSwimlanes();
+    edgeEls = Array.from(svg.querySelectorAll(".edge")).map((el) => {
+      const t = flowById(el.dataset.t);
+      return { el, head: svg.querySelector('.head[data-t="' + CSS.escape(t.id) + '"]'), t, len: el.getTotalLength() };
+    });
+    buildParticles();
+    applyProgress();
+    renderSummary();
+    renderLegend();
+  }
+
+  function drawSwimlanes() {
+    laid = layout();
+    const { pos, lanes, height, incoming } = laid;
+    const fl = flows();
+    let s = "";
+    svg.setAttribute("viewBox", "0 0 " + W + " " + height);
+
+    // column labels
+    s += '<text class="tier-label" x="' + (COL[0].x) + '" y="22">LAYER 1 · OWNER</text>';
+    s += '<text class="tier-label" x="' + (COL[1].x) + '" y="22">LAYER 2 · LEADERSHIP</text>';
+    s += '<text class="tier-label" x="' + (COL[2].x) + '" y="22">LAYER 3 · LOCAL TASK OWNERS (+ LAYER 4)</text>';
+
+    // lanes
+    lanes.forEach((L) => {
+      s += '<rect class="lane-band" x="0" y="' + L.y + '" width="' + W + '" height="' + L.h + '" fill="var(' + (L.i % 2 ? "--lane-b" : "--lane-a") + ')"/>';
+      s += '<rect x="0" y="' + L.y + '" width="' + LANE_W + '" height="' + L.h + '" fill="var(--lane-head)" stroke="var(--line)"/>';
+      const nameLines = wrapLines(L.lane.name, 15, 2);
+      nameLines.forEach((ln, k) => { s += '<text class="lane-name" x="14" y="' + (L.y + 26 + k * 17) + '">' + esc(ln) + "</text>"; });
+      wrapLines(L.lane.note || "", 18, 3).forEach((ln, k) => { s += '<text class="lane-note" x="14" y="' + (L.y + 30 + nameLines.length * 17 + k * 14) + '">' + esc(ln) + "</text>"; });
+    });
+
+    // ports (Sankey-style stacking so lines never pile on one point)
+    const sameCol = (t) => pos[t.from] && pos[t.to] && pos[t.from].x === pos[t.to].x;
+    const outPort = {}, inPort = {};
+    model.people.forEach((p) => {
+      const P = pos[p.id]; if (!P) return;
+      const outs = FLOWS.filter((t) => t.from === p.id && !sameCol(t)).sort((a, b) => pos[a.to].cy - pos[b.to].cy);
+      const tot = outs.reduce((a, t) => a + thick(wt(t)), 0) + Math.max(0, outs.length - 1) * 4;
+      let oy = P.cy - tot / 2;
+      outs.forEach((t) => { const th = thick(wt(t)); outPort[t.id] = oy + th / 2; oy += th + 4; });
+      const ins = FLOWS.filter((t) => t.to === p.id && !sameCol(t)).sort((a, b) => pos[a.from].cy - pos[b.from].cy);
+      const top = P.y + 16, bottom = P.y + P.h - 16;
+      const tot2 = ins.reduce((a, t) => a + thick(wt(t)), 0) + Math.max(0, ins.length - 1) * 3;
+      let iy = Math.max(top, Math.min(bottom - tot2, P.cy - tot2 / 2));
+      ins.forEach((t) => { const th = thick(wt(t)); inPort[t.id] = iy + th / 2; iy += th + 3; });
+    });
+
+    // edges (drawn under the boxes)
+    s += '<g id="edges">';
+    FLOWS.forEach((t) => {
+      const a = pos[t.from], b = pos[t.to]; if (!a || !b) return;
+      const src = person(t.from), th = thick(wt(t));
+      const off = !onRoute(t) || t.proposed, hs = Math.max(5, th * 0.55 + 3);
+      if (sameCol(t)) { // same column: drop straight down (or up) from box to box
+        const down = b.y > a.y, x = a.x + a.w / 2;
+        const y1 = down ? a.y + a.h : a.y, y2 = down ? b.y - 7 : b.y + b.h + 7, dy = (y2 - y1) * 0.5;
+        const d = "M" + x + "," + y1 + " C" + (x + 26) + "," + (y1 + dy) + " " + (x - 26) + "," + (y2 - dy) + " " + x + "," + y2;
+        s += '<path class="edge' + (off ? " off" : "") + '" data-t="' + esc(t.id) + '" d="' + d + '" stroke="' + colorOf(src) + '" stroke-width="' + th + '"/>';
+        const sg = down ? 1 : -1;
+        s += '<path class="head" data-t="' + esc(t.id) + '" d="M' + (x - hs) + "," + (y2 - sg) + " L" + x + "," + (y2 + 7 * sg) + " L" + (x + hs) + "," + (y2 - sg) + 'Z" fill="' + colorOf(src) + '"/>';
+        return;
+      }
+      const x1 = a.x + a.w, y1 = outPort[t.id], x2 = b.x - 7, y2 = inPort[t.id];
+      let d;
+      if (x2 > x1 + 20) { const dx = (x2 - x1) * 0.5; d = "M" + x1 + "," + y1 + " C" + (x1 + dx) + "," + y1 + " " + (x2 - dx) + "," + y2 + " " + x2 + "," + y2; }
+      else { // target is left of / level with the source: loop around
+        const bx = Math.max(x1, b.x + b.w) + 40, ty = y2;
+        d = "M" + x1 + "," + y1 + " C" + bx + "," + y1 + " " + bx + "," + (ty - 60) + " " + ((x1 + x2) / 2) + "," + (Math.min(y1, ty) - 40) + " S" + (x2 - 60) + "," + ty + " " + x2 + "," + ty;
+      }
+      s += '<path class="edge' + (off ? " off" : "") + '" data-t="' + esc(t.id) + '" d="' + d + '" stroke="' + colorOf(src) + '" stroke-width="' + th + '"/>';
+      s += '<path class="head" data-t="' + esc(t.id) + '" d="M' + (x2 - 1) + "," + (y2 - hs) + " L" + (x2 + 7) + "," + y2 + " L" + (x2 - 1) + "," + (y2 + hs) + 'Z" fill="' + colorOf(src) + '"/>';
+    });
+    s += "</g><g id=\"dots\"></g>";
+
+    // nodes
+    model.people.forEach((p) => {
+      const P = pos[p.id]; if (!P) return;
+      const inc = incoming[p.id];
+      const big = p.bottleneck || p.tier < 2;
+      s += '<g class="node' + (p.bottleneck ? " bn" : "") + (filterId === p.id ? " sel" : "") + '" data-p="' + esc(p.id) + '" tabindex="0" role="button" aria-label="' + esc(p.name) + '">';
+      s += '<rect class="box" x="' + P.x + '" y="' + P.y + '" width="' + P.w + '" height="' + P.h + '" rx="12"/>';
+      const hasOut = fl.out[p.id] > 0;
+      s += chipSVG(p, P.x + 14, P.y + 24);
+      if (big) {
+        s += '<text class="n-name" x="' + (P.x + 44) + '" y="' + (P.y + 30) + '">' + esc(trunc(p.name, 15)) + "</text>";
+        s += '<text class="n-role" x="' + (P.x + 18) + '" y="' + (P.y + 48) + '">' + esc(trunc(p.role, 32)) + "</text>";
+        if (p.bottleneck) s += '<g class="bn-pill"><rect x="' + (P.x + P.w - 86) + '" y="' + (P.y + 14) + '" width="72" height="18" rx="9"/><text x="' + (P.x + P.w - 50) + '" y="' + (P.y + 26.5) + '" text-anchor="middle">BOTTLENECK</text></g>';
+        const gw = P.w - 36;
+        s += '<rect class="track" x="' + (P.x + 18) + '" y="' + (P.y + 62) + '" width="' + gw + '" height="10" rx="5"/>';
+        s += '<rect class="fillbar" data-bar="' + esc(p.id) + '" x="' + (P.x + 18) + '" y="' + (P.y + 62) + '" width="' + gw + '" height="10" rx="5"/>';
+        s += '<text class="n-fig" data-fig="' + esc(p.id) + '" x="' + (P.x + 18) + '" y="' + (P.y + 98) + '"></text>';
+        s += '<text class="n-delta" data-delta="' + esc(p.id) + '" x="' + (P.x + P.w - 18) + '" y="' + (P.y + 98) + '" text-anchor="end"></text>';
+        s += '<text class="n-role" x="' + (P.x + 18) + '" y="' + (P.y + 113) + '">' + (unit === "hours" ? "hours a week on these duties" : "duties carried") + "</text>";
+        if (inc.length) {
+          s += '<line x1="' + (P.x + 18) + '" x2="' + (P.x + P.w - 18) + '" y1="' + (P.y + 124) + '" y2="' + (P.y + 124) + '" stroke="var(--line)"/>';
+          inc.forEach((t, k) => { s += itemRow(t, P.x + 18, P.y + 140 + k * ITEM_H, P.w - 36, 22); });
+        }
+      } else {
+        s += '<text class="n-name sm" x="' + (P.x + 44) + '" y="' + (P.y + 29) + '">' + esc(trunc(p.name, 22)) + "</text>";
+        s += '<text class="n-role" x="' + (P.x + 44) + '" y="' + (P.y + 45) + '">' + esc(trunc(p.role, 32)) + "</text>";
+        s += '<g class="gain-pill" data-gainwrap="' + esc(p.id) + '"><rect x="' + (P.x + P.w - 90) + '" y="' + (P.y + 14) + '" width="76" height="20" rx="10"/><text data-gain="' + esc(p.id) + '" x="' + (P.x + P.w - 52) + '" y="' + (P.y + 28) + '" text-anchor="middle"></text></g>';
+        if (!inc.length) s += '<text class="n-empty" x="' + (P.x + 18) + '" y="' + (P.y + 70) + '">No hand-offs yet</text>';
+        inc.forEach((t, k) => { s += itemRow(t, P.x + 18, P.y + 70 + k * ITEM_H, P.w - 36, 38); });
+      }
+      s += "</g>";
+    });
+
+    svg.innerHTML = s;
+  }
+
+  function itemRow(t, x, y, w, chars) {
+    const src = person(t.from), dst = person(t.to);
+    return '<g class="item" data-item="' + esc(t.id) + '"><title>' + esc((src ? src.name : "") + " → " + (dst ? dst.name : "") + hrsTxt(t) + "\n" + listOf(t)) + "</title>" +
+      chipSVG(src, x, y - 4) +
+      '<text class="n-item" x="' + (x + 30) + '" y="' + y + '">' + esc(trunc(t.activity, chars + 4)) + "</text>" +
+      '<text class="n-item-h" x="' + (x + w) + '" y="' + y + '" text-anchor="end">' + fmtH(wt(t)) + "</text></g>";
+  }
+
+  function wrapLines(text, n, max) {
+    const words = String(text).split(/\s+/).filter(Boolean), out = [];
+    let cur = "";
+    words.forEach((w) => { if ((cur + " " + w).trim().length > n) { if (cur) out.push(cur); cur = w; } else cur = (cur + " " + w).trim(); });
+    if (cur) out.push(cur);
+    return out.slice(0, max);
+  }
+
+  /* ───────── Driver tree: layers left to right, a waterfall on every card ───────── */
+  const TCOL = [{ x: 16, w: 326 }, { x: 452, w: 326 }, { x: 888, w: 306 }];
+  const ROW = 18, HEAD = 52;
+  let treeCards = [], treeOrder = [];
+
+  function rowKinds(p, nIn, nOut) {
+    const k = [], start = startOf(p);
+    if (start > 0 || nOut) k.push("start");
+    for (let i = 0; i < nIn; i++) k.push("in");
+    for (let i = 0; i < nOut; i++) k.push("out");
+    if (nOut || (nIn && start > 0)) k.push("end");
+    if (!k.length) k.push("empty");
+    return k;
+  }
+
+  function layoutTree() {
+    const ins = {}, outs = {};
+    model.people.forEach((p) => { ins[p.id] = []; outs[p.id] = []; });
+    FLOWS.forEach((t) => { outs[t.from].push(t); ins[t.to].push(t); });
+    const laneIdx = (id) => Math.max(0, model.lanes.findIndex((l) => l.id === id));
+    const order = (a, b) => laneIdx(a.lane) - laneIdx(b.lane) || model.people.indexOf(a) - model.people.indexOf(b);
+    const cardH = (p) => HEAD + rowKinds(p, ins[p.id].length, outs[p.id].length).length * ROW + 12;
+    const pos = {}, groups = [];
+    const active = (p) => p.bottleneck || ins[p.id].length || outs[p.id].length;   // people with no hand-offs stay on the board only
+    const byTier = [0, 1, 2].map((ti) => model.people.filter((p) => p.tier === ti && active(p)).sort(order));
+    let y = 40, lastLane = null;
+    byTier[2].forEach((p) => {   // task owners: stacked and grouped by lane
+      if (lastLane !== null && p.lane !== lastLane) y += 10;
+      const h = cardH(p);
+      pos[p.id] = { x: TCOL[2].x, w: TCOL[2].w, y, h, cy: y + h / 2 };
+      const g = groups[groups.length - 1];
+      if (g && g.lane === p.lane) g.y2 = y + h; else groups.push({ lane: p.lane, y1: y, y2: y + h });
+      lastLane = p.lane; y += h + 8;
+    });
+    [1, 0].forEach((ti) => {     // each layer centres on the people it hands work to
+      const want = byTier[ti].map((p) => {
+        const cs = outs[p.id].map((t) => pos[t.to]).filter(Boolean);
+        const c = cs.length ? cs.reduce((a, q) => a + q.cy, 0) / cs.length : 120;
+        return { p, c, h: cardH(p) };
+      }).sort((a, b) => a.c - b.c);
+      let floor = 40;
+      want.forEach((w) => { const top = Math.max(floor, w.c - w.h / 2); pos[w.p.id] = { x: TCOL[ti].x, w: TCOL[ti].w, y: top, h: w.h, cy: top + w.h / 2 }; floor = top + w.h + 14; });
+    });
+    let bottom = 0; Object.values(pos).forEach((q) => (bottom = Math.max(bottom, q.y + q.h)));
+    return { pos, groups, height: bottom + 24, ins, outs };
+  }
+
+  function wfLabel(name, act, prefix, max) {
+    const n = trunc(name, 14), room = max - prefix.length - n.length - 3, a = act && room >= 5 ? trunc(act, room) : "";
+    return (prefix ? esc(prefix) : "") + '<tspan class="wf-n">' + esc(n) + "</tspan>" + (a ? '<tspan class="wf-a"> · ' + esc(a) + "</tspan>" : "");
+  }
+
+  function drawTree() {
+    const L = layoutTree(); laid = L;
+    const { pos, groups, height, ins, outs } = L;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + height);
+    const rowCy = (P, i) => P.y + HEAD + i * ROW + ROW / 2;
+    const outRow = {}, inRow = {};
+    const cards = model.people.filter((p) => pos[p.id]).map((p) => {
+      const P = pos[p.id];
+      const ii = ins[p.id].slice().sort((a, b) => pos[a.from].cy - pos[b.from].cy);
+      const oo = outs[p.id].slice().sort((a, b) => pos[a.to].x - pos[b.to].x || pos[a.to].cy - pos[b.to].cy);
+      let ci = 0, co = 0;
+      const rows = rowKinds(p, ii.length, oo.length).map((kind, i) => {
+        const r = { kind, i, cy: rowCy(P, i) };
+        if (kind === "in") { r.t = ii[ci++]; inRow[r.t.id] = r.cy; }
+        if (kind === "out") { r.t = oo[co++]; outRow[r.t.id] = r.cy; }
+        return r;
+      });
+      return { p, P, rows };
+    });
+    // the order Play walks through: layer by layer, top to bottom, waterfall order
+    treeOrder = [];
+    cards.filter((c) => c.rows.some((r) => r.kind === "out")).sort((a, b) => a.p.tier - b.p.tier || a.P.cy - b.P.cy)
+      .forEach((c) => c.rows.forEach((r) => { if (r.kind === "out") treeOrder.push(r.t); }));
+
+    let s = "";
+    s += '<text class="tier-label" x="' + TCOL[0].x + '" y="24">LAYER 1 · OWNER</text>';
+    s += '<text class="tier-label" x="' + TCOL[1].x + '" y="24">LAYER 2 · LEADERSHIP</text>';
+    s += '<text class="tier-label" x="' + TCOL[2].x + '" y="24">LAYER 3 · LOCAL TASK OWNERS (+ LAYER 4)</text>';
+    groups.forEach((g) => {
+      const l = lane(g.lane), x = 1208, cy = (g.y1 + g.y2) / 2;
+      s += '<rect x="' + x + '" y="' + g.y1 + '" width="24" height="' + (g.y2 - g.y1) + '" rx="6" fill="var(--lane-head)" stroke="var(--line)"/>';
+      s += '<text class="lane-strip" transform="translate(' + (x + 16) + "," + cy + ') rotate(-90)" text-anchor="middle">' + esc(trunc(l ? l.name : "", Math.max(4, Math.floor((g.y2 - g.y1 - 12) / 7)))) + "</text>";
+    });
+
+    s += '<g id="edges">';
+    FLOWS.forEach((t) => {
+      const a = pos[t.from], b = pos[t.to], src = person(t.from);
+      const th = Math.min(12, thick(wt(t))), hs = Math.max(4.5, th * 0.5 + 3), col = colorOf(src);
+      const y1 = outRow[t.id], y2 = inRow[t.id], x1 = a.x + a.w;
+      let d, head;
+      if (b.x > x1) {
+        const x2 = b.x - 7, dx = (x2 - x1) * 0.55;
+        d = "M" + x1 + "," + y1 + " C" + (x1 + dx) + "," + y1 + " " + (x2 - dx) + "," + y2 + " " + x2 + "," + y2;
+        head = "M" + (x2 - 1) + "," + (y2 - hs) + " L" + (x2 + 7) + "," + y2 + " L" + (x2 - 1) + "," + (y2 + hs) + "Z";
+      } else {   // same layer (or backwards): loop out to the right and come back in
+        const x2 = b.x + b.w + 7, bx = Math.max(x1, x2) + 64;
+        d = "M" + x1 + "," + y1 + " C" + bx + "," + y1 + " " + bx + "," + y2 + " " + x2 + "," + y2;
+        head = "M" + (x2 + 1) + "," + (y2 - hs) + " L" + (x2 - 7) + "," + y2 + " L" + (x2 + 1) + "," + (y2 + hs) + "Z";
+      }
+      s += '<path class="edge' + (onRoute(t) && !t.proposed ? "" : " off") + '" data-t="' + esc(t.id) + '" d="' + d + '" stroke="' + col + '" stroke-width="' + th + '"/>';
+      s += '<path class="head" data-t="' + esc(t.id) + '" d="' + head + '" fill="' + col + '"/>';
+    });
+    s += '</g><g id="dots"></g>';
+
+    let wid = 0;
+    treeCards = [];
+    cards.forEach(({ p, P, rows }) => {
+      const big = p.bottleneck || p.tier < 2;
+      const bw = big ? 100 : 72, x0 = P.x + P.w - 46 - bw, chars = Math.floor((x0 - P.x - 26) / 6.3);
+      let run = startOf(p), mx = Math.max(run, 0.01);
+      rows.forEach((r) => { if (r.kind === "in") { run += wt(r.t); mx = Math.max(mx, run); } });
+      const k = bw / mx;
+      const C = { p, x0, k, start: startOf(p), rows: [] };
+      const ln = lane(p.lane);
+      s += '<g class="node' + (p.bottleneck ? " bn" : "") + (filterId === p.id ? " sel" : "") + '" data-p="' + esc(p.id) + '" tabindex="0" role="button" aria-label="' + esc(p.name) + '">';
+      s += '<rect class="box" x="' + P.x + '" y="' + P.y + '" width="' + P.w + '" height="' + P.h + '" rx="12"/>';
+      s += chipSVG(p, P.x + 14, P.y + 21);
+      s += '<text class="n-name' + (big ? "" : " sm") + '" x="' + (P.x + 44) + '" y="' + (P.y + 26) + '">' + esc(trunc(p.name, 18)) + "</text>";
+      s += '<text class="n-role" x="' + (P.x + 18) + '" y="' + (P.y + 43) + '">' + esc(trunc((p.role || "") + (!big && ln ? " · " + ln.name : ""), 36)) + "</text>";
+      if (p.bottleneck) s += '<g class="bn-pill"><rect x="' + (P.x + P.w - 86) + '" y="' + (P.y + 12) + '" width="72" height="18" rx="9"/><text x="' + (P.x + P.w - 50) + '" y="' + (P.y + 24.5) + '" text-anchor="middle">BOTTLENECK</text></g>';
+      if (big) s += '<text class="n-delta" data-delta="' + esc(p.id) + '" x="' + (P.x + P.w - 14) + '" y="' + (P.y + 43) + '" text-anchor="end"></text>';
+      else s += '<g class="gain-pill" data-gainwrap="' + esc(p.id) + '"><rect x="' + (P.x + P.w - 90) + '" y="' + (P.y + 11) + '" width="76" height="20" rx="10"/><text data-gain="' + esc(p.id) + '" x="' + (P.x + P.w - 52) + '" y="' + (P.y + 25) + '" text-anchor="middle"></text></g>';
+      s += '<line class="wf-sep" x1="' + (P.x + 14) + '" x2="' + (P.x + P.w - 14) + '" y1="' + (P.y + HEAD - 4) + '" y2="' + (P.y + HEAD - 4) + '"/>';
+
+      let full = C.start;
+      rows.forEach((r, ri) => {
+        const cy = r.cy, R = { kind: r.kind, t: r.t };
+        let label = "", title = "", val = "", ghost = null;
+        if (r.kind === "start") { label = unit === "hours" ? "Hours today" : "Duties today"; val = fmtH(C.start); title = p.name + " carries " + U(C.start) + " today"; }
+        if (r.kind === "in") { const f = person(r.t.from); label = esc(trunc(r.t.activity, chars - 5)); val = "+" + fmtH(wt(r.t)); title = f.name + " → " + p.name + hrsTxt(r.t) + "\n" + listOf(r.t); ghost = [full, full + wt(r.t)]; full += wt(r.t); }
+        if (r.kind === "out") { const to = person(r.t.to); label = esc(trunc(r.t.activity, chars - 5)); val = "−" + fmtH(wt(r.t)); title = p.name + " → " + to.name + hrsTxt(r.t) + "\n" + listOf(r.t); ghost = [Math.max(0, full - wt(r.t)), full]; full -= wt(r.t); }
+        if (r.kind === "end") { label = big ? "Keeps" : "Carries after"; title = p.name + " " + label.toLowerCase(); }
+        if (r.kind === "empty") { s += '<text class="n-empty" x="' + (P.x + 18) + '" y="' + (cy + 4) + '">No hand-offs yet</text>'; C.rows.push(R); return; }
+        const w = wid++;
+        s += '<g class="wf-row" data-w="' + w + '"' + (r.t ? ' data-row-t="' + esc(r.t.id) + '"' : "") + "><title>" + esc(title) + "</title>";
+        if (r.kind === "in" || r.kind === "out") {
+          const other = person(r.kind === "in" ? r.t.from : r.t.to);
+          s += '<text class="wf-l wf-arrow" x="' + (P.x + 16) + '" y="' + (cy + 4) + '">' + (r.kind === "in" ? "←" : "→") + "</text>" + chipSVG(other, P.x + 28, cy) +
+            '<text class="wf-l' + (r.t.proposed ? " wf-prop" : "") + '" x="' + (P.x + 58) + '" y="' + (cy + 4) + '">' + label + "</text>";
+        } else s += '<text class="wf-l' + (r.kind === "end" ? " wf-k" : "") + '" x="' + (P.x + 18) + '" y="' + (cy + 4) + '">' + esc(label) + "</text>";
+        if (ghost) s += '<rect class="wf-ghost" x="' + (x0 + ghost[0] * k) + '" y="' + (cy - 5) + '" width="' + Math.max(1, (ghost[1] - ghost[0]) * k) + '" height="10" rx="2"/>';
+        const fill = r.kind === "start" ? "var(--faint)" : r.kind === "in" ? colorOf(person(r.t.from)) : r.kind === "out" ? colorOf(p) : (big && full < C.start ? "var(--good)" : "var(--accent)");
+        s += '<rect data-wb="' + w + '" x="' + x0 + '" y="' + (cy - 5) + '" width="0" height="10" rx="2" fill="' + fill + '"/>';
+        if (ri > 0 && rows[ri - 1].kind !== "empty") s += '<line class="wf-hair" data-wh="' + w + '" x1="' + x0 + '" x2="' + x0 + '" y1="' + (rows[ri - 1].cy + 5) + '" y2="' + (cy - 5) + '"/>';
+        s += '<text class="wf-v' + (r.kind === "end" ? " wf-k" : "") + '" data-wv="' + w + '" x="' + (P.x + P.w - 14) + '" y="' + (cy + 4) + '" text-anchor="end">' + esc(val) + "</text></g>";
+        R.w = w; C.rows.push(R);
+      });
+      s += "</g>";
+      treeCards.push(C);
+    });
+
+    svg.innerHTML = s;
+    treeCards.forEach((C) => C.rows.forEach((R) => {
+      if (R.w == null) return;
+      R.bar = svg.querySelector('[data-wb="' + R.w + '"]');
+      R.hair = svg.querySelector('[data-wh="' + R.w + '"]');
+      R.val = svg.querySelector('[data-wv="' + R.w + '"]');
+      R.row = svg.querySelector('[data-w="' + R.w + '"]');
+    }));
+  }
+
+  function applyTree() {
+    treeCards.forEach((C) => {
+      let run = C.start;
+      C.rows.forEach((R) => {
+        if (R.kind === "empty") return;
+        const before = run;
+        let a = 0, b = 0, p = 1;
+        if (R.kind === "start") { a = 0; b = C.start; }
+        else if (R.kind === "in") { p = progOf(R.t); a = run; run += wt(R.t) * p; b = run; }
+        else if (R.kind === "out") { p = progOf(R.t); b = run; run -= wt(R.t) * p; a = Math.max(0, run); }
+        else { a = 0; b = Math.max(0, run); }
+        R.bar.setAttribute("x", (C.x0 + a * C.k).toFixed(1));
+        R.bar.setAttribute("width", Math.max(0, (b - a) * C.k).toFixed(1));
+        if (R.hair) { const x = (C.x0 + before * C.k).toFixed(1); R.hair.setAttribute("x1", x); R.hair.setAttribute("x2", x); }
+        if (R.kind === "in" || R.kind === "out") R.row.style.opacity = String(0.42 + 0.58 * p);
+        if (R.kind === "end") R.val.textContent = fmtH(Math.max(0, run));
+      });
+      const p = C.p, now = startOf(p), cur = hoursAt(p), diff = cur - now;
+      const dl = svg.querySelector('[data-delta="' + CSS.escape(p.id) + '"]');
+      if (dl) { dl.textContent = Math.abs(diff) < 0.05 ? "" : fmtH(now) + " → " + fmtH(cur) + " " + unitWord() + "  (" + (diff < 0 ? "−" : "+") + fmtH(Math.abs(diff)) + ")"; dl.style.fill = diff > 0 ? "var(--warn-ink)" : "var(--good)"; }
+      const gain = svg.querySelector('[data-gain="' + CSS.escape(p.id) + '"]');
+      if (gain) { gain.textContent = diff > 0.05 ? "+" + U(diff) : "—"; svg.querySelector('[data-gainwrap="' + CSS.escape(p.id) + '"]').style.opacity = diff > 0.05 ? "1" : "0.5"; }
+    });
+  }
+
+  function playTree() {
+    const token = ++playToken;
+    setMode("today"); mode = "play";
+    $("mToday").setAttribute("aria-pressed", "false");
+    const order = treeOrder.slice();
+    const STEP = reduceMotion ? 0 : 620, GAP = reduceMotion ? 250 : 160;
+    let idx = 0;
+    const next = () => {
+      if (token !== playToken) return;
+      if (idx >= order.length) { setMode("after"); return; }
+      const t = order[idx++], a = person(t.from), b = person(t.to);
+      setCaption("Step " + idx + " of " + order.length + ": " + chipHTML(a) + " <b>" + esc(a.name) + "</b> → " + chipHTML(b) + " <b>" + esc(b.name) + "</b> · " + U(wt(t)) + ": " + esc(t.activity) + (t.proposed ? " · <i>proposed</i>" : ""));
+      const t0 = performance.now();
+      const tick = (now) => {
+        if (token !== playToken) return;
+        const k = STEP ? Math.min(1, (now - t0) / STEP) : 1;
+        const ev = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        t.tasks.forEach((x) => (progT[x.id] = ev));
+        applyProgress();
+        if (k < 1) requestAnimationFrame(tick); else setTimeout(next, GAP);
+      };
+      requestAnimationFrame(tick);
+    };
+    const bns = model.people.filter((p) => p.bottleneck);
+    setCaption("<b>Today:</b> " + U(bns.reduce((x, p) => x + startOf(p), 0)) + " sit with " + bns.length + " people");
+    setTimeout(next, reduceMotion ? 200 : 900);
+  }
+
+  function setView(v) {
+    view = v; playToken++;
+    try { localStorage.setItem(LS_KEY + ":view2", v); } catch (_) {}
+    $("vBoard").setAttribute("aria-pressed", String(v === "board"));
+    $("vTree").setAttribute("aria-pressed", String(v === "tree"));
+    $("vLanes").setAttribute("aria-pressed", String(v === "lanes"));
+    if (tour.on && v !== "board") endTour(false);   // the narrated tour belongs to the board
+    playLabel();
+    renderChart(); setMode(mode === "today" ? "today" : "after"); if (filterId) focusOn(filterId);
+  }
+
+  /* ───────── Responsibility board: one row per person, duties grouped by bucket ───────── */
+  const boardEl = $("board");
+  let spot = new Set(), flipScale = 1;
+  function laneOrder(a, b) {
+    const li = (id) => Math.max(0, model.lanes.findIndex((l) => l.id === id));
+    return li(a.lane) - li(b.lane) || a.tier - b.tier || model.people.indexOf(a) - model.people.indexOf(b);
+  }
+  function holder(t) { return t.from === t.to || (progT[t.id] ?? 1) < 0.5 ? t.from : t.to; }
+
+  function dutyCard(t, here) {
+    const moving = t.from !== t.to, arrived = moving && here === t.to;
+    const cls = "duty" + (moving ? (t.proposed ? " prop" : " move") : "") + (arrived ? " in" : "");
+    let meta = "";
+    if (moving && !arrived) meta += '<span class="ch ' + (t.proposed ? "pp" : "mv") + '">' + (t.proposed ? "Proposed" : "Moves") + "</span><span>→ " + chipHTML(person(t.to)) + " " + esc((person(t.to) || {}).name) + "</span>";
+    if (arrived) meta += (t.proposed ? '<span class="ch pp">Proposed</span>' : "") + "<span>from " + chipHTML(person(t.from)) + " " + esc((person(t.from) || {}).name) + "</span>";
+    if (num(t.hours)) meta += "<span>" + (t.est ? "≈ " : "") + fmtH(num(t.hours)) + " h/wk</span>";
+    if (t.with) meta += "<span>with " + esc(t.with) + "</span>";
+    return '<div class="' + cls + '" data-t="' + esc(t.id) + '" tabindex="0" role="button">' + esc(t.activity || "Activity to name") + (meta ? '<span class="m">' + meta + "</span>" : "") + "</div>";
+  }
+
+  function renderBoard(animate) {
+    if (view !== "board") return;
+    const before = {};
+    if (animate && !reduceMotion) boardEl.querySelectorAll(".duty").forEach((el) => (before[el.dataset.t] = el.getBoundingClientRect()));
+    const people = model.people.slice().sort(laneOrder).filter((p) => p.lane !== "trim" || model.tasks.some((t) => t.from === p.id || t.to === p.id));
+    let html = "", lastLane = null;
+    people.forEach((p) => {
+      if (p.lane !== lastLane) { const l = lane(p.lane); html += '<div class="b-lane"><b>' + esc(l ? l.name : "") + "</b><span>" + esc(l ? l.note || "" : "") + "</span></div>"; lastLane = p.lane; }
+      const mine = model.tasks.filter((t) => holder(t) === p.id);
+      const buckets = [];
+      mine.forEach((t) => { const b = t.bucket || "Other"; let g = buckets.find((x) => x.name === b); if (!g) buckets.push((g = { name: b, list: [] })); g.list.push(t); });
+      const now = startOf(p), cur = hoursAt(p), diff = cur - now;
+      const itemized = model.tasks.filter((t) => t.from === p.id).reduce((a, t) => a + num(t.hours), 0);
+      html += '<div class="brow' + (filterId === p.id ? " sel" : "") + (spot.has(p.id) ? " spot" : "") + '" data-p="' + esc(p.id) + '"><div class="bhead" data-p="' + esc(p.id) + '">';
+      html += '<div class="nm">' + chipHTML(p) + esc(p.name) + (p.bottleneck ? ' <span class="pill-b" style="font-size:9.5px;font-weight:700;color:var(--bad);background:var(--bad-bg);padding:2px 6px;border-radius:999px;letter-spacing:.04em">BOTTLENECK</span>' : "") + "</div>";
+      html += '<div class="rl">' + esc(p.role || "") + "</div>";
+      if (p.badge) html += '<div class="badge">' + esc(p.badge) + "</div>";
+      if (now || cur) html += '<div class="ct">' + fmtH(now) + " → " + fmtH(cur) + " " + (unit === "hours" ? "h/wk" : Math.round(cur * 10) === 10 ? "duty" : "duties") + (Math.abs(diff) > 0.05 ? "<small" + (diff > 0 ? ' class="up"' : "") + ">" + (diff < 0 ? "−" : "+") + fmtH(Math.abs(diff)) + "</small>" : "") + "</div>";
+      if (num(p.hoursTotal)) html += '<div class="gap">' + fmtH(num(p.hoursTotal)) + " h/wk in total · " + fmtH(itemized) + " h listed with hours · " + fmtH(Math.max(0, num(p.hoursTotal) - itemized)) + " h not yet listed</div>";
+      if (p.note) html += '<div class="bnote">' + esc(p.note) + "</div>";
+      html += '</div><div class="bbody">';
+      if (!buckets.length) html += '<div class="b-empty">No duties listed yet.</div>';
+      buckets.forEach((g) => {
+        html += '<div class="bucket"><h4><span>' + esc(g.name) + "</span><span>" + g.list.length + "</span></h4>" + g.list.map((t) => dutyCard(t, p.id)).join("") + "</div>";
+      });
+      html += "</div></div>";
+    });
+    boardEl.innerHTML = html;
+    if (animate && !reduceMotion) {
+      boardEl.querySelectorAll(".duty").forEach((el) => {
+        const a = before[el.dataset.t]; if (!a) return;
+        const b = el.getBoundingClientRect(), dx = a.left - b.left, dy = a.top - b.top;
+        if (Math.abs(dx) + Math.abs(dy) < 2) return;
+        const far = Math.abs(dy) > 60;
+        el.style.zIndex = far ? "2" : "";
+        el.animate([{ transform: "translate(" + dx + "px," + dy + "px)", boxShadow: far ? "0 10px 28px rgba(17,38,58,.28)" : "none" }, { transform: "none", boxShadow: "none" }],
+          { duration: (far ? 760 : 420) * flipScale, easing: "cubic-bezier(.2,.8,.2,1)" }).onfinish = () => (el.style.zIndex = "");
+      });
+    }
+  }
+
+  function playBoard() {
+    const token = ++playToken;
+    setMode("today"); mode = "play";
+    $("mToday").setAttribute("aria-pressed", "false");
+    const srcRank = (id) => { const p = person(id); return (p ? p.tier * 1000 : 0) + model.people.indexOf(p); };
+    const order = HO.slice().sort((a, b) => srcRank(a.from) - srcRank(b.from) || model.tasks.indexOf(a) - model.tasks.indexOf(b));
+    let i = 0;
+    const next = () => {
+      if (token !== playToken) return;
+      if (i >= order.length) { setMode("after"); return; }
+      const t = order[i++];
+      setCaption("Hand-off " + i + " of " + order.length + ": <b>" + esc(person(t.from).name) + "</b> → <b>" + esc(person(t.to).name) + "</b> · " + esc(t.activity || "Activity to name") + (t.proposed ? " · <i>proposed</i>" : ""));
+      progT[t.id] = 1;
+      renderBoard(true);
+      const card = boardEl.querySelector('.duty[data-t="' + CSS.escape(t.id) + '"]');
+      if (card && !reduceMotion) { const r = card.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) card.scrollIntoView({ block: "center", behavior: "smooth" }); }
+      setTimeout(next, reduceMotion ? 200 : 700);
+    };
+    const bns = model.people.filter((p) => p.bottleneck);
+    setCaption("<b>Today:</b> " + U(bns.reduce((x, p) => x + startOf(p), 0)) + " sit with " + bns.length + " people");
+    setTimeout(next, reduceMotion ? 200 : 1000);
+  }
+
+  boardEl.addEventListener("click", (e) => {
+    const d = e.target.closest(".duty");
+    if (d) { const t = model.tasks.find((x) => x.id === d.dataset.t); if (t) { setFilter(t.from); highlightRow(t.id); } return; }
+    const h = e.target.closest(".bhead");
+    if (h) setFilter(filterId === h.dataset.p ? null : h.dataset.p);
+  });
+  boardEl.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.closest(".duty")) { e.preventDefault(); e.target.click(); } });
+
+  /* ───────── Guided tour: narrated, one hand-off group at a time ───────── */
+  const tour = { steps: [], i: 0, on: false, paused: false, speed: 1, voice: true, token: 0 };
+  let ttsCap = null, ttsAsked = false;
+  function lc(x) { return String(x || "").trim(); }
+  function listSay(ts) {
+    const a = ts.map((t) => lc(t.activity || "an unnamed duty"));
+    const shown = a.slice(0, 3), more = a.length - shown.length;
+    let txt = shown.length > 1 ? shown.slice(0, -1).join("; ") + "; and " + shown[shown.length - 1] : shown[0] || "";
+    if (more > 0) txt = shown.join("; ") + "; and " + more + " more";
+    return txt;
+  }
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  function buildSteps() {
+    refreshHO();
+    const steps = [];
+    const bns = model.people.filter((p) => p.bottleneck);
+    const startTotal = bns.reduce((a, p) => a + startOf(p), 0);
+    const names = (ps) => ps.map((p) => p.name).join(", ").replace(/, ([^,]*)$/, " and $1");
+    steps.push({ text: "This map shows every operations-management duty at Green Valley Dental, who holds it today, and where it should go. Today, " + names(bns) + " carry " + U(startTotal) + " between them: " + bns.map((p) => p.name + " " + fmtH(startOf(p))).join(", ").replace(/, ([^,]*)$/, " and $1") + ".", spot: bns.map((p) => p.id), tasks: [] });
+    steps.push({ text: "We'll move the work one person at a time. Blue dashed cards are agreed moves, and amber cards are proposals we still need to discuss. When a card reaches its new owner, it turns green. Each person has a colour chip, shown in the key above.", spot: [], tasks: [] });
+    const givers = [...new Set(HO.map((t) => t.from))].map(person).filter(Boolean).sort((a, b) => a.tier - b.tier || laneOrder(a, b));
+    givers.forEach((g) => {
+      const fl = FLOWS.filter((f) => f.from === g.id).sort((a, b) => laneOrder(person(a.to), person(b.to)));
+      const n = fl.reduce((a, f) => a + f.tasks.length, 0);
+      const save0 = progT; progT = {}; const left = hoursAt(g); progT = save0;
+      const inN = HO.filter((t) => t.to === g.id).reduce((a, t) => a + wt(t), 0);
+      steps.push({ text: g.name + (g.bottleneck ? ", one of the bottlenecks, " : " ") + "holds " + U(startOf(g)) + " today" + (inN ? ", takes on " + U(inN) : "") + ", and hands " + plural(n, "duty", "duties") + " to " + plural(fl.length, "person", "people") + ". That leaves " + U(left) + ".", spot: [g.id], focus: g.id, tasks: [] });
+      const singles = fl.filter((f) => f.tasks.length === 1 && f.to !== "retire" && f.to !== "central");
+      const grouped = singles.length > 1 ? singles : [];
+      if (grouped.length) {
+        const nPg = grouped.filter((f) => f.tasks[0].proposed).length;
+        let t = "One duty each goes to " + grouped.map((f) => person(f.to).name).join(", ").replace(/, ([^,]*)$/, " and $1") + ": " + grouped.map((f) => person(f.to).name + ", " + f.tasks[0].activity).join("; ") + ".";
+        if (nPg) t += " " + (nPg === grouped.length ? (nPg === 1 ? "It is a proposal." : "These are proposals.") : nPg + " of them " + (nPg === 1 ? "is a proposal." : "are proposals."));
+        steps.push({ text: t, spot: [g.id].concat(grouped.map((f) => f.to)), focus: g.id, tasks: grouped.map((f) => f.tasks[0]) });
+      }
+      fl.filter((f) => !grouped.includes(f)).forEach((f) => {
+        const to = person(f.to), k = f.tasks.length, nP = f.tasks.filter((t) => t.proposed).length;
+        let t;
+        if (f.to === "retire") t = "Stop doing: " + listSay(f.tasks) + ". " + (k === 1 ? "It duplicates" : "They duplicate") + " work that is already covered.";
+        else if (f.to === "central") t = plural(k, "duty goes", "duties go") + " to the central team: " + listSay(f.tasks) + ".";
+        else t = plural(k, "duty goes", "duties go") + " to " + to.name + ": " + listSay(f.tasks) + ".";
+        if (f.tasks.some((x) => x.poc)) t += " " + to.name + " becomes " + g.name + "'s single point of contact for strategy.";
+        if (nP === k) t += k === 1 ? " This one is a proposal to discuss." : " These are proposals to discuss.";
+        else if (nP) t += " " + nP + " of them " + (nP === 1 ? "is a proposal" : "are proposals") + ".";
+        steps.push({ text: t, spot: [g.id, f.to], focus: g.id, tasks: f.tasks.slice() });
+      });
+    });
+    const save = progT; progT = {};
+    const endTotal = bns.reduce((a, p) => a + hoursAt(p), 0); progT = save;
+    const nP = HO.filter((t) => t.proposed).length;
+    steps.push({ text: "After every hand-off, the three bottlenecks go from " + U(startTotal) + " to " + U(Math.round(endTotal * 100) / 100) + ". " + plural(HO.length, "duty changes", "duties change") + " hands: " + (HO.length - nP) + " agreed, and " + nP + " proposals to discuss. Next, we add hours to each duty, so we can see the time this frees up.", spot: bns.map((p) => p.id), tasks: [] });
+    return steps;
+  }
+
+  function wait(ms, my) {
+    return new Promise((res) => {
+      let left = ms, last = performance.now();
+      const tick = (now) => {
+        if (my !== tour.token) return res(false);
+        if (!tour.paused) left -= (now - last) * tour.speed;
+        last = now;
+        if (left <= 0) res(true); else requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+  async function getTTS() {
+    if (ttsAsked) return ttsCap;
+    ttsAsked = true;
+    try { ttsCap = window.claude && window.claude.use ? await window.claude.use("tts") : null; } catch (_) { ttsCap = null; }
+    return ttsCap;
+  }
+  function stopVoice() { if (tour.cut) { tour.cut(); tour.cut = null; } try { ttsCap && ttsCap.stop(); } catch (_) {} try { window.speechSynthesis && speechSynthesis.cancel(); } catch (_) {} }
+  async function say(text, my) {
+    const est = Math.max(2600, text.split(/\s+/).length * 390);   // reading time at 1×
+    const t0 = performance.now();
+    if (tour.voice) {
+      let spoken = null;
+      if (ttsCap) spoken = ttsCap.speak(text, { rate: tour.speed }).catch(() => {});
+      else if (window.speechSynthesis && window.SpeechSynthesisUtterance) spoken = new Promise((res) => {
+        try { const u = new SpeechSynthesisUtterance(text); u.rate = tour.speed; u.onend = u.onerror = () => res(); speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (_) { res(); }
+      });
+      const cut = new Promise((r) => (tour.cut = r));
+      if (spoken) await Promise.race([spoken, cut, wait(est * 1.6, my)]);
+      tour.cut = null;
+    }
+    if (my !== tour.token) return;
+    const spent = (performance.now() - t0) * tour.speed;      // voice blocked or off: keep reading time on screen
+    if (spent < est * 0.6) await wait(est - spent, my);
+  }
+
+  function stateBefore(i) {
+    progT = {}; HO.forEach((t) => (progT[t.id] = 0));
+    for (let k = 0; k < i; k++) tour.steps[k].tasks.forEach((t) => (progT[t.id] = 1));
+  }
+  function showStep(st) {
+    $("tourText").textContent = st.text;
+    $("tourStep").textContent = "Step " + (tour.i + 1) + " of " + tour.steps.length;
+    $("tourFill").style.width = Math.round(((tour.i + 1) / tour.steps.length) * 100) + "%";
+    spot = new Set(st.spot || []);
+    if (view === "board") {
+      renderBoard(false);
+      const target = boardEl.querySelector('.brow[data-p="' + CSS.escape(st.spot && st.spot.length > 1 ? st.spot[1] : (st.spot || [])[0] || "") + '"]');
+      if (target) target.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+    } else { applyProgress(); focusOn(st.focus || null); }
+    const ss = st.tasks[0];
+    setCaption(ss ? chipHTML(person(ss.from)) + " → " + chipHTML(person(ss.to)) + " <b>" + esc(person(ss.to).name) + "</b>" : "<b>Guided tour</b>");
+  }
+  async function moveTasks(ts, my) {
+    for (const t of ts) {
+      if (my !== tour.token) return;
+      if (view === "board") {
+        flipScale = 1.6 / tour.speed;
+        progT[t.id] = 1; renderBoard(true);
+        flipScale = 1;
+        await wait(1350, my);
+      } else {
+        const dur = 900; let done = 0, last = performance.now();
+        await new Promise((res) => {
+          const tick = (now) => {
+            if (my !== tour.token) return res();
+            if (!tour.paused) done += (now - last) * tour.speed;
+            last = now;
+            const k = Math.min(1, done / dur);
+            progT[t.id] = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+            applyProgress();
+            if (k < 1) requestAnimationFrame(tick); else res();
+          };
+          requestAnimationFrame(tick);
+        });
+        await wait(250, my);
+      }
+    }
+  }
+  async function runFrom(i) {
+    const my = ++tour.token;
+    stopVoice();
+    tour.i = Math.max(0, Math.min(i, tour.steps.length - 1));
+    mode = "play";
+    $("mToday").setAttribute("aria-pressed", "false"); $("mAfter").setAttribute("aria-pressed", "false");
+    stateBefore(tour.i);
+    if (view === "board") renderBoard(false); else applyProgress();
+    while (tour.i < tour.steps.length) {
+      const st = tour.steps[tour.i];
+      showStep(st);
+      const speech = say(st.text, my);
+      if (st.tasks.length) { await wait(900, my); await moveTasks(st.tasks, my); }
+      await speech;
+      if (my !== tour.token) return;
+      await wait(800, my);
+      if (my !== tour.token) return;
+      tour.i++;
+    }
+    endTour(true);
+  }
+  async function startTour() {
+    if (!HO.length) return;
+    tour.steps = buildSteps(); tour.on = true; tour.paused = false;
+    $("tour").hidden = false; $("tPause").textContent = "❚❚ Pause";
+    $("play").textContent = "↺ Restart tour";
+    if (tour.voice) await getTTS();
+    runFrom(0);
+  }
+  function endTour(finished) {
+    tour.token++; tour.on = false; tour.paused = false; stopVoice();
+    spot = new Set();
+    $("tour").hidden = true; playLabel();
+    setMode("after");
+    if (finished) setCaption("<b>Tour finished.</b> Every hand-off is shown. Press Guided tour to watch it again.");
+  }
+  function jump(d) { if (!tour.on) return; tour.paused = false; $("tPause").textContent = "❚❚ Pause"; runFrom(tour.i + d); }
+  $("tPause").addEventListener("click", () => {
+    tour.paused = !tour.paused;
+    $("tPause").textContent = tour.paused ? "▶ Resume" : "❚❚ Pause";
+    try { if (ttsCap) tour.paused ? ttsCap.pause() : ttsCap.resume(); } catch (_) {}
+    try { if (window.speechSynthesis) tour.paused ? speechSynthesis.pause() : speechSynthesis.resume(); } catch (_) {}
+  });
+  $("tBack").addEventListener("click", () => jump(-1));
+  $("tNext").addEventListener("click", () => jump(1));
+  $("tEnd").addEventListener("click", () => endTour(false));
+  $("tVoice").addEventListener("click", async () => {
+    tour.voice = !tour.voice;
+    $("tVoice").textContent = tour.voice ? "Voice on" : "Voice off";
+    $("tVoice").setAttribute("aria-pressed", String(tour.voice));
+    if (!tour.voice) stopVoice(); else await getTTS();
+  });
+  document.querySelectorAll("[data-speed]").forEach((b) => b.addEventListener("click", () => {
+    tour.speed = parseFloat(b.dataset.speed);
+    document.querySelectorAll("[data-speed]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    try { ttsCap && ttsCap.setRate(tour.speed); } catch (_) {}
+  }));
+  document.addEventListener("keydown", (e) => {
+    if (!tour.on || /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.key === " ") { e.preventDefault(); $("tPause").click(); }
+    if (e.key === "ArrowRight") jump(1);
+    if (e.key === "ArrowLeft") jump(-1);
+    if (e.key === "Escape") endTour(false);
+  });
+
+  /* ───────── Motion ───────── */
+  function buildParticles() {
+    const g = svg.querySelector("#dots");
+    particles = [];
+    if (!g) return;
+    let html = "";
+    edgeEls.forEach((E, i) => {
+      const h = wt(E.t), n = Math.max(1, Math.min(8, Math.round(h)));
+      const r = Math.max(2, Math.min(4.5, thick(h) / 3));
+      for (let k = 0; k < n; k++) {
+        html += '<circle class="dot" data-t="' + esc(E.t.id) + '" r="' + r + '" fill="' + colorOf(person(E.t.from)) + '" opacity="0"/>';
+        particles.push({ i, off: k / n });
+      }
+    });
+    g.innerHTML = html;
+    const dots = g.querySelectorAll(".dot");
+    particles.forEach((pt, k) => (pt.el = dots[k]));
+  }
+
+  function applyProgress() { if (view === "board") { renderBoard(true); return; } applyEdges(); if (view === "tree") applyTree(); else applySwim(); }
+
+  function applyEdges() {
+    edgeEls.forEach((E) => {
+      const p = progOf(E.t);
+      if (E.el.classList.contains("off") && p >= 1) { E.el.style.strokeDasharray = ""; E.el.style.strokeDashoffset = ""; }
+      else { E.el.style.strokeDasharray = E.len + " " + E.len; E.el.style.strokeDashoffset = String(E.len * (1 - p)); }
+      E.el.style.visibility = p <= 0 ? "hidden" : "visible";
+      E.head.style.opacity = p >= 0.98 ? "1" : "0";
+    });
+  }
+
+  function applySwim() {
+    edgeEls.forEach((E) => {
+      const p = progOf(E.t);
+      if (E.el.classList.contains("off") && p >= 1) { E.el.style.strokeDasharray = ""; E.el.style.strokeDashoffset = ""; }
+      else { E.el.style.strokeDasharray = E.len + " " + E.len; E.el.style.strokeDashoffset = String(E.len * (1 - p)); }
+      E.el.style.visibility = p <= 0 ? "hidden" : "visible";
+      E.head.style.opacity = p >= 0.98 ? "1" : "0";
+      const item = svg.querySelectorAll('[data-item="' + CSS.escape(E.t.id) + '"]');
+      item.forEach((it) => (it.style.opacity = p >= 0.98 ? "1" : "0.18"));
+    });
+    model.people.forEach((p) => {
+      const fig = svg.querySelector('[data-fig="' + CSS.escape(p.id) + '"]');
+      const now = startOf(p), cur = hoursAt(p);
+      if (fig) {
+        fig.textContent = fmtH(now) + " → " + fmtH(cur) + " " + (unit === "hours" ? "h/wk" : Math.round(cur * 10) === 10 ? "duty" : "duties");
+        const dl = svg.querySelector('[data-delta="' + CSS.escape(p.id) + '"]');
+        const diff = cur - now;
+        dl.textContent = Math.abs(diff) < 0.05 ? "" : (diff < 0 ? "−" : "+") + fmtH(Math.abs(diff));
+        dl.style.fill = diff > 0 ? "var(--warn-ink)" : "var(--good)";
+        const bar = svg.querySelector('[data-bar="' + CSS.escape(p.id) + '"]');
+        const P = laid.pos[p.id], gw = P.w - 36, base = Math.max(now, cur, 1);
+        bar.setAttribute("width", String(Math.max(0, gw * cur / base)));
+        bar.classList.toggle("ok", cur < now);
+      }
+      const gain = svg.querySelector('[data-gain="' + CSS.escape(p.id) + '"]');
+      if (gain) {
+        const add = cur - now;
+        gain.textContent = add > 0.05 ? "+" + U(add) : "—";
+        svg.querySelector('[data-gainwrap="' + CSS.escape(p.id) + '"]').style.opacity = add > 0.05 ? "1" : "0.5";
+      }
+    });
+  }
+
+  let last = performance.now(), clock = 0;
+  function frame(now) {
+    const dt = Math.min(64, now - last); last = now;
+    if (!reduceMotion) clock += dt;
+    const speed = 0.085; // px per ms
+    particles.forEach((pt) => {
+      const E = edgeEls[pt.i]; if (!E || !pt.el) return;
+      const p = progOf(E.t);
+      if (p < 1 || reduceMotion && mode !== "after") { pt.el.setAttribute("opacity", "0"); return; }
+      const L = E.len;
+      const s = reduceMotion ? L * (0.25 + 0.5 * pt.off) : ((clock * speed) / L + pt.off) % 1 * L;
+      const q = E.el.getPointAtLength(s);
+      pt.el.setAttribute("cx", q.x.toFixed(1)); pt.el.setAttribute("cy", q.y.toFixed(1));
+      const fade = Math.min(1, s / 30, (L - s) / 30);
+      pt.el.setAttribute("opacity", (0.95 * fade).toFixed(2));
+    });
+    requestAnimationFrame(frame);
+  }
+
+  function sources() {
+    const ids = [...new Set(HO.map((t) => t.from))];
+    return ids.map(person).filter(Boolean).sort((a, b) => a.tier - b.tier || ((laid.pos[a.id] || {}).cy || 0) - ((laid.pos[b.id] || {}).cy || 0)).map((p) => p.id);
+  }
+
+  function setMode(m) {
+    mode = m;
+    $("mToday").setAttribute("aria-pressed", String(m === "today"));
+    $("mAfter").setAttribute("aria-pressed", String(m === "after"));
+    const v = m === "today" ? 0 : 1;
+    progT = {}; model.tasks.forEach((t) => (progT[t.id] = v));
+    applyProgress();
+    caption();
+  }
+
+  let playToken = 0;
+  function play() { if (view === "board") startTour(); else if (view === "tree") playTree(); else playSwim(); }   // narration is for the board only
+  function playLabel() { $("play").textContent = view === "board" ? (tour.on ? "↺ Restart tour" : "▶ Guided tour") : "▶ Play the hand-off"; }
+  function playSwim() {
+    const token = ++playToken;
+    setMode("today"); mode = "play";
+    $("mToday").setAttribute("aria-pressed", "false");
+    const order = sources();
+    const STEP = reduceMotion ? 0 : 1500, GAP = reduceMotion ? 300 : 450;
+    let idx = 0;
+    const next = () => {
+      if (token !== playToken) return;
+      if (idx >= order.length) { setMode("after"); return; }
+      const id = order[idx++], p = person(id);
+      const moved = HO.filter((t) => t.from === id), hrs = moved.reduce((a, t) => a + wt(t), 0);
+      const to = new Set(moved.map((t) => t.to)).size;
+      setCaption("Step " + idx + " of " + order.length + ": <b>" + esc(p.name) + "</b> hands off " + U(hrs) + " to " + to + (to === 1 ? " person" : " people"));
+      const t0 = performance.now();
+      const tick = (now) => {
+        if (token !== playToken) return;
+        const k = STEP ? Math.min(1, (now - t0) / STEP) : 1;
+        const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        moved.forEach((t) => (progT[t.id] = e));
+        applyProgress();
+        if (k < 1) requestAnimationFrame(tick); else setTimeout(next, GAP);
+      };
+      requestAnimationFrame(tick);
+    };
+    setCaption("Today: the work sits with " + model.people.filter((p) => p.bottleneck).length + " people");
+    setTimeout(next, reduceMotion ? 200 : 900);
+  }
+
+  function setCaption(html) { $("caption").innerHTML = html; }
+  function caption() {
+    const bns = model.people.filter((p) => p.bottleneck);
+    const now = bns.reduce((a, p) => a + startOf(p), 0);
+    if (mode === "today") setCaption("<b>Today:</b> " + U(now) + " sit with " + bns.map((p) => esc(p.name)).join(", ").replace(/, ([^,]*)$/, " and $1"));
+    else { const nP = HO.filter((t) => t.proposed).length; setCaption("<b>After hand-off:</b> " + HO.length + " duties change hands (" + (HO.length - nP) + " agreed, " + nP + " proposed). " + (view === "board" ? "Click a card to edit it." : "Hover a person to trace their lines.")); }
+  }
+
+  /* ───────── Summary + legend ───────── */
+  function renderSummary() {
+    const bns = model.people.filter((p) => p.bottleneck);
+    const now = bns.reduce((a, p) => a + startOf(p), 0);
+    const after = bns.reduce((a, p) => { const save = progT; progT = {}; const h = hoursAt(p); progT = save; return a + h; }, 0);
+    const afterAgreed = bns.reduce((a, p) => { const save = progT; progT = {}; HO.forEach((t) => { if (t.proposed) progT[t.id] = 0; }); const h = hoursAt(p); progT = save; return a + h; }, 0);
+    const big = (n) => fmtH(n) + (unit === "hours" ? " h" : "");
+    $("sumNow").textContent = big(now);
+    $("sumNowNote").textContent = (unit === "hours" ? "hours a week on " : "duties on ") + bns.map((p) => p.name).join(", ").replace(/, ([^,]*)$/, " and $1");
+    $("sumAfter").textContent = big(after);
+    $("sumAfterNote").textContent = now > 0 ? Math.round((1 - after / now) * 100) + "% less if every proposal goes ahead; " + fmtH(afterAgreed) + (unit === "hours" ? " h" : "") + " with agreed moves only" : "";
+    const nP = HO.filter((t) => t.proposed).length;
+    $("sumMoved").textContent = big(Math.max(0, now - after));
+    $("sumMovedNote").textContent = "net, after work moving between the three of them · " + (HO.length - nP) + " agreed and " + nP + " proposed hand-offs in all";
+    const takers = new Set(HO.map((t) => t.to).filter((id) => { const q = person(id); return q && !q.bottleneck && id !== "central" && id !== "retire"; }));
+    $("sumPeople").textContent = String(takers.size);
+    if (unit === "hours") $("sumNowNote").textContent += " (only Dr. Bajwa and Jennifer have hours so far)";
+    const withH = model.tasks.filter((t) => num(t.hours) > 0).length;
+    $("exampleNote").hidden = false;
+    $("exampleText").innerHTML = model.examples ? "<b>Example tasks and hours.</b> Replace them with the real activities, hours and owners in the tables below the chart."
+      : "<b>Counts are in duties.</b> Blue dashed cards are agreed moves and amber cards are proposals to discuss. Hours are filled in for " + withH + " of " + model.tasks.length + " duties so far (Jennifer's are estimates).";
+    $("clearExamples").hidden = !model.examples;
+    caption();
+  }
+
+  function renderKey() {
+    const ppl = model.people.filter((p) => model.tasks.some((t) => t.from === p.id || t.to === p.id)).sort(laneOrder);
+    $("key").innerHTML = '<span class="eyebrow" style="margin-right:4px">Key</span>' + ppl.map((p) => "<span>" + chipHTML(p) + "<b>" + esc(p.name) + "</b></span>").join("");
+  }
+  function renderLegend() {
+    renderKey();
+    if (view === "board") { $("legend").innerHTML = '<span><i class="lg-card"></i> Stays with this person</span><span><i class="lg-card lg-move"></i> Agreed move</span><span><i class="lg-card lg-prop"></i> Proposal to discuss</span><span><i class="lg-card lg-in"></i> Arrived after hand-off</span><span><span class="pill-b">Bottleneck</span> carries the most work today</span>'; return; }
+    let h = "<span>Line colour = who hands the work off</span>";
+    h += '<span><span class="pill-b">Bottleneck</span> carries the most work today</span>';
+    h += "<span>Thicker line = more " + (unit === "hours" ? "hours a week" : "duties") + " moving</span>";
+    if (view === "tree") h += "<span>Waterfall bars: grey = " + unitWord() + " today, colour = " + unitWord() + " moving, green = what stays. Dashed outline = the planned move.</span>";
+    if (HO.some((t) => !onRoute(t) || t.proposed)) h += '<span><span class="flag">Dashed</span> proposal to discuss, or outside the agreed routes</span>';
+    $("legend").innerHTML = h;
+  }
+
+  /* ───────── Hover / focus ───────── */
+  const tip = $("tip");
+  function focusOn(pid) {
+    if (!pid) { svg.classList.remove("focus"); svg.querySelectorAll(".on").forEach((e) => e.classList.remove("on")); return; }
+    svg.classList.add("focus");
+    svg.querySelectorAll(".on").forEach((e) => e.classList.remove("on"));
+    const rel = new Set([pid]);
+    FLOWS.forEach((t) => {
+      if (t.from === pid || t.to === pid) {
+        rel.add(t.from); rel.add(t.to);
+        svg.querySelectorAll('[data-t="' + CSS.escape(t.id) + '"]').forEach((e) => e.classList.add("on"));
+      }
+    });
+    rel.forEach((id) => { const n = svg.querySelector('.node[data-p="' + CSS.escape(id) + '"]'); if (n) n.classList.add("on"); });
+  }
+  svg.addEventListener("mouseover", (e) => {
+    const n = e.target.closest(".node");
+    if (n) { focusOn(n.dataset.p); return; }
+    const ed = e.target.closest(".edge");
+    if (ed) {
+      const t = flowById(ed.dataset.t), a = person(t.from), b = person(t.to);
+      tip.innerHTML = "<b>" + esc(a.name) + " → " + esc(b.name) + "</b>" + esc(U(wt(t)) + hrsTxt(t)) + "<br>" + t.tasks.map((x) => esc(x.activity || "Activity to name") + (x.proposed ? " <i>(proposed)</i>" : "")).join("<br>") + (onRoute(t) ? "" : "<br>Outside the agreed routes");
+      tip.hidden = false;
+    }
+  });
+  svg.addEventListener("mousemove", (e) => {
+    if (tip.hidden) return;
+    const r = $("scroller").getBoundingClientRect();
+    tip.style.left = Math.min(e.clientX - r.left + $("scroller").scrollLeft + 14, $("scroller").scrollWidth - 290) + "px";
+    tip.style.top = (e.clientY - r.top + 14) + "px";
+  });
+  svg.addEventListener("mouseout", (e) => {
+    if (e.target.closest(".edge")) tip.hidden = true;
+    if (e.target.closest(".node") && !(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(".node"))) focusOn(filterId);
+  });
+  svg.addEventListener("click", (e) => {
+    const row = e.target.closest("[data-row-t]");
+    if (row) { const t = flowById(row.dataset.rowT); if (t) { setFilter(t.from); highlightRow(t.tasks[0].id); return; } }
+    const n = e.target.closest(".node");
+    const ed = e.target.closest(".edge");
+    if (n) { setFilter(filterId === n.dataset.p ? null : n.dataset.p); }
+    else if (ed) { const t = flowById(ed.dataset.t); setFilter(t.from); highlightRow(t.tasks[0].id); }
+  });
+  svg.addEventListener("keydown", (e) => {
+    const n = e.target.closest(".node");
+    if (n && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); setFilter(filterId === n.dataset.p ? null : n.dataset.p); }
+  });
+
+  function setFilter(id) {
+    filterId = id;
+    svg.querySelectorAll(".node").forEach((n) => n.classList.toggle("sel", n.dataset.p === id));
+    boardEl.querySelectorAll(".brow").forEach((n) => n.classList.toggle("sel", n.dataset.p === id));
+    focusOn(id);
+    renderTasks();
+  }
+  function highlightRow(tid) {
+    const row = document.querySelector('#taskRows tr[data-id="' + CSS.escape(tid) + '"]');
+    if (row) { row.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); const i = row.querySelector('input[data-f="activity"]'); if (i) i.focus({ preventScroll: true }); }
+  }
+
+  /* ───────── Editor tables ───────── */
+  function peopleOptions(sel, exclude) {
+    return model.lanes.map((l) => {
+      const ps = model.people.filter((p) => p.lane === l.id && p.id !== exclude);
+      if (!ps.length) return "";
+      return '<optgroup label="' + esc(l.name) + '">' + ps.map((p) => '<option value="' + esc(p.id) + '"' + (p.id === sel ? " selected" : "") + ">" + esc(p.name) + "</option>").join("") + "</optgroup>";
+    }).join("");
+  }
+
+  function statusOf(t) { return t.from === t.to ? "keep" : t.proposed ? "prop" : "move"; }
+  function renderTasks() {
+    $("bucketList").innerHTML = [...new Set(model.tasks.map((t) => t.bucket).filter(Boolean))].map((b) => '<option value="' + esc(b) + '"></option>').join("");
+    const rank = (id) => { const q = person(id); return q ? model.people.slice().sort(laneOrder).indexOf(q) : 999; };
+    const rows = model.tasks.filter((t) => !filterId || t.from === filterId || t.to === filterId).slice().sort((a, b) => rank(a.from) - rank(b.from) || model.tasks.indexOf(a) - model.tasks.indexOf(b));
+    $("filterChip").hidden = !filterId;
+    if (filterId) $("filterName").textContent = "Showing " + (person(filterId) || {}).name;
+    $("taskRows").innerHTML = rows.length ? rows.map((t) => {
+      const a = person(t.from);
+      return '<tr data-id="' + esc(t.id) + '">' +
+        '<td style="min-width:150px"><span class="sw" style="background:' + colorOf(a) + '"></span><select data-k="task" data-f="from" aria-label="From" style="width:calc(100% - 16px)">' + peopleOptions(t.from) + "</select></td>" +
+        '<td><select class="st" data-k="task" data-f="status" aria-label="Status">' + [["keep", "Keeps"], ["move", "Moves to"], ["prop", "Proposed to"]].map((o) => '<option value="' + o[0] + '"' + (statusOf(t) === o[0] ? " selected" : "") + ">" + o[1] + "</option>").join("") + "</select></td>" +
+        '<td style="min-width:140px">' + (t.from === t.to ? '<span class="muted" style="padding:0 7px">—</span>' : '<select data-k="task" data-f="to" aria-label="To">' + peopleOptions(t.to, t.from) + "</select>") + "</td>" +
+        '<td style="min-width:150px"><input type="text" list="bucketList" data-k="task" data-f="bucket" value="' + esc(t.bucket || "") + '" placeholder="Bucket" aria-label="Bucket"></td>' +
+        '<td style="min-width:300px"><input type="text" data-k="task" data-f="activity" value="' + esc(t.activity) + '" placeholder="Name the activity" aria-label="Activity"></td>' +
+        '<td style="text-align:right"><input type="number" min="0" step="0.5" data-k="task" data-f="hours" value="' + (num(t.hours) ? esc(num(t.hours)) : "") + '" placeholder="–" aria-label="Hours a week"></td>' +
+        "<td>" + (onRoute(t) ? "" : '<span class="flag" title="This route is outside the agreed routes">Off route</span>') + "</td>" +
+        '<td><button type="button" class="x" data-del="task" aria-label="Remove duty">×</button></td></tr>';
+    }).join("") : '<tr><td colspan="8" class="muted" style="padding:16px">No duties ' + (filterId ? "for this person yet." : "yet.") + " Press <b>Add duty</b> to start.</td></tr>";
+  }
+
+  function renderPeople() {
+    $("peopleRows").innerHTML = model.people.map((p) =>
+      '<tr data-id="' + esc(p.id) + '">' +
+      '<td style="min-width:110px"><input type="text" data-k="person" data-f="name" value="' + esc(p.name) + '" aria-label="Name"></td>' +
+      '<td style="min-width:110px"><input type="text" data-k="person" data-f="role" value="' + esc(p.role) + '" aria-label="Role"></td>' +
+      '<td style="min-width:104px"><select data-k="person" data-f="lane" aria-label="Lane">' + model.lanes.map((l) => '<option value="' + esc(l.id) + '"' + (l.id === p.lane ? " selected" : "") + ">" + esc(l.name) + "</option>").join("") + "</select></td>" +
+      '<td style="min-width:118px"><select data-k="person" data-f="tier" aria-label="Column">' + TIERS.map((n, i) => '<option value="' + i + '"' + (i === p.tier ? " selected" : "") + ">" + n + "</option>").join("") + "</select></td>" +
+      '<td style="text-align:right"><input type="number" min="0" step="0.5" data-k="person" data-f="hoursTotal" value="' + (num(p.hoursTotal) ? esc(num(p.hoursTotal)) : "") + '" placeholder="–" aria-label="Stated hours a week"></td>' +
+      '<td style="text-align:center"><input type="checkbox" data-k="person" data-f="bottleneck"' + (p.bottleneck ? " checked" : "") + ' aria-label="Bottleneck"></td>' +
+      '<td><button type="button" class="x" data-del="person" aria-label="Remove person">×</button></td></tr>').join("");
+  }
+
+  function renderLanes() {
+    $("laneRows").innerHTML = model.lanes.map((l) =>
+      '<tr data-id="' + esc(l.id) + '"><td><input type="text" data-k="lane" data-f="name" value="' + esc(l.name) + '" aria-label="Lane name"></td>' +
+      '<td><input type="text" data-k="lane" data-f="note" value="' + esc(l.note || "") + '" aria-label="Lane note"></td>' +
+      '<td><button type="button" class="x" data-del="lane" aria-label="Remove lane">×</button></td></tr>').join("");
+  }
+
+  function renderAll() { renderChart(); renderTasks(); renderPeople(); renderLanes(); if (filterId) focusOn(filterId); }
+
+  let chartTimer = null;
+  function softChart() { clearTimeout(chartTimer); chartTimer = setTimeout(() => { renderChart(); if (filterId) focusOn(filterId); }, 140); }
+
+  document.addEventListener("input", (e) => {
+    const el = e.target, k = el.dataset && el.dataset.k; if (!k) return;
+    const id = el.closest("tr").dataset.id, f = el.dataset.f;
+    const list = k === "task" ? model.tasks : k === "person" ? model.people : model.lanes;
+    const item = list.find((x) => x.id === id); if (!item) return;
+    let v = el.type === "checkbox" ? el.checked : el.value;
+    if (f === "hours" || f === "hoursTotal") v = num(v);
+    if (f === "tier") v = parseInt(v, 10);
+    if (k === "task" && f === "status") {
+      if (v === "keep") { item.to = item.from; item.proposed = false; }
+      else {
+        item.proposed = v === "prop";
+        if (item.to === item.from) { const alt = model.people.find((p) => p.id !== item.from && onRoute({ from: item.from, to: p.id })) || model.people.find((p) => p.id !== item.from); if (alt) item.to = alt.id; }
+      }
+      renderAll(); changed(); return;
+    }
+    if (k === "task" && f === "from" && item.to !== item.from) { /* keep its new owner */ }
+    else if (k === "task" && f === "from") { item[f] = v; item.to = v; renderAll(); changed(); return; }
+    item[f] = v;
+    if (k === "task" && f === "from" && item.to === item.from) { const alt = model.people.find((p) => p.id !== item.from); if (alt) item.to = alt.id; item.proposed = false; }
+    if (k === "person" && f === "bottleneck" && v && !item.color) item.color = COLORS[model.people.filter((p) => p.color).length % COLORS.length];
+    const structural = el.tagName === "SELECT" || el.type === "checkbox";
+    if (structural) renderAll(); else softChart();
+    changed();
+  });
+
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-del]"); if (!b) return;
+    if (!b.classList.contains("armed") && b.dataset.del !== "task") { b.classList.add("armed"); b.textContent = "Remove?"; setTimeout(() => { if (b.isConnected) { b.classList.remove("armed"); b.textContent = "×"; } }, 3000); return; }
+    const id = b.closest("tr").dataset.id;
+    if (b.dataset.del === "task") model.tasks = model.tasks.filter((t) => t.id !== id);
+    if (b.dataset.del === "person") { model.people = model.people.filter((p) => p.id !== id); model.tasks = model.tasks.filter((t) => t.from !== id && t.to !== id); if (filterId === id) filterId = null; }
+    if (b.dataset.del === "lane") { if (model.lanes.length < 2) return; model.lanes = model.lanes.filter((l) => l.id !== id); }
+    renderAll(); changed();
+  });
+
+  $("addTask").addEventListener("click", () => {
+    const from = filterId || (model.people.find((p) => p.bottleneck) || model.people[0]).id;
+    const fp = person(from);
+    const to = (model.people.find((p) => p.id !== from && onRoute({ from, to: p.id }) && p.tier > fp.tier) || model.people.find((p) => p.id !== from)).id;
+    const t = { id: uid("t"), from, to: from, bucket: "", activity: "" };
+    model.tasks.push(t); renderAll(); changed();
+    const i = document.querySelector('#taskRows tr[data-id="' + t.id + '"] input[data-f="activity"]'); if (i) i.focus();
+  });
+  $("addPerson").addEventListener("click", () => {
+    const l = model.lanes[model.lanes.length - 1];
+    model.people.push({ id: uid("p"), name: "New person", role: "", lane: l.id, tier: 2, bottleneck: false });
+    renderAll(); changed();
+    const rows = document.querySelectorAll("#peopleRows tr"); const i = rows[rows.length - 1].querySelector("input"); i.focus(); i.select();
+  });
+  $("addLane").addEventListener("click", () => { model.lanes.push({ id: uid("l"), name: "New lane", note: "" }); renderAll(); changed(); });
+  $("clearFilter").addEventListener("click", () => setFilter(null));
+  $("clearExamples").addEventListener("click", () => {
+    model.tasks.forEach((t) => { t.activity = ""; });
+    model.examples = false; renderAll(); changed();
+  });
+
+  $("vBoard").addEventListener("click", () => setView("board"));
+  $("vTree").addEventListener("click", () => setView("tree"));
+  function setUnit(u) {
+    unit = u; try { localStorage.setItem(LS_KEY + ":unit", u); } catch (_) {}
+    $("uDuties").setAttribute("aria-pressed", String(u === "duties"));
+    $("uHours").setAttribute("aria-pressed", String(u === "hours"));
+    playToken++; renderChart(); setMode(mode === "today" ? "today" : "after"); if (filterId) focusOn(filterId);
+  }
+  $("uDuties").addEventListener("click", () => setUnit("duties"));
+  $("uHours").addEventListener("click", () => setUnit("hours"));
+  $("vLanes").addEventListener("click", () => setView("lanes"));
+  $("mToday").addEventListener("click", () => { playToken++; if (tour.on) endTour(false); setMode("today"); });
+  $("mAfter").addEventListener("click", () => { playToken++; if (tour.on) endTour(false); setMode("after"); });
+  $("play").addEventListener("click", play);
+  $("full").addEventListener("click", () => {
+    const el = document.querySelector(".stage");
+    try { if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen().catch(() => {}); } catch (_) {}
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const st = document.querySelector(".stage");
+    st.style.overflow = document.fullscreenElement ? "auto" : "";
+    $("full").textContent = document.fullscreenElement ? "Exit full screen" : "Full screen";
+  });
+
+  /* ───────── Data dialog ───────── */
+  const dlg = $("dataDlg");
+  $("openData").addEventListener("click", () => { $("dataText").value = JSON.stringify(model, null, 2); $("dataMsg").textContent = ""; try { dlg.showModal(); } catch (_) { dlg.setAttribute("open", ""); } });
+  $("closeData").addEventListener("click", () => dlg.close());
+  $("copyData").addEventListener("click", () => {
+    const ta = $("dataText");
+    navigator.clipboard && navigator.clipboard.writeText(ta.value).then(() => ($("dataMsg").textContent = "Copied."), () => { ta.select(); $("dataMsg").textContent = "Select-all is on. Press Ctrl+C or ⌘C to copy."; });
+    if (!navigator.clipboard) { ta.select(); $("dataMsg").textContent = "Press Ctrl+C or ⌘C to copy."; }
+  });
+  $("applyData").addEventListener("click", () => {
+    try { const m = JSON.parse($("dataText").value); model = normalize(m); filterId = null; renderAll(); changed(); $("dataMsg").textContent = "Loaded."; }
+    catch (err) { $("dataMsg").textContent = "That isn't valid map data: " + err.message; }
+  });
+  let resetArmed = false;
+  $("resetEx").addEventListener("click", () => {
+    if (!resetArmed) { resetArmed = true; $("resetEx").textContent = "Press again to reset"; setTimeout(() => { resetArmed = false; $("resetEx").textContent = "Reset to starting map"; }, 3000); return; }
+    resetArmed = false; $("resetEx").textContent = "Reset to starting map";
+    model = clone(EXAMPLE); filterId = null; renderAll(); changed(); $("dataText").value = JSON.stringify(model, null, 2); $("dataMsg").textContent = "Reset to the starting map.";
+  });
+
+  /* ───────── Saving: shared store when the page runs as a Claude artifact, this browser otherwise ───────── */
+  function status(s, text) { $("status").dataset.s = s; $("statusText").textContent = text; }
+
+  function changed() {
+    dirty = true;
+    try { localStorage.setItem(LS_KEY, JSON.stringify(model)); } catch (_) {}
+    if (docRef && canWrite) { status("saving", "Saving…"); clearTimeout(saveTimer); saveTimer = setTimeout(save, 900); }
+    else if (docRef) status("view", "View only · changes stay on this screen");
+    else status("local", "Saved in this browser");
+  }
+
+  async function save() {
+    if (saving) { clearTimeout(saveTimer); saveTimer = setTimeout(save, 400); return; }
+    saving = true;
+    const snapshot = JSON.stringify(model);
+    try {
+      await docRef.set({ model: JSON.parse(snapshot), savedAt: new Date().toISOString() });
+      if (JSON.stringify(model) === snapshot) dirty = false;
+      status("saved", "Saved for everyone");
+    } catch (err) {
+      if (err && (err.code === "not_granted" || err.code === "revoked")) { canWrite = false; status("view", "View only · changes stay on this screen"); }
+      else status("local", "Couldn't save. Changes are kept in this browser.");
+    } finally { saving = false; }
+  }
+
+  function loadLocal() {
+    try { const raw = localStorage.getItem(LS_KEY); if (raw) { model = normalize(JSON.parse(raw)); return true; } } catch (_) {}
+    return false;
+  }
+
+  async function connect() {
+    if (!window.claude || typeof window.claude.use !== "function") { status("local", loadLocal() ? "Saved in this browser" : "Starting map · edits save in this browser"); renderAll(); return; }
+    try { db = await window.claude.use("db"); } catch (_) { db = null; }
+    if (!db) { status("local", "Edits save in this browser"); return; }
+    try {
+      const user = await window.claude.use("user");
+      if (user) { const c = await user.can("data.write"); if (c === false) canWrite = false; }
+    } catch (_) {}
+    docRef = db.doc(DOC_PATH);
+    status("saving", "Loading saved map…");
+    const timer = setTimeout(() => status("local", "Can't reach the saved map yet. Showing the last copy on this screen."), 10000);
+    docRef.onSnapshot((snap) => {
+      if (!snap.metadata.fromCache) clearTimeout(timer);
+      if (snap.exists) {
+        const data = snap.data() || {};
+        if (data.model && !dirty && !snap.metadata.hasPendingWrites && JSON.stringify(normalize(data.model)) !== JSON.stringify(model)) {
+          model = normalize(data.model);
+          renderAll();
+        }
+        if (!snap.metadata.fromCache && !dirty) status(canWrite ? "saved" : "view", canWrite ? "Saved for everyone" : "View only");
+      } else if (!snap.metadata.fromCache) {
+        status(canWrite ? "saved" : "view", canWrite ? "Starting map · your edits save for everyone" : "View only");
+      }
+    }, () => { clearTimeout(timer); status("local", "Saved map unavailable. Edits stay on this screen."); });
+  }
+
+  /* ───────── Boot ───────── */
+  status("local", "Starting map");
+  $("vBoard").setAttribute("aria-pressed", String(view === "board"));
+  $("uDuties").setAttribute("aria-pressed", String(unit === "duties"));
+  $("uHours").setAttribute("aria-pressed", String(unit === "hours"));
+  $("vTree").setAttribute("aria-pressed", String(view === "tree"));
+  $("vLanes").setAttribute("aria-pressed", String(view === "lanes"));
+  renderAll();
+  playLabel();
+  requestAnimationFrame((t) => { last = t; requestAnimationFrame(frame); });
+  connect();
+})();
+</script>
+
+</body>
+</html>
