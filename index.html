@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Huddle — AI that runs the dental office, so your people can run the practice</title>
+<meta name="description" content="Huddle is the AI operating layer for dental groups. Workspace clears the office manager's queues: insurance AR, patient balances, pre-auths, Open Chair recall calls, call coaching and a self-training Dental Wiki. Pulse runs the owner's books, schedules, HR, payroll and marketing report card end to end. Press the button. The chore is done.">
+<meta property="og:title" content="Huddle — AI that runs the dental office">
+<meta property="og:description" content="Workspace for office managers. Pulse for owners. Press the button, the chore is done.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e121c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Huddle home">
+      <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><circle cx="11.5" cy="13" r="4" fill="#fff"/><circle cx="20.5" cy="13" r="4" fill="#fff"/><path d="M8 24c0-4 3.5-6 8-6s8 2 8 6" fill="#fff"/></svg>
+      huddle
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#workspace">Workspace</a>
+      <a href="#pulse">Pulse</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#security">Security</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://app.huddle.dental" rel="noopener">Sign in</a>
+      <a class="btn btn-primary" href="#contact">Book a demo</a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" data-open="false">
+    <div class="wrap">
+      <a href="#workspace">Workspace · for office managers</a>
+      <a href="#pulse">Pulse · for owners</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#integrations">Integrations</a>
+      <a href="#security">Security</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="#contact">Book a demo</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-top">
+    <div class="hero-copy">
+      <span class="eyebrow hero-eyebrow">For dental groups that would rather see patients than paperwork</span>
+      <h1>Press the button.<br>The chore is <span class="em">done.</span></h1>
+      <p class="lede">Huddle is the AI operating layer for dental groups. It plugs into your practice management system, your payers, your phones and your books, then works the queues your team used to work by hand. Insurance AR, patient balances, pre-auths, empty chairs, call coaching, the daily huddle. Your office manager presses one button. Your owner opens one screen.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#contact">Book a 20-minute demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost btn-lg" href="#demo">Try the queue below</a>
+      </div>
+      <div class="hero-note">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><b>Workspace</b>&nbsp;for office managers · <b>Pulse</b>&nbsp;for owners</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Connects to Eaglesoft, Dentrix, Open Dental, CareStack and more</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>AI plus a human operations team behind every queue</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pay for work done, not seats</span>
+      </div>
+    </div>
+
+    <!-- Fusion: everything a dental office juggles becomes one huddle -->
+    <div class="fusion" id="fusion" aria-label="Fifteen office chores merging into one Huddle">
+      <div class="fstage" id="fstage">
+        <div class="fring" aria-hidden="true"></div>
+        <div class="forbit" id="forbit">
+        <span class="fchip ws" data-i="0">Insurance claims</span>
+        <span class="fchip ws" data-i="1">Patient balances</span>
+        <span class="fchip ws" data-i="2">Pre-authorizations</span>
+        <span class="fchip ws" data-i="3">Recall calls</span>
+        <span class="fchip ws" data-i="4">Missed calls</span>
+        <span class="fchip ws" data-i="5">Daily audits</span>
+        <span class="fchip ws" data-i="6">Team training</span>
+        <span class="fchip ws" data-i="7">Patient financing</span>
+        <span class="fchip ws" data-i="8">Daily huddle</span>
+        <span class="fchip pl" data-i="9">Bookkeeping</span>
+        <span class="fchip pl" data-i="10">Bills & 1099s</span>
+        <span class="fchip pl" data-i="11">Staff scheduling</span>
+        <span class="fchip pl" data-i="12">Attendance</span>
+        <span class="fchip pl" data-i="13">Payroll</span>
+        <span class="fchip pl" data-i="14">Your SEO & SEM</span>
+        </div>
+        <button class="fcore" id="fcore" type="button" aria-label="Replay the animation">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="11.5" cy="13" r="4" fill="#fff"/><circle cx="20.5" cy="13" r="4" fill="#fff"/><path d="M8 24c0-4 3.5-6 8-6s8 2 8 6" fill="#fff"/></svg>
+        </button>
+      </div>
+      <div class="fcaption"><b id="fcount">15</b> <span id="fword">chores a dental office juggles</span><span class="farrow" id="farrow">→</span><b class="fone" id="fone">one huddle</b></div>
+    </div>
+    </div>
+
+    <!-- Interactive queue demo -->
+    <div class="frame demo" id="demo" aria-label="Interactive queue demo">
+      <div class="frame-bar"><i></i><i></i><i></i><span class="url">app.huddle.dental · Workspace · Lakeside Dental, Montclair</span></div>
+      <div class="demo-body">
+        <div class="demo-side">
+          <div class="demo-tabs" role="tablist" aria-label="Choose a queue">
+            <button class="demo-tab" role="tab" aria-selected="true" data-q="ar"><b>Insurance AR</b><span>23 claims · $41,280</span></button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-q="bal"><b>Patient balances</b><span>18 accounts · $12,940</span></button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-q="pa"><b>Pre-auths</b><span>9 requests · $18,600</span></button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-q="oc"><b>Open Chair</b><span>6 openings tomorrow</span></button>
+          </div>
+          <div class="demo-cta">
+            <button class="btn btn-primary" id="runQueue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+              <span id="runLabel">Work this queue</span>
+            </button>
+            <p class="demo-hint" id="runHint">One press. Huddle calls the payer portals, pulls the EOBs, fixes the codes and resubmits. You get the few that need a human.</p>
+          </div>
+          <div class="demo-progress" aria-hidden="true"><i id="runBar"></i></div>
+        </div>
+        <div class="demo-main">
+          <div class="demo-head"><span id="demoTitle">Insurance AR · 23 open claims</span><span class="demo-sum" id="demoSum"><b>0</b> resolved · <b>0</b> need you</span></div>
+          <ul class="demo-list" id="demoList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PMS STRIP ===================== -->
+<section class="logos" aria-label="Works with">
+  <div class="wrap">
+    <p>Built for the systems dental groups already run on</p>
+    <div class="marquee">
+      <div class="marquee-track" aria-hidden="true">
+        <span>Eaglesoft</span><span>Dentrix</span><span>Open Dental</span><span>CareStack</span><span>Dentrix Ascend</span><span>Curve Dental</span><span>Denticon</span><span>tab32</span><span>Fuse</span><span>Oryx</span>
+        <span>Eaglesoft</span><span>Dentrix</span><span>Open Dental</span><span>CareStack</span><span>Dentrix Ascend</span><span>Curve Dental</span><span>Denticon</span><span>tab32</span><span>Fuse</span><span>Oryx</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TWO PRODUCTS ===================== -->
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">One huddle, two products</span>
+      <h2>Workspace runs the office. Pulse runs the <span class="em">business.</span></h2>
+      <p class="lede">The office manager and the owner carry two very different loads. Huddle takes both. Each product stands alone, and they share one truth: the same patients, the same claims, the same dollars.</p>
+    </div>
+    <div class="split">
+      <a class="prod prod-ws" href="#workspace">
+        <div class="prod-top"><span class="prod-badge">Workspace</span><span class="prod-for">For office managers and front desks</span></div>
+        <h3>Every chore in one queue. Every queue works itself.</h3>
+        <p>Insurance AR, patient balances, pre-auths, empty chairs filled by a voice AI, yesterday's blind spots, every phone call scored, the Dental Wiki that trains your team, and a financing leaderboard. Open it at 7:45. Press the button. Go run the floor.</p>
+        <ul class="prod-list">
+          <li>Queues that resolve with one press</li>
+          <li>Recall calls that fill the schedule <small>(Open Chair)</small></li>
+          <li>Daily audits: what you missed yesterday <small>(Blind Spots)</small></li>
+          <li>Phone coaching: every call scored <small>(Call Check)</small></li>
+          <li>Team training: your practice's own Wikipedia <small>(Dental Wiki)</small></li>
+          <li>Financing leaderboard across offices</li>
+          <li>The daily huddle, written for you</li>
+        </ul>
+        <span class="prod-link">See Workspace <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="prod prod-pl" href="#pulse">
+        <div class="prod-top"><span class="prod-badge">Pulse</span><span class="prod-for">For owners and partners</span></div>
+        <h3>Books, schedules, HR, payroll and marketing, run for you. Not another dashboard to run.</h3>
+        <p>Front-to-back accounting reconciled to your practice management system, with a month-end summary and EBITDA by practice. Shifts set with your office managers, attendance tracked by person, warnings and compliance records kept. Payroll run and checked against hours logged. You open one screen and read what happened.</p>
+        <ul class="prod-list">
+          <li>Your books: AP, AR, month-end close and EBITDA <small>(Bottom Line)</small></li>
+          <li>Staff scheduling and time tickets <small>(Roster)</small></li>
+          <li>Attendance: lates, call-outs and no-shows <small>(On Time)</small></li>
+          <li>HR records: warnings and compliance <small>(Staff File)</small></li>
+          <li>Payroll, run and checked against hours <small>(Payday)</small></li>
+          <li>Your SEO and SEM, graded monthly <small>(Curb Appeal)</small></li>
+          <li>Locked to the owner login, always</li>
+        </ul>
+        <span class="prod-link">See Pulse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== A TUESDAY ===================== -->
+<section class="section" id="day" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The office manager's day</span>
+      <h2>Same Tuesday. <span class="em">Different</span> office manager.</h2>
+      <p class="lede">The job was never the spreadsheets. It was the patients, the team and the schedule. Huddle gives the day back to the parts that need a person.</p>
+    </div>
+    <div class="day">
+      <div class="day-col">
+        <h3>Before <small>buried in paper</small></h3>
+        <ul class="tl">
+          <li><span class="t">7:45 AM</span><b>Six spreadsheets, three inboxes, one voicemail box</b>The AR report, the pre-auth tracker, the audit sheet, the corporate file you're not sure is current, and forty unread emails.</li>
+          <li><span class="t">9:30 AM</span><b>Two hours on hold with a payer</b>Three claims denied for a missing attachment. You find the x-rays, re-attach, resubmit, and write it down somewhere.</li>
+          <li><span class="t">12:10 PM</span><b>The new hire asks the same question again</b>How do we quote bonding insurance won't cover? You stop what you're doing and explain it for the fourth time.</li>
+          <li><span class="t">3:00 PM</span><b>A missed call from a new patient at 11:52</b>Nobody called them back. You find out when the review goes up.</li>
+          <li><span class="t">6:15 PM</span><b>Still here</b>Tomorrow's schedule has two gaps you haven't filled, and the owner wants to know why collections dipped.</li>
+        </ul>
+        <div class="day-sum"><span>Hours on chores, not patients</span><b>5.5 hrs</b></div>
+      </div>
+      <div class="day-col after">
+        <h3>With Huddle <small>one screen</small></h3>
+        <ul class="tl">
+          <li class="good"><span class="t">7:45 AM</span><b>Open Huddle. Read the brief.</b>"23 claims worked overnight, 19 resolved. 4 need you. Open Chair filled two of tomorrow's three gaps with recall patients last evening. One blind spot from yesterday."</li>
+          <li class="good"><span class="t">7:52 AM</span><b>Press the button on the four</b>Each one comes with the payer's answer, the fix Huddle proposes and a one-tap approve. Seven minutes.</li>
+          <li class="good"><span class="t">11:53 AM</span><b>The missed call is already texted back</b>Call Check saw it, offered two openings, booked the one they picked, and logged the call for coaching.</li>
+          <li class="good"><span class="t">12:10 PM</span><b>The new hire asks the Dental Wiki</b>The answer is your practice's own, with your fee schedule and your doctor's rule. You never hear the question.</li>
+          <li class="good"><span class="t">4:30 PM</span><b>Home on time</b>The scoreboard shows the week. Financing is up 18% over last month. The owner saw it in Pulse before asking.</li>
+        </ul>
+        <div class="day-sum"><span>Hours on chores, not patients</span><b>25 min</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WORKSPACE: THEMES ===================== -->
+<section class="section" id="workspace">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Workspace · for office managers</span>
+      <h2>Seven things that used to be your job. Now they're <span class="em">Huddle's.</span></h2>
+      <p class="lede">Each one is a queue, a caller, a coach or a brain. All of them are connected to the systems behind the desk, and all of them learn your practice.</p>
+    </div>
+
+    <!-- Theme 1: queues -->
+    <div class="feature">
+      <div class="feature-copy">
+        <span class="feature-k">01 · Queues that work themselves</span>
+        <h3>Insurance AR and patient balances, resolved while you sleep.</h3>
+        <p>Huddle reads the aging report straight from your practice management system. For every unpaid, underpaid or denied claim it checks the payer portal, pulls the EOB, finds the missing attachment or the wrong code, corrects it and resubmits. For every patient balance it sends the statement, offers a payment plan or financing by text, and posts what comes back. What's left is a short list that needs a human, each with the fix already drafted.</p>
+        <ul class="ticks">
+          <li>Denials worked with the payer's reason and the correction, not a to-do</li>
+          <li>Patient balances offered a plan, financing or a two-tap payment link</li>
+          <li>Pre-auths submitted with the x-rays and narrative attached the first time</li>
+          <li>Every action written back to your PMS and the ledger under a name</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Queues · Insurance AR · today</span></div>
+          <div class="mini">
+            <div class="row"><h4>Worked overnight</h4><span class="chip done">19 resolved</span></div>
+            <div class="list">
+              <div class="li"><span class="ck ok">✓</span><span><b>Delta Dental</b> · D2740, denied for missing attachment<small>Huddle attached the PA x-ray and narrative, resubmitted 2:14 AM. Expected $1,185 in 14 days.</small></span><span class="chip done">Resolved</span></div>
+              <div class="li"><span class="ck ok">✓</span><span><b>Horizon NJ Health</b> · D4341, underpaid $212<small>Fee schedule mismatch. Appeal filed with the contracted rate. Tracking.</small></span><span class="chip done">Appealed</span></div>
+              <div class="li"><span class="ck no">!</span><span><b>MetLife</b> · D6010, denied as not covered<small>Plan excludes implants. Huddle drafted the patient conversation and a financing offer. Needs you.</small></span><span class="chip todo">Needs you</span></div>
+            </div>
+            <div class="row" style="justify-content:flex-end"><span class="btn btn-primary" style="padding:9px 14px;font-size:13px">Approve the 4 that need me</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 02: Open Chair -->
+    <div class="feature flip">
+      <div class="feature-copy">
+        <span class="feature-k">02 · Recall calls · <em>Open Chair</em></span>
+        <h3>Every empty chair gets a call. A warm, patient voice makes it.</h3>
+        <p>Open Chair is Huddle's recall voice AI. Each evening it looks at tomorrow's gaps and the patients who are due, then calls them the way your best front desk person would: unhurried, by name, with two real openings to choose from. It books straight into the schedule, texts a "reply 1 or 2" follow-up to anyone who didn't pick up, and hands anything clinical or about money to your manager. In the morning the chairs are full and the call summaries are waiting in Workspace.</p>
+        <ul class="ticks">
+          <li>Calls only patients who are due, inside the hours and attempt limits you set</li>
+          <li>Offers real open times, books them, and reads the confirmation back</li>
+          <li>Voicemail becomes a text with two openings; "1" or "2" books the slot</li>
+          <li>Pain goes to a short visit, red flags go to your manager, "stop calling" is honored at once</li>
+          <li>Workspace shows the summary of every call and how the AI performed; it only reads from the calling platform, never writes to it</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Open Chair · last evening · Lakeside Dental</span></div>
+          <div class="mini">
+            <div class="row"><h4>Tomorrow: 3 gaps → 1 left</h4><span class="chip done">2 chairs filled · $640 production</span></div>
+            <div style="display:grid;gap:12px">
+              <div class="bars">
+                <div class="row"><span>Patients called</span><div class="bar g"><i style="width:100%"></i></div><b>31</b></div>
+                <div class="row"><span>Reached</span><div class="bar g"><i style="width:58%"></i></div><b>18</b></div>
+                <div class="row"><span>Booked</span><div class="bar g"><i style="width:36%"></i></div><b>11</b></div>
+                <div class="row"><span>Texted, booked by reply</span><div class="bar a"><i style="width:19%"></i></div><b>6</b></div>
+                <div class="row"><span>To the manager</span><div class="bar"><i style="width:6%"></i></div><b>2</b></div>
+              </div>
+              <div class="list">
+                <div class="li"><span class="ck ok">✓</span><span>6:12 PM · Maria R. · 2m 10s<small>"Thursday at two works." Booked with Dr. Lopez. Reminder sent.</small></span><span class="chip done">Booked</span></div>
+                <div class="li"><span class="ck wt">!</span><span>6:40 PM · James T. · voicemail<small>Text sent with Thu 2:00 and Sat 10:20. Replied "2" at 8:05 PM. Booked.</small></span><span class="chip done">Booked by text</span></div>
+                <div class="li"><span class="ck no">!</span><span>7:02 PM · Dana K. · 1m 30s<small>Asked about a balance. Callback logged for the manager, 9 AM.</small></span><span class="chip todo">Manager</span></div>
+              </div>
+            </div>
+            <div class="row"><span class="sub">Recall visits booked this month: 142 · same month last year: 61</span><span class="chip done">AI answer-to-book 61%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 2: blind spots -->
+    <div class="feature">
+      <div class="feature-copy">
+        <span class="feature-k">03 · Daily audits · <em>Blind Spots</em></span>
+        <h3>What you missed yesterday, before it costs you.</h3>
+        <p>Every walkout and every visit gets a second look overnight: the chart, the codes, the consent, the balance collected, the next appointment booked, the documents signed. Huddle doesn't send you an audit. It sends you yesterday's three blind spots, in plain words, with the fix. And when the same miss repeats, it writes the lesson into your Dental Wiki, so it stops repeating.</p>
+        <ul class="ticks">
+          <li>Chart Check: notes, codes, consent, missed services</li>
+          <li>Desk Check: balances, insurance, next appointment, documents</li>
+          <li>Patterns become lessons; lessons become fewer misses</li>
+          <li>Your score trends up, and you can see it</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Blind Spots · yesterday · 3 of 41 visits</span></div>
+          <div class="mini">
+            <div class="list">
+              <div class="li"><span class="ck wt">!</span><span><b>Perio charting missing</b> · patient 54063, Dr. Lopez<small>Claim will deny without it. Chart note drafted for the doctor to sign.</small></span><span class="chip wait">Fix drafted</span></div>
+              <div class="li"><span class="ck wt">!</span><span><b>Left without next appointment</b> · patient 50599<small>Crown prep due in 3 weeks. Text with two openings sent at 8:00 AM.</small></span><span class="chip wait">Offered</span></div>
+              <div class="li"><span class="ck no">!</span><span><b>Copay not collected</b> · patient 82692, $75<small>Third time this month at checkout. Lesson added to the wiki: collect before the patient leaves.</small></span><span class="chip todo">Lesson learned</span></div>
+            </div>
+            <div class="viz"><div class="row"><span>Clean visits this month</span><div class="bar g"><i style="width:93%"></i></div><b class="tabular">93%</b></div><div class="row"><span>Same month last year</span><div class="bar"><i style="width:71%"></i></div><b class="tabular">71%</b></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 3: Call Check -->
+    <div class="feature flip">
+      <div class="feature-copy">
+        <span class="feature-k">04 · Phone coaching · <em>Call Check</em></span>
+        <h3>Every call scored. Every missed caller recovered. Every desk coached.</h3>
+        <p>Your phones are the front door, and most groups have no idea how it's answered. Call Check listens to every call, scores fourteen behaviours, finds the new patients who were never offered a time, and texts the ones who hung up on hold. Each office gets one focus a month and a coaching line on the calls that matter. The leaderboard makes it a game your front desks want to win.</p>
+        <ul class="ticks">
+          <li>Answer rate, after-hours, new callers booked, missed callers recovered</li>
+          <li>Fourteen yes/no behaviours per call, scored by AI, spot-checked by people</li>
+          <li>Coaching lines with the recording, one focus per office per month</li>
+          <li>Missed new-patient calls get a text with two openings in under five minutes</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Call Check · October · this month's focus: offer a specific time</span></div>
+          <div class="mini">
+            <div class="cols">
+              <div class="bars">
+                <div class="row"><span>Answer rate</span><div class="bar g"><i style="width:96%"></i></div><b>96%</b></div>
+                <div class="row"><span>New callers booked</span><div class="bar g"><i style="width:71%"></i></div><b>71%</b></div>
+                <div class="row"><span>Missed, recovered</span><div class="bar g"><i style="width:84%"></i></div><b>84%</b></div>
+                <div class="row"><span>Offered a time</span><div class="bar a"><i style="width:58%"></i></div><b>58%</b></div>
+              </div>
+              <div class="list">
+                <div class="li"><span class="ck ok">✓</span><span>Oct 16, 9:05 AM · new patient · 2m 05s<small>"Offered Thursday 2 or Saturday 10:20. Booked. Great warmth."</small></span><span class="money" style="font-size:11px">▶ Listen</span></div>
+                <div class="li"><span class="ck no">!</span><span>Oct 14, 2:12 PM · new patient · 3m 40s<small>Coaching: "Give two times instead of asking when works."</small></span><span class="money" style="font-size:11px">▶ Listen</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 4: Dental Wiki -->
+    <div class="feature">
+      <div class="feature-copy">
+        <span class="feature-k">05 · Team training · <em>Dental Wiki</em></span>
+        <h3>Your practice's own Wikipedia. It trains your team so you don't have to.</h3>
+        <p>You hire people, and then you train them, and then you train them again. The Dental Wiki is the one place every question goes: how we quote bonding, which fee schedule, what the doctor wants on a perio chart, who to call when the lab is late. Answers are yours, not generic, and the AI answers in your practice's voice because it learned from your rules, your lessons and your corrections. New hires ramp in days. Veterans stop being the help desk.</p>
+        <ul class="ticks">
+          <li>Hundreds of answers on day one, grown from your own standards and manuals</li>
+          <li>Ask in plain English, get your practice's answer with the source</li>
+          <li>Anyone can suggest; approvers publish; every version is kept</li>
+          <li>Lessons learned feed in from Blind Spots automatically</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Dental Wiki · Lakeside Dental · 412 answers · 10 topics</span></div>
+          <div class="mini">
+            <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg><span style="color:var(--ink)">how do we quote bonding insurance won't cover</span></div>
+            <div class="answer">Bonding that insurance won't cover is out of pocket. Charge it like a 4- or 5-surface filling: confirm the surfaces with Dr. Lopez, quote that fee from our schedule, put it on the treatment plan and have the patient sign before treatment.<small>Checkout, Treatment Plans &amp; Collections · your practice's answer · updated by Priya, 14 days ago · 3 versions kept</small></div>
+            <div class="row"><span class="sub">Asked 6 times this month · 0 times to a person</span><span class="chip done">New hire ramp: 4 days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 5: Financing leaderboard -->
+    <div class="feature flip">
+      <div class="feature-copy">
+        <span class="feature-k">06 · Patient financing · <em>Leaderboard</em></span>
+        <h3>Every office offers financing. The leaderboard makes them want to.</h3>
+        <p>Patients say yes to treatment when the number fits the month. Huddle tracks every Sunbit and CareCredit approval, every funded plan and every declined offer, by office and by month. The leaderboard shows this month against last, this year against last, who's climbing and who needs a nudge. It turns "did you offer financing?" into a scoreboard the whole group can see.</p>
+        <ul class="ticks">
+          <li>Funded dollars by office, month over month and year over year</li>
+          <li>Offer rate, approval rate, average plan size</li>
+          <li>Trending up, flat or down, with the reason</li>
+          <li>Feeds straight into Pulse as collected revenue</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Financing · leaderboard · October</span></div>
+          <div class="mini">
+            <div class="row"><h4>Funded this month</h4><span class="chip done">+18% vs September · +41% vs last October</span></div>
+            <div class="bars">
+              <div class="row"><span>1 · Lakeside</span><div class="bar g"><i style="width:96%"></i></div><b>$48.2k</b></div>
+              <div class="row"><span>2 · Harbor</span><div class="bar g"><i style="width:78%"></i></div><b>$39.1k</b></div>
+              <div class="row"><span>3 · Summit</span><div class="bar g"><i style="width:61%"></i></div><b>$30.6k</b></div>
+              <div class="row"><span>4 · Riverside</span><div class="bar a"><i style="width:34%"></i></div><b>$17.0k</b></div>
+            </div>
+            <div class="row"><span class="sub">Riverside offered financing on 31% of plans over $1,000. Group average 68%.</span><span class="chip wait">Nudge sent</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 6: the daily huddle -->
+    <div class="feature">
+      <div class="feature-copy">
+        <span class="feature-k">07 · The daily huddle</span>
+        <h3>The morning brief, written before you arrive.</h3>
+        <p>Every practice holds a huddle. Few have the numbers in front of them. At 7:30 Huddle writes yours: what was resolved overnight, what needs a person, today's gaps and who's been offered them, yesterday's blind spots, the one coaching line for the desk, and where the office stands this month. Read it in two minutes. Run the huddle. Go see patients.</p>
+        <ul class="ticks">
+          <li>Written in plain words, for your office, every morning</li>
+          <li>Scoreboard: open now, answered within three days, your pace</li>
+          <li>One tap from any line to the item behind it</li>
+          <li>Owners get the group version in Pulse</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="url">Today · Tuesday · Lakeside Dental</span></div>
+          <div class="mini brief">
+            <p><b>Good morning, Priya.</b> Overnight Huddle worked 23 claims and resolved 19; <b>4 need you</b> (about 7 minutes). Two patient balances were paid by text, $1,340. Open Chair filled <b>two of tomorrow's three gaps</b> last evening; 10:20 is still open and three more patients are being texted. Yesterday had <b>one blind spot</b>: a copay not collected at checkout, third this month. Coaching line for the desk today: offer two specific times. You're at <b>1.6 days</b> median response, pace <b>Fast</b>. Financing is up 18% on last month.</p>
+            <div class="row"><span class="chip done">Resolved 19</span><span class="chip todo">Needs you 4</span><span class="chip wait">Gaps 2</span><span class="chip wait">Blind spot 1</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OUTCOMES BAND ===================== -->
+<section class="stats" aria-label="Outcomes">
+  <div class="wrap">
+    <div class="stat"><b><span data-count="6">6</span><span class="em"> hrs</span></b><span>Back in each office manager's week, spent on patients and the team instead of chores</span></div>
+    <div class="stat"><b><span data-count="31">31</span><span class="em">%</span></b><span>Fewer claims aged past 90 days within the first quarter</span></div>
+    <div class="stat"><b><span data-count="84">84</span><span class="em">%</span></b><span>Of missed new-patient calls recovered by text inside five minutes</span></div>
+    <div class="stat"><b><span data-count="0">0</span></b><span>Pieces of paper an owner touches to close the books, run payroll or file 1099s</span></div>
+  </div>
+</section>
+
+<!-- ===================== PULSE ===================== -->
+<section class="section pulse" id="pulse">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pulse · for owners</span>
+      <h2>The back office, <span class="em">run for you.</span></h2>
+      <p class="lede">Pulse is not a reporting tool you have to feed. It is accounting, scheduling, HR, payroll and marketing done for the owner, by AI and by our operations team, as a complete third-party service with one screen on top. Six pages, each named for what you read on it. Locked to the owner login. Nobody else in the group can open it.</p>
+    </div>
+    <div class="pulse-grid">
+      <div class="pcard span3">
+        <div class="pcard-head"><span class="pcard-ico">$</span><div><h3>Your books</h3><span class="pcard-sub">Bottom Line · finance</span></div></div>
+        <p class="pcard-lede">Books, AP and AR, month-end close and EBITDA. Full front-to-back accounting for every practice.</p>
+        <ul class="ticks">
+          <li>Every deposit matched to the practice management system's day sheet, every transaction categorized nightly</li>
+          <li>Accounts payable: bills paid on schedule, vendors reconciled, 1099s generated on time</li>
+          <li>Accounts receivable: what Workspace collects posts straight into the books</li>
+          <li>A month-end summary with EBITDA analysis, practice by practice, by the fifth</li>
+          <li>Tax-ready every month; your accountant gets a package, not a shoebox</li>
+        </ul>
+        <div class="viz">
+          <div class="row"><span>September close</span><span class="chip done">Closed Oct 3 · ties out</span></div>
+          <div class="row"><span>Uncategorized transactions</span><b class="tabular money">0 of 1,284</b></div>
+          <div class="row"><span>EBITDA, group · margin</span><b class="tabular money">$412k · 39.1%</b></div>
+          <div class="row"><span>Vendors paid · 1099s ready</span><b class="tabular money">46 · 46</b></div>
+        </div>
+      </div>
+      <div class="pcard span3">
+        <div class="pcard-head"><span class="pcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M7 12h.01M17 12h.01"/></svg></span><div><h3>Payroll</h3><span class="pcard-sub">Payday</span></div></div>
+        <p class="pcard-lede">End-to-end payroll, run on the owner's behalf, then shown against the hours that were actually worked.</p>
+        <ul class="ticks">
+          <li>Every period run through your payroll provider; you approve, we do the rest</li>
+          <li>Hours paid checked against hours logged, every person, before it goes out</li>
+          <li>Overtime, corrections and set-aside roles caught before approval</li>
+          <li>Trends: labor as a share of collections, by office, period over period</li>
+          <li>One screen: what ran, for whom, what changed from the time clock</li>
+        </ul>
+        <div class="viz">
+          <div class="row"><span>Period ending Oct 23</span><span class="chip done">Ran Oct 25 · 63 of 63</span></div>
+          <div class="row"><span>Corrections caught before run</span><b class="tabular money">2 · $418</b></div>
+          <div class="row"><span>Labor as share of collections</span><b class="tabular money">27.9% ↓</b></div>
+        </div>
+      </div>
+      <div class="pcard span2">
+        <div class="pcard-head"><span class="pcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span><div><h3>Staff scheduling</h3><span class="pcard-sub">Roster · HR</span></div></div>
+        <p class="pcard-lede">Shift schedules and time tickets, set with your office managers.</p>
+        <ul class="ticks">
+          <li>Every office's week built to the doctor's day and the hygiene columns</li>
+          <li>Time-off requests, swaps and open shifts handled in one place</li>
+          <li>Time tickets from staff (late, absent, forgot to clock out) resolved and recorded</li>
+        </ul>
+        <div class="viz"><div class="row"><span>Next week</span><span class="chip done">13 offices scheduled</span></div><div class="row"><span>Open shifts · tickets waiting</span><b class="tabular money">0 · 0</b></div></div>
+      </div>
+      <div class="pcard span2">
+        <div class="pcard-head"><span class="pcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h3>Attendance</h3><span class="pcard-sub">On Time · HR</span></div></div>
+        <p class="pcard-lede">Late arrivals, call-outs and no-shows, by person and by practice.</p>
+        <ul class="ticks">
+          <li>Punches against the roster, every day, every person</li>
+          <li>How many times each person has been late or called out, this month and this year</li>
+          <li>Missed clock-ins and clock-outs fixed without the owner touching them</li>
+        </ul>
+        <div class="viz"><div class="row"><span>Adherence, group</span><div class="bar g"><i style="width:94%"></i></div><b class="tabular">94%</b></div><div class="row"><span>Lates this month</span><b class="tabular money">7 · 3 at one office</b></div></div>
+      </div>
+      <div class="pcard span2">
+        <div class="pcard-head"><span class="pcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><div><h3>HR records</h3><span class="pcard-sub">Staff File · HR compliance</span></div></div>
+        <p class="pcard-lede">Warnings, write-ups and HR compliance records, kept for you.</p>
+        <ul class="ticks">
+          <li>When attendance crosses your policy, the warning letter is drafted and waiting for a signature</li>
+          <li>Every write-up, acknowledgement and document in one file per person</li>
+          <li>Compliance records current, so the hard conversation has the paperwork behind it</li>
+        </ul>
+        <div class="viz"><div class="row"><span>Warnings drafted this month</span><b class="tabular money">2 · 1 signed</b></div><div class="row"><span>Files complete</span><span class="chip done">63 of 63</span></div></div>
+      </div>
+      <div class="pcard span6 curb">
+        <div class="pcard-head"><span class="pcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5M8 11h6M11 8v6"/></svg></span><div><h3>Your SEO and SEM</h3><span class="pcard-sub">Curb Appeal · marketing report card</span></div></div>
+        <div class="curb-grid">
+          <div>
+            <p class="pcard-lede">How new patients find you, graded every month. Search, ads, reviews and the calls they produce, practice by practice.</p>
+            <ul class="ticks">
+              <li>Google rankings for the searches that matter in your town, and how they moved</li>
+              <li>Ad spend, cost per new-patient call, and which campaigns booked</li>
+              <li>Reviews: new this month, average rating, response time</li>
+              <li>Tied to Call Check, so a "new patient" is counted when the phone rings and the visit books, not when an ad is clicked</li>
+              <li>A letter grade per practice and a month-over-month trend, so the question becomes "what moved" instead of "what is SEO"</li>
+              <li>Receives its data from Huddle's marketing audit platform, one way; Huddle never writes back</li>
+            </ul>
+          </div>
+          <div class="viz">
+            <div class="row"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600">Report card · October</span><span class="chip done">Group B+ · up from C+</span></div>
+            <div class="bars">
+              <div class="row"><span>Lakeside</span><div class="bar g"><i style="width:92%"></i></div><b>A−</b></div>
+              <div class="row"><span>Harbor</span><div class="bar g"><i style="width:80%"></i></div><b>B+</b></div>
+              <div class="row"><span>Summit</span><div class="bar a"><i style="width:62%"></i></div><b>B−</b></div>
+              <div class="row"><span>Riverside</span><div class="bar"><i style="width:44%"></i></div><b>C</b></div>
+            </div>
+            <div class="row"><span>New-patient calls from search</span><b class="tabular money">312 · +22%</b></div>
+            <div class="row"><span>Cost per new-patient call, ads</span><b class="tabular money">$38 · ↓ from $54</b></div>
+            <div class="row"><span>Reviews this month · avg rating</span><b class="tabular money">47 · 4.8</b></div>
+            <div class="row"><span class="sub">Riverside: ranking #9 for "dentist near me"; 3 reviews unanswered for 12 days. Plan drafted.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pulse-foot">
+      <div class="lockbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pulse is for owners only. The server refuses everyone else, admins included, and logs the attempt.</div>
+      <p>The result is simple. An owner of six practices opens Pulse on the first Monday of the month and sees last month closed with EBITDA by practice, payroll run and checked, every vendor paid, every roster filled, who was late and who's been warned, and a marketing report card for every office. Nothing to export. Nothing to sign. Nothing to chase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS / SERVICE AS A SOFTWARE ===================== -->
+<section class="section" id="how" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Software that does the work. People behind it who make sure it's <span class="em">right.</span></h2>
+      <p class="lede">Huddle is a service delivered as software. The AI works the queues. A dental operations team, who have run front desks and closed books for groups like yours, checks what the AI isn't sure about. You see one product. You pay for work done.</p>
+    </div>
+    <div class="loop">
+      <div class="step">
+        <span class="n">1</span>
+        <h3>Connect</h3>
+        <p>We connect your practice management system, payer portals, phones, financing partners, bank feeds and payroll provider. Two weeks, no migration. Your systems stay the system of record.</p>
+        <div class="viz"><div class="row"><span class="chip done">Eaglesoft · connected</span><span class="chip done">CallRail · connected</span><span class="chip done">Gusto · connected</span></div></div>
+      </div>
+      <div class="step">
+        <span class="n">2</span>
+        <h3>Huddle works the queues</h3>
+        <p>Overnight and all day: claims worked, balances offered, pre-auths filed, recall patients called, calls scored, blind spots found, books categorized, rosters built. Everything the AI isn't sure about goes to our operations team before it reaches you.</p>
+        <div class="viz"><div class="row"><span>Items worked last night, group</span><b class="tabular money">1,412</b></div><div class="row"><span>Needed a person</span><b class="tabular money">61 · 4%</b></div></div>
+      </div>
+      <div class="step">
+        <span class="n">3</span>
+        <h3>You press the button</h3>
+        <p>The office manager approves the few that need judgment. The owner reads what happened. Every action is written back to your systems under a name, and the scoreboard keeps the time.</p>
+        <div class="viz"><div class="row"><span>Office manager minutes per day</span><b class="tabular money">~12</b></div><div class="row"><span>Owner minutes per month</span><b class="tabular money">~30</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>Pay for the work, not the <span class="em">seats.</span></h2>
+      <p class="lede">Huddle prices like the service it replaces. A simple platform fee per practice, then a share of what we actually work: claims collected, balances recovered, books closed, payroll periods run. If we don't do the work, you don't pay for it. Every plan includes the operations team.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price">
+        <div class="price-head"><span class="prod-badge">Workspace</span><h3>For office managers</h3></div>
+        <p>Queues that work themselves, recall calls, daily audits, phone coaching, team training, the financing leaderboard and the daily huddle. Priced per practice plus a share of AR collected, balances recovered and recall visits booked.</p>
+        <ul class="ticks">
+          <li>Unlimited office managers and front desk seats</li>
+          <li>Insurance AR and patient balances worked end to end</li>
+          <li>Recall calls (Open Chair) fill schedule gaps by voice and text</li>
+          <li>Every call scored, coaching included</li>
+          <li>Dental Wiki built from your standards in week one</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Contact sales</a>
+      </div>
+      <div class="price featured">
+        <div class="price-tag">Most groups</div>
+        <div class="price-head"><span class="prod-badge">Huddle Complete</span><h3>Workspace + Pulse</h3></div>
+        <p>The whole group, front desk to back office, on one platform. Office managers get Workspace. Owners get Pulse. Books, rosters, HR and payroll run for you, priced per practice with volume pricing from ten locations.</p>
+        <ul class="ticks">
+          <li>Everything in Workspace and Pulse</li>
+          <li>Dedicated operations lead for your group</li>
+          <li>Monthly close, EBITDA, payroll and 1099s included</li>
+          <li>Group leaderboards, owner brief, partner reporting</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Contact sales</a>
+      </div>
+      <div class="price">
+        <div class="price-head"><span class="prod-badge">Pulse</span><h3>For owners</h3></div>
+        <p>Your books, staff scheduling, attendance, HR records, payroll and your SEO and SEM, run as a service, with the owner's screen on top. Priced per practice per month, with bookkeeping, bill pay, payroll runs, 1099 filing and the monthly marketing report card included.</p>
+        <ul class="ticks">
+          <li>Books reconciled to your PMS and closed monthly with EBITDA</li>
+          <li>Bills paid, vendors tracked, 1099s filed</li>
+          <li>Rosters, attendance, warnings and compliance records</li>
+          <li>Payroll run and checked against hours logged</li>
+          <li>Your SEO and SEM: rankings, ads and reviews graded monthly</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Contact sales</a>
+      </div>
+    </div>
+    <p class="price-note">Pricing is quoted after a 20-minute call where we look at your aging report, call volume and practice count together. No long contracts. Start with two practices if you like; most groups add the rest within a quarter.</p>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS (placeholder quotes) ===================== -->
+<!-- PLACEHOLDER: replace these three quotes with real customer quotes and names before launch. -->
+<section class="section" id="stories" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">From the front office and the corner office</span>
+      <h2>"I stopped asking <span class="em">where</span> and started asking <span class="em">what's next.</span>"</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <div><div class="stars" aria-label="5 stars">★★★★★</div><p>I used to spend my mornings on hold with payers. Now I read a brief, press approve on four items, and I'm on the floor with my team by eight. The denials get worked whether I'm there or not.</p></div>
+        <div class="by"><span class="av">P</span><span><b>Priya</b><small>Office manager · multi-location group, New Jersey</small></span></div>
+      </div>
+      <div class="quote">
+        <div><div class="stars" aria-label="5 stars">★★★★★</div><p>Two new front desk hires in a month and I never trained either of them on billing questions. They asked the Dental Wiki. It answered the way I would have, because it learned it from me.</p></div>
+        <div class="by"><span class="av">D</span><span><b>Dana</b><small>Regional manager · multi-location group, Indiana</small></span></div>
+      </div>
+      <div class="quote">
+        <div><div class="stars" aria-label="5 stars">★★★★★</div><p>Last month closed on the third with EBITDA by office. Payroll ran. Every vendor got paid. I found out from Pulse, not from my accountant. For the first time in twelve years I didn't touch a piece of paper to run six offices.</p></div>
+        <div class="by"><span class="av">R</span><span><b>Dr. R.</b><small>Owner · six-practice group, Pennsylvania</small></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INTEGRATIONS WALL ===================== -->
+<section class="section" id="integrations">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Integrations</span>
+      <h2>Keep your practice management system. Huddle plugs in <span class="em">behind it.</span></h2>
+      <p class="lede">We built Huddle against the systems dental groups actually run. Connections are live, in development or on the roadmap for the platforms below, and the list grows with every group we onboard.</p>
+    </div>
+  </div>
+  <div class="wall" aria-label="Integration partners">
+    <div class="wall-row">
+      <div class="wall-track">
+        <div class="tile-i"><b>Eaglesoft</b><small>Practice management</small></div><div class="tile-i"><b>Dentrix</b><small>Practice management</small></div><div class="tile-i"><b>Open Dental</b><small>Practice management</small></div><div class="tile-i"><b>CareStack</b><small>Cloud PMS</small></div><div class="tile-i"><b>Dentrix Ascend</b><small>Cloud PMS</small></div><div class="tile-i"><b>Curve Dental</b><small>Cloud PMS</small></div><div class="tile-i"><b>Denticon</b><small>Cloud PMS</small></div><div class="tile-i"><b>tab32</b><small>Cloud PMS</small></div><div class="tile-i"><b>Fuse</b><small>Cloud PMS</small></div><div class="tile-i"><b>Oryx</b><small>Cloud PMS</small></div>
+        <div class="tile-i"><b>Eaglesoft</b><small>Practice management</small></div><div class="tile-i"><b>Dentrix</b><small>Practice management</small></div><div class="tile-i"><b>Open Dental</b><small>Practice management</small></div><div class="tile-i"><b>CareStack</b><small>Cloud PMS</small></div><div class="tile-i"><b>Dentrix Ascend</b><small>Cloud PMS</small></div><div class="tile-i"><b>Curve Dental</b><small>Cloud PMS</small></div><div class="tile-i"><b>Denticon</b><small>Cloud PMS</small></div><div class="tile-i"><b>tab32</b><small>Cloud PMS</small></div><div class="tile-i"><b>Fuse</b><small>Cloud PMS</small></div><div class="tile-i"><b>Oryx</b><small>Cloud PMS</small></div>
+      </div>
+    </div>
+    <div class="wall-row reverse">
+      <div class="wall-track">
+        <div class="tile-i"><b>CallRail</b><small>Call tracking</small></div><div class="tile-i"><b>Weave</b><small>Phones &amp; messaging</small></div><div class="tile-i"><b>RingCentral</b><small>Phones</small></div><div class="tile-i"><b>Sunbit</b><small>Patient financing</small></div><div class="tile-i"><b>CareCredit</b><small>Patient financing</small></div><div class="tile-i"><b>Gusto</b><small>Payroll</small></div><div class="tile-i"><b>ADP</b><small>Payroll</small></div><div class="tile-i"><b>Sling</b><small>Scheduling &amp; time clock</small></div><div class="tile-i"><b>QuickBooks</b><small>Accounting</small></div><div class="tile-i"><b>Delta · MetLife · Aetna · Cigna</b><small>Payer portals</small></div><div class="tile-i"><b>Twilio</b><small>Texts &amp; voice</small></div><div class="tile-i"><b>Google Business Profile</b><small>Reviews &amp; rankings</small></div><div class="tile-i"><b>Google Ads</b><small>SEM spend &amp; calls</small></div><div class="tile-i"><b>Google Workspace</b><small>Sign-in &amp; drive</small></div>
+        <div class="tile-i"><b>CallRail</b><small>Call tracking</small></div><div class="tile-i"><b>Weave</b><small>Phones &amp; messaging</small></div><div class="tile-i"><b>RingCentral</b><small>Phones</small></div><div class="tile-i"><b>Sunbit</b><small>Patient financing</small></div><div class="tile-i"><b>CareCredit</b><small>Patient financing</small></div><div class="tile-i"><b>Gusto</b><small>Payroll</small></div><div class="tile-i"><b>ADP</b><small>Payroll</small></div><div class="tile-i"><b>Sling</b><small>Scheduling &amp; time clock</small></div><div class="tile-i"><b>QuickBooks</b><small>Accounting</small></div><div class="tile-i"><b>Delta · MetLife · Aetna · Cigna</b><small>Payer portals</small></div><div class="tile-i"><b>Twilio</b><small>Texts &amp; voice</small></div><div class="tile-i"><b>Google Business Profile</b><small>Reviews &amp; rankings</small></div><div class="tile-i"><b>Google Ads</b><small>SEM spend &amp; calls</small></div><div class="tile-i"><b>Google Workspace</b><small>Sign-in &amp; drive</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><p class="price-note" style="text-align:center;margin-inline:auto">Don't see yours? Huddle also reads any CSV or XLSX export, so no group waits on an integration to start.</p></div>
+</section>
+
+<!-- ===================== SECURITY / TRUST ===================== -->
+<section class="section trust" id="security">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Built for patient data</span>
+      <h2>Boring where it should be boring.</h2>
+      <p class="lede">AI that touches claims, balances and payroll has to be trustworthy before it is clever. Every rule below is enforced on the server, not in a checkbox.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Roles the server enforces</h3><p>Owner, admin, central team, office manager, front desk. Each sees only their practices. Pulse opens for owners alone, and every refused request is logged.</p></div>
+      <div class="trust-item"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Every AI action is ledgered</h3><p>Each claim worked, text sent, transaction categorized and roster change is written to an append-only ledger with what was done, why, and who approved it. You can always answer "who changed this?"</p></div>
+      <div class="trust-item"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>A human in the loop where it counts</h3><p>Money leaving, a patient conversation, a warning letter, a payroll correction: the AI drafts, a person approves. Anything the AI is unsure about goes to our operations team first.</p></div>
+      <div class="trust-item"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>HIPAA-aligned by design</h3><p>Minimum-necessary access per role and per practice, named accounts, Google sign-in, session limits, encryption in transit and at rest, and a Business Associate Agreement with every customer.</p></div>
+      <div class="trust-item"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 3v6h-6"/></svg>Nothing can be wiped</h3><p>A snapshot before every write. Syncs block on empty data or a 20%+ row drop. Documents keep every version. Snapshots are kept 400 days with a nightly copy to a drive you own.</p></div>
+      <div class="trust-item"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>One-way where it should be</h3><p>Open Chair and Curb Appeal only receive data from their platforms; Huddle has no write access to either. Your PMS, books and payroll provider stay the system of record, so you can leave any time and take everything with you.</p></div>
+    </div>
+    <div class="badges">
+      <span class="badge"><i></i>BAA with every customer</span>
+      <span class="badge"><i></i>Role and practice scoped</span>
+      <span class="badge"><i></i>Encrypted in transit and at rest</span>
+      <span class="badge"><i></i>Append-only action ledger</span>
+      <span class="badge"><i></i>US data residency</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Asked at almost every demo.</h2>
+    </div>
+    <div class="faq">
+      <details open><summary>Does Huddle replace our practice management system?</summary><p>No. Eaglesoft, Dentrix, Open Dental, CareStack or whichever you run stays the system of record for the chart, the schedule and the ledger. Huddle connects behind it, works the queues, and writes the results back. Your team keeps the tools they know.</p></details>
+      <details><summary>What does "press the button" really mean? What does the AI do and what do people do?</summary><p>The AI does the repetitive work: reading aging reports, checking payer portals, pulling EOBs, correcting codes, resubmitting, texting patients, categorizing transactions, building rosters, scoring calls. Our operations team, people who have run dental front desks and closed dental books, reviews anything the AI isn't confident about. Your office manager approves the few items that need judgment about a patient or a payer. Money never leaves and no warning letter goes out without a human approval.</p></details>
+      <details><summary>How long does it take to go live?</summary><p>About two weeks for most groups. Week one: we connect your PMS, phones, financing and bank feeds, load your standards into the Dental Wiki, and set roles. Week two: office managers work their real queues alongside our team. There is no data migration because Huddle reads what your systems already hold.</p></details>
+      <details><summary>What can an office manager see?</summary><p>Their own practice: its queues, recall calls, daily audits, phone coaching, the financing leaderboard, team training and the daily huddle. They approve, comment and resolve. They cannot see other practices or Pulse. The server enforces this on every request; rows for other practices are never sent to their browser.</p></details>
+      <details><summary>Does the voice AI really call my patients? What does it say?</summary><p>Yes. Open Chair calls patients who are due for a check-up, in the hours and attempt limits you set, and only after your consent and disclosure rules are in place. It sounds like a warm front desk person: it greets by name, says why it's calling, offers two real openings and books the one they choose. It never discusses clinical findings, insurance details or balances; those go to your manager. If someone asks whether they're talking to a person, it says honestly that it is the office's automated assistant. If someone says stop, it stops. Every call summary and recording is in Workspace the next morning.</p></details>
+      <details><summary>Is Pulse really owners-only?</summary><p>Yes. The owner pages (your books, staff scheduling, attendance, HR records, payroll and your SEO and SEM) open only for accounts with the owner role. Admins who are not owners are refused by the server, and each refusal is logged. Everyone else sees a lock in the sidebar.</p></details>
+      <details><summary>How is pricing structured?</summary><p>A platform fee per practice, then a share of the work actually done: AR collected, balances recovered, books closed, payroll periods run. Volume pricing from ten practices. No long contracts. We quote after a 20-minute call where we look at your numbers together.</p></details>
+      <details><summary>Where does our data live, and can we leave?</summary><p>In the United States, encrypted in transit and at rest, with a nightly copy to a drive you own. We sign a Business Associate Agreement before any patient data is loaded. Because Huddle writes back to your own systems, leaving means turning it off. Everything stays where it already was.</p></details>
+      <details><summary>Can we start with Workspace only, or Pulse only?</summary><p>Yes. Many groups start with Workspace at two offices where AR hurts most, then add Pulse when the owner is ready to hand off the books. Others start with Pulse because the month-end is the pain. Each product stands alone; together they share one set of numbers.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA + CONTACT ===================== -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-card">
+      <div class="cta-copy">
+        <h2>See your own offices in Huddle.</h2>
+        <p class="lede">Bring last month's aging report and your call volume. In twenty minutes we'll show what Huddle would have worked overnight, what your office managers would have pressed approve on, and what your owner would have seen in Pulse.</p>
+        <!-- PLACEHOLDER CONTACT DETAILS: replace with the real address, phone and email before launch. -->
+        <div class="cta-contact">
+          <span><strong>Huddle Dental Inc.</strong> · huddle.dental</span>
+          <span>One Gateway Center, Suite 2600, Newark, NJ 07102</span>
+          <span>Sales: <a href="tel:+15550100199">(555) 010-0199</a> · <a href="mailto:hello@huddle.dental">hello@huddle.dental</a></span>
+          <span>Support: <a href="mailto:support@huddle.dental">support@huddle.dental</a> · weekdays 8 AM to 8 PM Eastern</span>
+        </div>
+      </div>
+      <form class="form" id="demoForm" data-sent="false" novalidate>
+        <div class="fields" style="display:grid;gap:14px">
+          <h3>Book a demo</h3>
+          <div class="f2">
+            <label>First name<input type="text" id="f-first" name="first" autocomplete="given-name" required></label>
+            <label>Last name<input type="text" id="f-last" name="last" autocomplete="family-name" required></label>
+          </div>
+          <label>Work email<input type="email" id="f-email" name="email" autocomplete="email" placeholder="you@yourpractice.com" required></label>
+          <div class="f2">
+            <label>Group or practice name<input type="text" id="f-org" name="org" autocomplete="organization" required></label>
+            <label>Number of practices<select id="f-size" name="size"><option>1</option><option>2–3</option><option selected>4–9</option><option>10–24</option><option>25+</option></select></label>
+          </div>
+          <div class="f2">
+            <label>Your role<select id="f-role" name="role"><option>Office manager</option><option>Regional / operations manager</option><option>Owner / dentist</option><option>Central team (billing, AR)</option><option>Other</option></select></label>
+            <label>Interested in<select id="f-prod" name="product"><option>Huddle Complete</option><option>Workspace (office managers)</option><option>Pulse (owners)</option><option>Not sure yet</option></select></label>
+          </div>
+          <label>What hurts most right now? <span style="font-weight:400;color:var(--ink-3)">(optional)</span><textarea id="f-note" name="note" rows="2" placeholder="e.g. AR over 90 days, month-end close, training new front desk staff"></textarea></label>
+          <button class="btn btn-primary" type="submit">Request my demo</button>
+          <small>We reply within one business day. No patient data is needed for the first call.</small>
+        </div>
+        <div class="ok" role="status">Thanks! We'll be in touch within one business day to set up your 20 minutes.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="#top" aria-label="Huddle home">
+          <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><circle cx="11.5" cy="13" r="4" fill="#fff"/><circle cx="20.5" cy="13" r="4" fill="#fff"/><path d="M8 24c0-4 3.5-6 8-6s8 2 8 6" fill="#fff"/></svg>
+          huddle
+        </a>
+        <p>The AI operating layer for dental groups. Workspace for office managers. Pulse for owners. Press the button; the chore is done. Every empty chair gets a call.</p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul><li><a href="#workspace">Workspace</a></li><li><a href="#pulse">Pulse</a></li><li><a href="#how">How it works</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#integrations">Integrations</a></li></ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="#contact">Book a demo</a></li><li><a href="#contact">Contact</a></li><li><a href="#faq">FAQ</a></li><li><a href="#stories">Customer stories</a></li><li><a href="#security">Security</a></li></ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="#contact">HIPAA &amp; BAA</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Huddle Dental Inc. · huddle.dental · All rights reserved.</span>
+      <span>Eaglesoft, Dentrix, Open Dental, CareStack and all other product names are trademarks of their respective owners. Listed integrations are live, in development or on the roadmap.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta"><a class="btn btn-primary" href="#contact">Book a demo</a></div>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
