@@ -7,7 +7,7 @@ description: Quality gate before opening a pull request - runs the repo's tests 
 
 1. **Commit first.** Everything for this PR is committed; `git status --short` is clean (or only has files that don't belong in the PR).
 2. **Tests and typecheck.** Run the exact commands from this repo's CLAUDE.md "Tests" section (all suites that can run here, plus typecheck/lint if the repo has them). Paste the summary lines (passed/failed counts). If anything fails: fix the cause (never the assertion), commit, and start again from step 2. A failure that also fails on unchanged main is noted, not blamed on this change — prove it by running that test on main.
-3. **Untangle.** Run `/untangle`. Apply low-risk proposals in a separate `chore(untangle)` commit and list the rest for me. If you applied anything, go back to step 2.
+3. **Untangle.** Run `/untangle`. Apply the low-risk, small proposals yourself in a separate `chore(untangle)` commit; put the bigger ones in the final report (don't stop to ask). If you applied anything, go back to step 2.
 4. **Code review.** Run the built-in `/code-review` on this branch's diff. Fix every correctness finding you agree with (test first where possible), commit, and go back to step 2. List findings you disagree with and why.
 5. **Page changes.** If the diff changes a page or user flow and `/sim-test` hasn't run on this commit, run it.
 6. **Record the pass** for the exact commit:

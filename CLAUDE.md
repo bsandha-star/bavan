@@ -1,5 +1,6 @@
 # Huddle marketing website (huddle.dental)
 Project tag: [OPS]
+Work here follows the `/ship` flow without being asked (build → tests → browser check → `/pre-pr` → PR → merge when green → one report). Ask only for a real design choice or a step that can't be undone.
 
 ## What this is
 - The public marketing site for Huddle, published at https://huddle.dental (GitHub Pages from the `gh-pages` branch;
@@ -21,9 +22,8 @@ Project tag: [OPS]
   keys or tokens. Examples on the page use made-up names (Lakeside Dental, Dr. Lopez, 555-01xx numbers).
 - Copy from the internal Huddle apps (ADMI-Workspace, hr-huddle, practice-books, call-score) only after stripping
   anything private. When unsure, ask the owner before committing.
-- `site/green-valley-map-r8q4.html` is an internal ownership map (real first names, roles, hours) that is currently
-  published; it is listed in `.claude/guard.json` while the owner decides. Don't read, grep, edit, copy or quote it
-  (the hook only catches Read/Edit/Write, not Bash or Grep, so this rule is on you).
+- `site/green-valley-map-r8q4.html` is an internal ownership map; the owner decided it stays public (12 Nov 2026).
+  Don't delete or move it; edit it only when asked.
 
 ## Layout
 - `site/index.html` the landing page (hero queue demo, products, before/after day, Workspace themes, Pulse, how it
@@ -63,8 +63,8 @@ Run from the repo root. Open http://127.0.0.1:8080/ . Google Fonts load from the
 - Changed files: `git diff --stat $(git merge-base HEAD origin/main)`.
 
 ## Publish
-- Merging to `main` publishes: `pages.yml` force-pushes `site/` to `gh-pages`, live in about a minute. Merge and publish
-  only when the owner says so. The guard hook (`.claude/hooks/guard.js`) asks before any push to `main` or force push.
+- Merging to `main` publishes: `pages.yml` force-pushes `site/` to `gh-pages`, live in about a minute. Claude merges its own PR once CI is green and `/pre-pr` passed.
+  The guard hook (`.claude/hooks/guard.js`) asks only for what can't be undone: `--remote` writes, secrets, rollbacks, force pushes outside `claude/` branches, protected files. Deploys and pushes to the main branch go through once `/pre-pr` passed on the commit.
 - Netlify/Vercel/Cloudflare Pages configs exist; GitHub Pages was the intended host (DNS at Squarespace, `DEPLOY.md`),
   but huddle.dental currently answers from the IIS server (see What this is).
 - Never run `dns-check.yml` (it changes Pages settings) or `screenshot.yml` (force-pushes `evidence`) without the owner.

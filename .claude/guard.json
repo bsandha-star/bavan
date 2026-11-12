@@ -2,7 +2,8 @@
   "protected": [
     {
       "pattern": "^site/CNAME$",
-      "why": "custom domain for GitHub Pages. Changing or deleting it moves or drops huddle.dental (the live site)."
+      "why": "custom domain for GitHub Pages. Changing or deleting it moves or drops huddle.dental (the live site).",
+      "read": true
     },
     {
       "pattern": "(^|/)\\.env($|\\.(?!example$))",
@@ -14,19 +15,23 @@
     },
     {
       "pattern": "^site/_headers$|^netlify\\.toml$|^vercel\\.json$",
-      "why": "hosting config and security headers (X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, asset caching) for every page."
+      "why": "hosting config and security headers (X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, asset caching) for every page.",
+      "read": true
     },
     {
       "pattern": "^\\.github/workflows/(pages|dns-check|screenshot)\\.yml$",
-      "why": "workflows with write access: pages.yml force-pushes site/ to gh-pages (publishes the live site), dns-check.yml changes the Pages settings, screenshot.yml force-pushes the evidence branch."
+      "why": "workflows with write access: pages.yml force-pushes site/ to gh-pages (publishes the live site), dns-check.yml changes the Pages settings, screenshot.yml force-pushes the evidence branch.",
+      "read": true
     },
     {
       "pattern": "^site/green-valley-map-r8q4\\.html$",
-      "why": "internal Green Valley ownership map; the owner decided it stays public (12 Nov 2026). Don't delete or move it; edits only when the owner asks."
+      "why": "internal Green Valley ownership map; the owner decided it stays public (12 Nov 2026). Don't delete or move it; edits only when the owner asks.",
+      "read": true
     },
     {
       "pattern": "^\\.claude/(settings\\.json|guard\\.json|hooks/)",
-      "why": "the guard and permission settings themselves (master copy: claude-kit). Change via the kit, with the owner."
+      "why": "the guard and permission settings themselves (master copy: claude-kit). Change via the kit, with the owner.",
+      "read": true
     }
   ]
 }
