@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "ask": [
+      "mcp__Gusto__run_payroll",
+      "mcp__Gusto__update_payroll",
+      "mcp__Gusto__update_compensation",
+      "mcp__Gusto__accept_reasonable_salary",
+      "mcp__Gusto__record_time",
+      "mcp__Gusto__manage_company_members",
+      "mcp__Gusto__manage_account",
+      "mcp__Gmail__send_message",
+      "mcp__Gmail__reply",
+      "mcp__Gmail__forward",
+      "mcp__Gmail__trash_message",
+      "mcp__Gmail__trash_thread",
+      "mcp__Docusign__createEnvelope",
+      "mcp__Docusign__createEnvelopeWithDocuments",
+      "mcp__Docusign__updateEnvelope",
+      "mcp__Docusign__updateEnvelopeRecipients",
+      "mcp__Docusign__sendReminder",
+      "mcp__Docusign__triggerWorkflow",
+      "mcp__Docusign__startClmWorkflow",
+      "mcp__Cauldron_Sling__sling_push_week",
+      "mcp__Cauldron_Sling__sling_apply_changes",
+      "mcp__Cauldron_Sling__sling_timesheet_apply",
+      "mcp__Cauldron_Sling__sling_timesheet_approve",
+      "mcp__Cauldron_Sling__cauldron_doc_set",
+      "mcp__Callrail__get_call_transcript",
+      "mcp__Google_Drive__share_file",
+      "mcp__Google_Drive__trash_file",
+      "mcp__Google_Calendar__create_event",
+      "mcp__Google_Calendar__update_event",
+      "mcp__Google_Calendar__delete_event",
+      "mcp__Google_Cloud_BigQuery__execute_sql"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write|MultiEdit|NotebookEdit|Read|mcp__github__create_pull_request",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.js\"", "timeout": 15 }
+        ]
+      }
+    ]
+  }
+}

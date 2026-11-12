@@ -1,0 +1,31 @@
+name: PR checks
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pr-tests-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: HTML well-formed, local links and anchors, CNAME, security headers
+        run: python3 tests/check_site.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - name: Install Playwright (pinned in tests/package-lock.json) and Chromium
+        working-directory: tests
+        run: npm ci --no-audit --no-fund && npx playwright install --with-deps chromium
+      - name: Browser smoke test (every page, desktop + phone, no network)
+        working-directory: tests
+        run: node smoke.mjs
