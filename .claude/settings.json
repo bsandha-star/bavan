@@ -1,5 +1,23 @@
 {
   "permissions": {
+    "allow": [
+      "Read", "Edit", "Write", "Glob", "Grep", "WebSearch", "WebFetch",
+      "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Bash(git:*)", "Bash(wrangler:*)", "Bash(python3:*)", "Bash(python:*)",
+      "Bash(curl:*)", "Bash(ls:*)", "Bash(cat:*)", "Bash(head:*)", "Bash(tail:*)", "Bash(grep:*)", "Bash(rg:*)", "Bash(find:*)",
+      "Bash(wc:*)", "Bash(sed:*)", "Bash(awk:*)", "Bash(sort:*)", "Bash(uniq:*)", "Bash(cut:*)", "Bash(tr:*)", "Bash(diff:*)",
+      "Bash(jq:*)", "Bash(echo:*)", "Bash(printf:*)", "Bash(mkdir:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(touch:*)", "Bash(cd:*)",
+      "Bash(pwd)", "Bash(which:*)", "Bash(test:*)", "Bash(kill:*)", "Bash(sleep:*)", "Bash(timeout:*)", "Bash(setsid:*)",
+      "Bash(bash:*)", "Bash(sh:*)", "Bash(powershell:*)", "Bash(gh pr:*)", "Bash(gh run:*)",
+      "PowerShell(npm:*)", "PowerShell(npx:*)", "PowerShell(node:*)", "PowerShell(git:*)", "PowerShell(wrangler:*)",
+      "PowerShell(python:*)", "PowerShell(curl:*)", "PowerShell(cd:*)", "PowerShell(Set-Location:*)", "PowerShell(Get-Content:*)",
+      "PowerShell(Get-ChildItem:*)", "PowerShell(Select-String:*)", "PowerShell(Test-Path:*)", "PowerShell(New-Item:*)",
+      "PowerShell(Start-Process:*)", "PowerShell(Stop-Process:*)", "PowerShell(Invoke-WebRequest:*)", "PowerShell(taskkill:*)",
+      "mcp__playwright", "mcp__headroom",
+      "mcp__github__pull_request_read", "mcp__github__create_pull_request", "mcp__github__update_pull_request",
+      "mcp__github__merge_pull_request", "mcp__github__list_pull_requests", "mcp__github__actions_list",
+      "mcp__github__actions_get", "mcp__github__get_job_logs", "mcp__github__get_file_contents",
+      "mcp__github__list_branches", "mcp__github__list_commits", "mcp__github__get_commit", "mcp__github__issue_read"
+    ],
     "ask": [
       "mcp__Gusto__run_payroll",
       "mcp__Gusto__update_payroll",
@@ -11,8 +29,6 @@
       "mcp__Gmail__send_message",
       "mcp__Gmail__reply",
       "mcp__Gmail__forward",
-      "mcp__Gmail__trash_message",
-      "mcp__Gmail__trash_thread",
       "mcp__Docusign__createEnvelope",
       "mcp__Docusign__createEnvelopeWithDocuments",
       "mcp__Docusign__updateEnvelope",
@@ -27,9 +43,6 @@
       "mcp__Cauldron_Sling__cauldron_doc_set",
       "mcp__Callrail__get_call_transcript",
       "mcp__Google_Drive__share_file",
-      "mcp__Google_Drive__trash_file",
-      "mcp__Google_Calendar__create_event",
-      "mcp__Google_Calendar__update_event",
       "mcp__Google_Calendar__delete_event",
       "mcp__Google_Cloud_BigQuery__execute_sql"
     ]
@@ -37,7 +50,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash|Edit|Write|MultiEdit|NotebookEdit|Read|Grep|Glob|mcp__github__create_pull_request",
+        "matcher": "Bash|PowerShell|Edit|Write|MultiEdit|NotebookEdit|Read|Grep|Glob|mcp__github__create_pull_request|mcp__github__merge_pull_request|mcp__github__push_files|mcp__github__create_or_update_file|mcp__github__delete_file",
         "hooks": [
           { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.js\"", "timeout": 15 }
         ]
