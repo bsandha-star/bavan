@@ -1,0 +1,12 @@
+{
+  "name": "huddle-site-checks",
+  "private": true,
+  "description": "Checks for the static site in ../site (not part of the site).",
+  "type": "module",
+  "scripts": {
+    "test": "python3 check_site.py && node smoke.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}
