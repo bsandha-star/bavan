@@ -1,11 +1,32 @@
 {
   "protected": [
-    { "pattern": "^site/CNAME$", "why": "custom domain for GitHub Pages. Changing or deleting it moves or drops huddle.dental (the live site)." },
-    { "pattern": "(^|/)\\.env($|\\.(?!example$))", "why": "environment file that may hold secrets (.env.example is allowed). This repo is PUBLIC: never commit one." },
-    { "pattern": "(^|/)\\.dev\\.vars", "why": "local secrets file. This repo is PUBLIC: never commit one." },
-    { "pattern": "^site/_headers$|^netlify\\.toml$|^vercel\\.json$", "why": "hosting config and security headers (X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, asset caching) for every page." },
-    { "pattern": "^\\.github/workflows/(pages|dns-check|screenshot)\\.yml$", "why": "workflows with write access: pages.yml force-pushes site/ to gh-pages (publishes the live site), dns-check.yml changes the Pages settings, screenshot.yml force-pushes the evidence branch." },
-    { "pattern": "^site/green-valley-map-r8q4\\.html$", "why": "internal ownership map with real staff names, roles and hours, published on the public site. Owner is deciding whether it stays; don't edit, copy or quote it without asking." },
-    { "pattern": "^\\.claude/(settings\\.json|guard\\.json|hooks/)", "why": "the guard and permission settings themselves (master copy: claude-kit). Change via the kit, with the owner." }
+    {
+      "pattern": "^site/CNAME$",
+      "why": "custom domain for GitHub Pages. Changing or deleting it moves or drops huddle.dental (the live site)."
+    },
+    {
+      "pattern": "(^|/)\\.env($|\\.(?!example$))",
+      "why": "environment file that may hold secrets (.env.example is allowed). This repo is PUBLIC: never commit one."
+    },
+    {
+      "pattern": "(^|/)\\.dev\\.vars",
+      "why": "local secrets file. This repo is PUBLIC: never commit one."
+    },
+    {
+      "pattern": "^site/_headers$|^netlify\\.toml$|^vercel\\.json$",
+      "why": "hosting config and security headers (X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, asset caching) for every page."
+    },
+    {
+      "pattern": "^\\.github/workflows/(pages|dns-check|screenshot)\\.yml$",
+      "why": "workflows with write access: pages.yml force-pushes site/ to gh-pages (publishes the live site), dns-check.yml changes the Pages settings, screenshot.yml force-pushes the evidence branch."
+    },
+    {
+      "pattern": "^site/green-valley-map-r8q4\\.html$",
+      "why": "internal Green Valley ownership map; the owner decided it stays public (12 Nov 2026). Don't delete or move it; edits only when the owner asks."
+    },
+    {
+      "pattern": "^\\.claude/(settings\\.json|guard\\.json|hooks/)",
+      "why": "the guard and permission settings themselves (master copy: claude-kit). Change via the kit, with the owner."
+    }
   ]
 }
