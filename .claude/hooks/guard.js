@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Claude Code PreToolUse guard (master: Birdcycle-Dental/claude-kit). Cross-platform; fails open on its own errors.
-//  - Bash deploy / --remote / secret / push-to-main  -> ask the owner first
+//  - Bash deploy / --remote / secret / push-to-main / force push      -> ask the owner first
+//  - Bash, Grep or Glob touching a protected file                     -> ask the owner first
 //  - Edit/Write/Read of protected files (.claude/guard.json "protected")   -> ask the owner first
 //  - Opening a PR (GitHub MCP or `gh pr create`) before /pre-pr passed on HEAD -> blocked with instructions
 //  `node .claude/hooks/guard.js --record-pre-pr` records a /pre-pr pass for the current HEAD.
@@ -21,13 +22,17 @@ if (process.argv.includes('--record-pre-pr')) {
 }
 
 const DEPLOY = new RegExp([
+  // note: "git -C dir push" and "git -c k=v push" are covered (git\b … push)
   String.raw`\bwrangler\b[^\n;&|]*\b(deploy|publish|rollback|secret\s+(put|bulk|delete)|versions\s+(deploy|upload))\b`,
   String.raw`(^|\s)--remote(\s|=|$)`,
   String.raw`\bnpm\s+run\s+(deploy|release|publish)\b`,
   String.raw`\b(DEPLOY|SETUP|PUSH-TO-GITHUB)\.bat\b`,
   String.raw`\baz\s+(webapp|functionapp)\b`,
-  String.raw`\bgit\s+push\b[^\n;&|]*\s(origin\s+)?(main|master)(\s|$)`,
-  String.raw`\bgit\s+push\b[^\n;&|]*\s(--force|-f)(\s|$)`,
+  // push to main/master in any spelling: `main`, `origin main`, `HEAD:main`, `+x:refs/heads/main`, `--all`, `--mirror`
+  String.raw`\bgit\b[^\n;&|]*\spush\b[^\n;&|]*[\s:/+](main|master)(\s|$)`,
+  String.raw`\bgit\b[^\n;&|]*\spush\b[^\n;&|]*\s--(all|mirror)\b`,
+  // any force push: --force, --force-with-lease[=…], --force-if-includes, -f (alone or bundled like -fu), +refspec
+  String.raw`\bgit\b[^\n;&|]*\spush\b[^\n;&|]*\s(--force(-with-lease|-if-includes)?(=\S*)?|-[a-zA-Z]*f[a-zA-Z]*|\+\S+)(\s|$)`,
 ].join('|'), 'i');
 const PR_CREATE = /\bgh\s+pr\s+create\b/;
 
@@ -36,6 +41,21 @@ const out = (decision, reason) => {
     hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: decision, permissionDecisionReason: reason },
   }));
 };
+
+// Is `p` (relative to root, absolute, or ./-prefixed) a protected path? Directories also match as "dir/".
+function protectedHit(cfg, root, p, dirHint = false) {
+  if (!p || /^[a-z][a-z0-9+.-]*:\/\//i.test(p)) return null;
+  const abs = path.resolve(root, p);
+  const rel = path.relative(root, abs).split(path.sep).join('/');
+  if (rel.startsWith('../')) return null;
+  let isDir = dirHint || /[\\/]$/.test(p);
+  try { isDir = isDir || fs.statSync(abs).isDirectory(); } catch {}
+  for (const pr of cfg.protected || []) {
+    const re = new RegExp(pr.pattern, 'i');
+    if (re.test(rel) || (isDir && re.test(rel + '/'))) return { rel, why: pr.why };
+  }
+  return null;
+}
 
 function prePrPassed(cwd) {
   try {
@@ -59,22 +79,30 @@ process.stdin.on('end', () => {
       }
       return;
     }
+    let cfg = { protected: [] };
+    try { cfg = JSON.parse(fs.readFileSync(path.join(root, '.claude', 'guard.json'), 'utf8')); } catch {}
     if (tool === 'Bash') {
-      if (DEPLOY.test(ti.command || '')) {
-        out('ask', 'This deploys, touches remote/production resources, sets a secret or pushes to main. The owner approves these.');
+      const cmd = ti.command || '';
+      if (DEPLOY.test(cmd)) {
+        out('ask', 'This deploys, touches remote/production resources, sets a secret, force-pushes or pushes to main. The owner approves these.');
+        return;
       }
+      // Protected files named in a shell command (cat, cp, sed, grep …): check every word as a path.
+      const words = cmd.split(/[\s;|&<>()]+/).flatMap((w) => w.split('=')).map((w) => w.replace(/^['"]+|['"]+$/g, '')).filter(Boolean);
+      for (const w of words) {
+        const hit = protectedHit(cfg, root, w);
+        if (hit) { out('ask', `This command touches ${hit.rel}, which is protected: ${hit.why}`); return; }
+      }
+      return;
+    }
+    if (tool === 'Grep' || tool === 'Glob') {
+      const hit = ti.path && protectedHit(cfg, root, ti.path, true);
+      if (hit) out('ask', `${hit.rel} is protected: ${hit.why}`);
       return;
     }
     const file = ti.file_path || ti.notebook_path || ti.path;
     if (!file) return;
-    let cfg = { protected: [] };
-    try { cfg = JSON.parse(fs.readFileSync(path.join(root, '.claude', 'guard.json'), 'utf8')); } catch {}
-    const rel = path.relative(root, path.resolve(root, file)).split(path.sep).join('/');
-    for (const p of cfg.protected || []) {
-      if (new RegExp(p.pattern, 'i').test(rel)) {
-        out('ask', `${rel} is protected: ${p.why}`);
-        return;
-      }
-    }
+    const hit = protectedHit(cfg, root, file);
+    if (hit) out('ask', `${hit.rel} is protected: ${hit.why}`);
   } catch { /* fail open: never break the session */ }
 });
