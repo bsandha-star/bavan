@@ -11,7 +11,7 @@
 // never sends anything anywhere (it only shows its thank-you state until an endpoint is wired up).
 import { createServer } from 'node:http';
 import { readFile, readdir, stat } from 'node:fs/promises';
-import { extname, join, normalize, dirname } from 'node:path';
+import { extname, join, normalize, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
@@ -23,8 +23,9 @@ const VIEWS = [
 ];
 
 async function fileFor(urlPath) {
-  let p = normalize(join(SITE, decodeURIComponent(urlPath.split('?')[0])));
-  if (!p.startsWith(SITE)) return null;
+  let p;
+  try { p = normalize(join(SITE, decodeURIComponent(urlPath.split('?')[0]))); } catch { return null; }
+  if (p !== SITE && !p.startsWith(SITE + sep)) return null;
   for (const c of [p, join(p, 'index.html'), p + '.html']) {
     try { if ((await stat(c)).isFile()) return c; } catch {}
   }
@@ -32,15 +33,17 @@ async function fileFor(urlPath) {
 }
 
 const server = createServer(async (req, res) => {
-  const f = await fileFor(req.url);
-  if (!f) { res.writeHead(404); res.end('not found'); return; }
-  res.writeHead(200, { 'content-type': TYPES[extname(f)] || 'application/octet-stream' });
-  res.end(await readFile(f));
+  try {
+    const f = await fileFor(req.url);
+    if (!f) { res.writeHead(404); res.end('not found'); return; }
+    res.writeHead(200, { 'content-type': TYPES[extname(f)] || 'application/octet-stream' });
+    res.end(await readFile(f));
+  } catch (e) { res.writeHead(500); res.end(String(e)); }
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const BASE = `http://127.0.0.1:${server.address().port}`;
 
-const pages = (await readdir(SITE)).filter((f) => f.endsWith('.html')).sort();
+const pages = (await readdir(SITE, { recursive: true })).filter((f) => f.endsWith('.html')).map((f) => f.split(sep).join('/')).sort();
 const browser = await chromium.launch({
   executablePath: process.env.PW_CHROMIUM || undefined,
   args: process.env.PW_CHROMIUM ? ['--no-sandbox'] : [],
@@ -92,11 +95,13 @@ try {
           check((await page.locator('#mobileMenu').getAttribute('data-open')) === 'false', `${where}: mobile menu stays open after a link is used`);
         }
 
-        // "Work this queue" demo runs without errors.
+        // "Work this queue" demo works every item and ends in its "Done" state.
         const run = page.locator('#runQueue');
         await run.scrollIntoViewIfNeeded();
         await run.click();
-        await page.waitForTimeout(500);
+        const finished = await page.waitForFunction(() => /^Done/.test(document.querySelector('#runLabel').textContent), null, { timeout: 10000 }).then(() => true, () => false);
+        check(finished, `${where}: queue demo never reached its "Done" state`);
+        check(await page.evaluate(() => [...document.querySelectorAll('#demoList li')].every((li) => li.matches('.done, .human'))), `${where}: queue demo left items unworked`);
 
         // Demo form: empty submit is refused; filled submit shows the thank-you state and sends nothing.
         const form = page.locator('#demoForm');
@@ -110,7 +115,7 @@ try {
         await form.locator('#f-org').fill('Sample Dental Group');
         const before = log.all.length;
         await form.locator('button[type="submit"]').click();
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(1500); // long enough for a delayed fetch/beacon to show up
         check((await form.getAttribute('data-sent')) === 'true', `${where}: filled demo form did not show its thank-you state`);
         check(await form.locator('.ok').isVisible(), `${where}: thank-you message not visible`);
         check(log.all.length === before, `${where}: demo form sent a request: ${log.all.slice(before).join(', ')}`);

@@ -7,11 +7,13 @@ Checks every page in site/:
   - HTML is well-formed: every element that needs an end tag is closed, in order
     (optional end tags such as </p>, </li>, </option> may be left out, as HTML allows);
   - no duplicate id on a page; <html lang>, one <title> and a viewport meta are present;
-  - every local link and asset (href, src, CSS url()) points at a file in site/, and every
-    #anchor points at an id that exists on the target page.
+  - every local link and asset (href, src, CSS url()) is relative (the github.io copy lives under /bavan/),
+    points at a file in site/, and every #anchor points at an id that exists on the target page;
+  - no HTML element is self-closed (<div/> stays open in browsers; SVG/MathML may self-close).
 And the publishing files:
   - site/CNAME is exactly the live domain (changing it moves huddle.dental);
-  - _headers, netlify.toml and vercel.json keep the X-Frame-Options and X-Content-Type-Options headers.
+  - _headers, netlify.toml and vercel.json keep their security headers (X-Frame-Options, X-Content-Type-Options,
+    Referrer-Policy, and Permissions-Policy where already set); commented-out lines don't count.
 Exits 1 and lists every problem if anything fails.
 """
 import json
@@ -71,6 +73,9 @@ class Page(HTMLParser):
 
     def handle_startendtag(self, tag, attrs):  # <path .../> in SVG, <br/>
         self._attrs(tag, attrs)
+        if tag not in VOID and not any(t in ("svg", "math") for t, _ in self.stack):
+            # Browsers ignore the "/" on HTML elements: <div/> stays open and swallows what follows.
+            self.errors.append(f"line {self.getpos()[0]}: <{tag}/> is not closed in HTML (write <{tag}></{tag}>)")
 
     def handle_endtag(self, tag):
         line = self.getpos()[0]
@@ -108,8 +113,9 @@ def resolve(ref, from_file):
     path = unquote(parts.path)
     if not path:
         return from_file, frag
-    base = SITE if path.startswith("/") else os.path.dirname(from_file)
-    target = os.path.normpath(os.path.join(base, path.lstrip("/")))
+    if path.startswith("/"):
+        return "ROOT-ABSOLUTE", frag
+    target = os.path.normpath(os.path.join(os.path.dirname(from_file), path))
     if os.path.isdir(target):
         target = os.path.join(target, "index.html")
     elif not os.path.exists(target) and os.path.exists(target + ".html"):
@@ -139,7 +145,9 @@ def main():
             target, frag = resolve(ref, full)
             if target is None:
                 continue
-            if not target.startswith(SITE + os.sep):
+            if target == "ROOT-ABSOLUTE":
+                problems.append(f"{rel}:{line}: \"{ref}\" starts with / (use a relative path: the github.io copy is served under /bavan/)")
+            elif not target.startswith(SITE + os.sep):
                 problems.append(f"{rel}:{line}: \"{ref}\" points outside site/")
             elif not os.path.exists(target):
                 problems.append(f"{rel}:{line}: \"{ref}\" -> missing file {os.path.relpath(target, ROOT)}")
@@ -154,7 +162,9 @@ def main():
                     css = fh.read()
                 for m in re.finditer(r"url\(\s*['\"]?([^'\")]+)['\"]?\s*\)", css):
                     target, _ = resolve(m.group(1).strip(), full)
-                    if target and not os.path.exists(target):
+                    if target == "ROOT-ABSOLUTE":
+                        problems.append(f"{os.path.relpath(full, ROOT)}: url({m.group(1)}) starts with / (use a relative path)")
+                    elif target and not os.path.exists(target):
                         problems.append(f"{os.path.relpath(full, ROOT)}: url({m.group(1)}) -> missing file")
 
     cname = os.path.join(SITE, "CNAME")
@@ -167,7 +177,10 @@ def main():
     except OSError:
         problems.append("site/CNAME is missing (GitHub Pages would drop the huddle.dental custom domain)")
 
-    for name in ("site/_headers", "netlify.toml", "vercel.json"):
+    all_four = ("X-Frame-Options", "X-Content-Type-Options", "Referrer-Policy", "Permissions-Policy")
+    # vercel.json has never set Permissions-Policy; add it there, then add it to this list.
+    expected = {"site/_headers": all_four, "netlify.toml": all_four, "vercel.json": all_four[:3]}
+    for name, headers in expected.items():
         path = os.path.join(ROOT, name)
         try:
             with open(path, encoding="utf-8") as fh:
@@ -180,8 +193,9 @@ def main():
                 json.loads(text)
             except ValueError as e:
                 problems.append(f"{name} is not valid JSON: {e}")
-        for header in ("X-Frame-Options", "X-Content-Type-Options"):
-            if header not in text:
+        live = "\n".join(l for l in text.splitlines() if not l.lstrip().startswith("#"))
+        for header in headers:
+            if header not in live:
                 problems.append(f"{name} no longer sets {header}")
 
     links = sum(len(p.links) for p in pages.values())
