@@ -93,7 +93,7 @@ let raw = '';
 process.stdin.on('data', (c) => (raw += c));
 process.stdin.on('end', () => {
   try {
-    const input = JSON.parse(raw || '{}');
+    const input = JSON.parse(raw.replace(/^\uFEFF/, '') || '{}');   // tolerate a UTF-8 BOM (would otherwise fail open)
     const tool = input.tool_name || '';
     const ti = input.tool_input || {};
     const root = process.env.CLAUDE_PROJECT_DIR || input.cwd || process.cwd();
