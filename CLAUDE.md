@@ -8,6 +8,12 @@ Project tag: [OPS]
   description of the current internal apps. Testimonials, contact details, the demo form endpoint and legal pages are
   placeholders (`PLACEHOLDER` / `TODO (launch)` comments; list in `README.md`).
 - Read `README.md` and `DEPLOY.md` first.
+- **Where it is really live (checked 12 Nov 2026):** https://huddle.dental is served by the Huddle Windows/IIS server
+  (`Server: Microsoft-IIS`), not GitHub Pages, and its homepage is a different copy from `site/index.html`.
+  `bsandha-star.github.io/bavan/` (gh-pages) just redirects there. So merging here does NOT change what visitors see;
+  updating the live site means updating the copy on that server (owner's call). `ADMI-Workspace/website/` holds an
+  identical copy of this site. The Green Valley ownership map that people use is https://app.huddle.dental/green-valley-map-r8q4.html
+  (ADMI-Workspace `public/`); it stays public by the owner's decision — leave it.
 
 ## This repo is PUBLIC
 - Everything committed here is world-readable, and everything in `site/` is published on huddle.dental.
@@ -59,7 +65,8 @@ Run from the repo root. Open http://127.0.0.1:8080/ . Google Fonts load from the
 ## Publish
 - Merging to `main` publishes: `pages.yml` force-pushes `site/` to `gh-pages`, live in about a minute. Merge and publish
   only when the owner says so. The guard hook (`.claude/hooks/guard.js`) asks before any push to `main` or force push.
-- Netlify/Vercel/Cloudflare Pages configs exist but GitHub Pages is the live host (DNS at Squarespace, `DEPLOY.md`).
+- Netlify/Vercel/Cloudflare Pages configs exist; GitHub Pages was the intended host (DNS at Squarespace, `DEPLOY.md`),
+  but huddle.dental currently answers from the IIS server (see What this is).
 - Never run `dns-check.yml` (it changes Pages settings) or `screenshot.yml` (force-pushes `evidence`) without the owner.
 
 ## Protected files (`.claude/guard.json`, the hook asks before Read/Edit/Write; it does not see Bash or Grep)
