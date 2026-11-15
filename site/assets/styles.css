@@ -10,6 +10,8 @@
   --paper-2:#f2f0ea;
   --line:#e4e1d9;
   --accent:#ef6a1f;       /* huddle orange */
+  --mark-bg:#d97757;      /* logo tile, Claude orange, the same in day and night (Huddle design v2.2) */
+  --mark-glyph:#ffffff;   /* the Linked H on the tile */
   --accent-ink:#cf5411;
   --accent-soft:#fdeee3;
   --mint:#1f9d7a;
@@ -501,7 +503,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:28px;margin:0}
 
 /* The hopping mark */
 .demo{position:relative}
-.ball{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--accent);box-shadow:0 6px 14px -4px rgba(239,106,31,.7),inset 0 -3px 0 rgba(0,0,0,.12);z-index:6;pointer-events:none;display:grid;place-items:center;will-change:transform}
+.ball{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:8px;background:var(--mark-bg);box-shadow:0 6px 14px -4px rgba(239,106,31,.7),inset 0 -3px 0 rgba(0,0,0,.12);z-index:6;pointer-events:none;display:grid;place-items:center;will-change:transform}
 .ball svg{width:22px;height:22px}
 .logo-mark{transform-origin:center}
 
@@ -523,7 +525,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:28px;margin:0}
 @keyframes spinr{from{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(0deg)}to{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(-360deg)}}
 .fstage.orbit .fchip{animation:spinr 70s linear infinite}
 .hero-top .hero h1,.hero-top h1{font-size:clamp(40px,4.9vw,72px)}
-.fcore{position:absolute;left:50%;top:50%;width:28%;aspect-ratio:1;transform:translate(-50%,-50%) scale(0);border-radius:50%;background:var(--accent);display:grid;place-items:center;box-shadow:0 18px 50px -14px rgba(239,106,31,.75),inset 0 -6px 0 rgba(0,0,0,.12);cursor:pointer;padding:0;border:0}
+.fcore{position:absolute;left:50%;top:50%;width:28%;aspect-ratio:1;transform:translate(-50%,-50%) scale(0);border-radius:24%;background:var(--mark-bg);display:grid;place-items:center;box-shadow:0 18px 50px -14px rgba(239,106,31,.75),inset 0 -6px 0 rgba(0,0,0,.12);cursor:pointer;padding:0;border:0}
 .fcore svg{width:72%;height:72%}
 .fcore:focus-visible{outline:3px solid var(--accent);outline-offset:6px}
 .fcaption{font-family:var(--font-display);font-size:clamp(15px,1.4vw,18px);color:var(--ink-2);display:flex;flex-wrap:wrap;gap:6px 8px;align-items:baseline;justify-content:center;text-align:center;letter-spacing:-.01em}
