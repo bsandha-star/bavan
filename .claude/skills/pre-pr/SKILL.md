@@ -10,6 +10,10 @@ description: Quality gate before opening a pull request - runs the repo's tests 
 3. **Untangle.** Run `/untangle`. Apply the low-risk, small proposals yourself in a separate `chore(untangle)` commit; put the bigger ones in the final report (don't stop to ask). If you applied anything, go back to step 2.
 4. **Code review.** Run the built-in `/code-review` on this branch's diff. Fix every correctness finding you agree with (test first where possible), commit, and go back to step 2. List findings you disagree with and why.
 5. **Page changes.** If the diff changes a page or user flow and `/sim-test` hasn't run on this commit, run it.
+5b. **Prompt changes.** If the diff touches a file listed in `.claude/prompts.json` (or another live AI prompt), the prompt's log
+   (`log` in that file) must have an entry for this change with its matrix result, and every new rule must carry its "why generic"
+   line. Missing → run `/prompt-tune` first. A `run: "owner"` prompt whose round hasn't been run yet may still go to a PR, but the
+   PR says so in its first line and it is not merged until the owner's round and sign-off are in.
 6. **Record the pass** for the exact commit:
    ```bash
    node .claude/hooks/guard.js --record-pre-pr
