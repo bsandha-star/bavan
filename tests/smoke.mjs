@@ -8,7 +8,8 @@
 // no sideways scrolling on the phone. Requests to other hosts (Google Fonts) are answered with an
 // empty response, so the test never touches the internet.
 // On index.html it also checks the mobile menu, the "Work this queue" demo and that the demo form
-// never sends anything anywhere (it only shows its thank-you state until an endpoint is wired up).
+// never claims a send: with no endpoint wired up it says nothing was sent and only hands the request to the
+// visitor's e-mail app (one mailto: to admin@huddle.dental); it never POSTs or fetches anything.
 import { createServer } from 'node:http';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { extname, join, normalize, dirname, sep } from 'node:path';
@@ -66,7 +67,8 @@ async function openPage(view, file) {
   page.on('pageerror', (e) => log.errors.push(`exception: ${e.message}`));
   page.on('request', (r) => { log.all.push(`${r.method()} ${r.url()}`); if (r.method() !== 'GET') log.posts.push(`${r.method()} ${r.url()}`); });
   page.on('response', (r) => { if (r.url().startsWith(BASE) && r.status() >= 400) log.errors.push(`HTTP ${r.status()} ${r.url().slice(BASE.length)}`); });
-  page.on('requestfailed', (r) => log.errors.push(`failed: ${r.url()} ${r.failure()?.errorText}`));
+  // a mailto: hand-off to the e-mail app is aborted in a headless browser; that is the form working, not a failure
+  page.on('requestfailed', (r) => { if (!r.url().startsWith('mailto:')) log.errors.push(`failed: ${r.url()} ${r.failure()?.errorText}`); });
   await page.goto(`${BASE}/${file}`, { waitUntil: 'load' });
   await page.waitForTimeout(300);
   return { context, page, log };
@@ -103,7 +105,8 @@ try {
         check(finished, `${where}: queue demo never reached its "Done" state`);
         check(await page.evaluate(() => [...document.querySelectorAll('#demoList li')].every((li) => li.matches('.done, .human'))), `${where}: queue demo left items unworked`);
 
-        // Demo form: empty submit is refused; filled submit shows the thank-you state and sends nothing.
+        // Demo form: empty submit is refused; a filled submit never claims a send (no endpoint yet): it says so,
+        // shows no thank-you state, and its only request is one mailto: to admin@huddle.dental.
         const form = page.locator('#demoForm');
         await form.scrollIntoViewIfNeeded();
         await form.locator('button[type="submit"]').click();
@@ -116,9 +119,11 @@ try {
         const before = log.all.length;
         await form.locator('button[type="submit"]').click();
         await page.waitForTimeout(1500); // long enough for a delayed fetch/beacon to show up
-        check((await form.getAttribute('data-sent')) === 'true', `${where}: filled demo form did not show its thank-you state`);
-        check(await form.locator('.ok').isVisible(), `${where}: thank-you message not visible`);
-        check(log.all.length === before, `${where}: demo form sent a request: ${log.all.slice(before).join(', ')}`);
+        check((await form.getAttribute('data-sent')) === 'false', `${where}: demo form claims it was sent, but no endpoint is wired up`);
+        check(!(await form.locator('.ok').isVisible()), `${where}: thank-you message shown although nothing was sent`);
+        check(/Nothing was sent yet/.test(await page.locator('#formHelp').textContent()), `${where}: demo form does not say that nothing was sent`);
+        const after = log.all.slice(before);
+        check(after.length === 1 && after[0].startsWith('GET mailto:admin@huddle.dental?'), `${where}: demo form should only hand one mailto: to admin@huddle.dental, saw: ${after.join(', ') || 'nothing'}`);
         check(new URL(page.url()).pathname === '/index.html', `${where}: demo form navigated away to ${page.url()}`);
       }
 
