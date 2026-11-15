@@ -106,7 +106,7 @@
   function ensureBall() {
     if (ball) return ball;
     ball = document.createElement('div'); ball.className = 'ball'; ball.hidden = true;
-    ball.innerHTML = '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="11.5" cy="13" r="4" fill="#fff"/><circle cx="20.5" cy="13" r="4" fill="#fff"/><path d="M8 24c0-4 3.5-6 8-6s8 2 8 6" fill="#fff"/></svg>';
+    ball.innerHTML = '<svg viewBox="0 0 32 32" aria-hidden="true"><g fill="var(--mark-glyph)" transform="translate(5.6 5.6) scale(.65)"><circle cx="9" cy="5.6" r="3.4"/><circle cx="23" cy="5.6" r="3.4"/><rect x="5.8" y="10.4" width="6.4" height="19.6" rx="3.2"/><rect x="19.8" y="10.4" width="6.4" height="19.6" rx="3.2"/><rect x="10" y="17" width="12" height="4.4" rx="2.2"/></g></svg>';
     demoEl.appendChild(ball); return ball;
   }
   function centerOf(el) {
