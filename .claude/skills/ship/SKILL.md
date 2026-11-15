@@ -11,6 +11,8 @@ The owner should not have to watch. Never stop for routine confirmation. Stop on
    and you can't settle it from the code, the docs or how the app already works, ask it now — every such question in ONE message — then wait.
    Otherwise state your assumptions in two or three lines and start. Don't ask for plan approval.
 2. **Build** on the work branch. Bug: failing test first, then the fix. New behaviour: tests with it. Use subagents for independent parts.
+   A change to a live AI prompt (a file in `.claude/prompts.json`, or any prompt patients, staff or the books depend on) runs
+   `/prompt-tune` inside this step: fixed cases, expert review, smallest generic fix, full re-test, at most three versions.
 3. **Prove it.** Run the repo's tests and typecheck (CLAUDE.md "Tests"). For anything a person sees: start the app locally on fake data,
    open the changed screens with Playwright at desktop and phone width, walk each acceptance item, keep a screenshot per item.
    Page or flow changes: also run `/sim-test`.
@@ -25,5 +27,6 @@ The owner should not have to watch. Never stop for routine confirmation. Stop on
 8. **One report**, in plain English:
    - each acceptance item: ✅ done / ⚠️ partly / ❌ not done, with the evidence (test name or screenshot);
    - what is live and where (PR link, deploy result);
+   - for a prompt change, the `/prompt-tune` block (versions, matrix results, fixes, escalations, sign-off still needed);
    - assumptions you made;
    - anything that needs the owner (decisions, irreversible steps from 7).
