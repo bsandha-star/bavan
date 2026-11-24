@@ -122,7 +122,7 @@ checks the register either way.
    | Code | A format rule followed only sometimes | Escalate: a code check or validator, with a test |
    | Model variance | Same prompt, different answers on repeat runs | Strengthen the rule, or accept and record it |
 
-   Escalations are fixed as ordinary code changes (failing test first) in the same `/ship`, or listed for the owner.
+   Escalations are fixed as ordinary code changes (failing test first) in the same `/ship-it`, or listed for the owner.
 7. **Write the smallest generic fix.** No names, numbers, dates or practices from the test case: state the principle. Put the
    rule inside the step, field or tool description it governs (followed more reliably than a general rule elsewhere). Say what to
    do and what not to do; a neutral example if needed. Never rename or remove output keys, tool names or phrases other code
@@ -133,7 +133,7 @@ checks the register either way.
    regenerate any `also` copies, and go back to step 3 with the **full** matrix. Run `/pre-pr` once, after the last version
    (a "commits since the last check" nudge mid-loop can wait until then).
 9. **Finalise.** Abort if the live prompt changed on main during the exercise (rebase and re-run instead). Write the log entry
-   (writing `prompts/<name>/LOG.md` also clears the project-band "prompt changed" nudge), then hand over through `/ship` as usual (`/pre-pr`, PR, merge when green). A locked prompt's PR is merged only after the
+   (writing `prompts/<name>/LOG.md` also clears the project-band "prompt changed" nudge), then hand over through `/ship-it` as usual (`/pre-pr`, PR, merge when green). A locked prompt's PR is merged only after the
    owner's OK (the guard asks). Live effects that need a person (for example pressing "Connect Emma") stay with the owner.
 
 ## Version log — `prompts/<name>/LOG.md`
@@ -156,7 +156,7 @@ checks the register either way.
 - Owner: … · date: … · locked: yes/no
 ```
 
-## In the `/ship` report
+## In the `/ship-it` report
 
 Add a "Prompt" block: versions run (v0 → vN), the matrix result per version, fixes with their "why generic" line, escalations,
 remaining issues, and whether the owner still has to run a round or sign off.
