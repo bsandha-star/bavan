@@ -1,6 +1,6 @@
 # Huddle marketing website (huddle.dental)
 Project tag: [OPS]
-Work here follows the `/ship` flow without being asked (build → tests → browser check → `/pre-pr` → PR → merge when green → one report). Ask only for a real design choice or a step that can't be undone.
+Work here follows the `/ship-it` flow without being asked (build → tests → browser check → `/pre-pr` → PR → merge when green → one report). Ask only for a real design choice or a step that can't be undone.
 
 ## What this is
 - The public marketing site for Huddle, published at https://huddle.dental (GitHub Pages from the `gh-pages` branch;
